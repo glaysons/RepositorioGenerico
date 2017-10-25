@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{84FB8077-5393-478D-B4B4-E524332B5DDD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RepositorioGenerico.Pattern</RootNamespace>
+    <AssemblyName>RepositorioGenerico.Pattern</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Buscadores\Agregadores.cs" />
+    <Compile Include="Buscadores\IBuscador.cs" />
+    <Compile Include="Buscadores\IConfiguracaoParametro`.cs" />
+    <Compile Include="Buscadores\IConfiguracaoParametro.cs" />
+    <Compile Include="Buscadores\IConfiguracao.cs" />
+    <Compile Include="Buscadores\IConfiguracaoCondicao.cs" />
+    <Compile Include="Buscadores\IConfiguracaoCondicao`.cs" />
+    <Compile Include="Buscadores\IConfiguracaoProcedure.cs" />
+    <Compile Include="Buscadores\IConfiguracaoProcedure`.cs" />
+    <Compile Include="Buscadores\IConfiguracaoQuery.cs" />
+    <Compile Include="Buscadores\IConfiguracao`.cs" />
+    <Compile Include="Buscadores\IConfiguracaoQuery`.cs" />
+    <Compile Include="Buscadores\IBuscador`.cs" />
+    <Compile Include="Buscadores\Operadores.cs" />
+    <Compile Include="Buscadores\OperadoresEspeciais.cs" />
+    <Compile Include="Buscadores\OperadoresTexto.cs" />
+    <Compile Include="Contextos\IRepositorioObject.cs" />
+    <Compile Include="Contextos\Tables\IContexto.cs" />
+    <Compile Include="Contextos\Tables\IContextoTransacional.cs" />
+    <Compile Include="Contextos\Tables\IRepositorio.cs" />
+    <Compile Include="EventoConexaoDelegate.cs" />
+    <Compile Include="IComando.cs" />
+    <Compile Include="IConexao.cs" />
+    <Compile Include="Contextos\IRepositorioBase.cs" />
+    <Compile Include="Contextos\IContexto.cs" />
+    <Compile Include="Contextos\IContextoTransacional.cs" />
+    <Compile Include="Contextos\IPersistencia.cs" />
+    <Compile Include="IEventoConexao.cs" />
+    <Compile Include="ITransacao.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Contextos\IRepositorio.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
+      <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
+      <Name>RepositorioGenerico.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
