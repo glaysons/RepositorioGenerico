@@ -216,7 +216,7 @@ Sempre que precisar gerar novos objetos, utilize o método **Criar**, pois, o ob
 
 Recomendamos que desenvolva todas as classes de negócio dependendo apenas de **IRepositorio<*SeuObjeto*>***, assim, suas regras estarão menos dependente da estrutura de banco ou da transação. O objetivo é que estas regras não saibam se o repositório está utilizando o Sql Server ou Oracle, muito menos se é um banco de dados falso (***Fake***).
 
-Para montar um contexto de testes, basta executar o método ***RepositorioGenerico.Fake.FabricaFake.CriarContexto()*** e em seguida adicionar todos os registros que deverão ser encontrados no contexto.
+Para montar um contexto de testes, basta executar o método **RepositorioGenerico.Fake.FabricaFake.CriarContexto()** e em seguida adicionar todos os registros que deverão ser encontrados no contexto.
 
 ```
   var contextoFalso = RepositorioGenerico.Fake.FabricaFake.CriarContexto();
