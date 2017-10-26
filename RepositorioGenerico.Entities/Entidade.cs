@@ -13,6 +13,7 @@ namespace RepositorioGenerico.Entities
 		public Entidade()
 		{
 			EstadoEntidade = EstadosEntidade.Novo;
+			//teste
 		}
 
 		public object Clone()
