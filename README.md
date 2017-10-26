@@ -14,8 +14,9 @@ Este ORM foi padronizado totalmente em português e já é utilizado em ambiente
  - Possibilidade de desenvolvimento de validadores na forma de anotações
  - Preparado para utilização com tabelas com múltiplos campos na chave
  - Permite utilização de contextos simples ou transacionais
- - Sincronização de relacionamentos *filhos* é feita automáticamente
+ - Sincronização de relacionamentos *filhos* é feita automaticamente
  - **Suporte a Sql Server**, por enquanto!
+ - Suporte a **Testes Automatizados**
 
 ### Como Utilizar ###
 

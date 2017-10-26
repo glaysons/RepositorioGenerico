@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RepositorioGenerico.Fake</RootNamespace>
+    <AssemblyName>RepositorioGenerico.Fake</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.7.8.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.7.8\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdapterFake.cs" />
+    <Compile Include="Builders\QueryFakeBuilder.cs" />
+    <Compile Include="ComandoFake.cs" />
+    <Compile Include="ConexaoFake.cs" />
+    <Compile Include="Contextos\ContextoFake.cs" />
+    <Compile Include="Contextos\ContextoFakeBase.cs" />
+    <Compile Include="Contextos\FilhosRepositorioFake.cs" />
+    <Compile Include="Contextos\IContextoFake.cs" />
+    <Compile Include="Contextos\PersistenciaFake.cs" />
+    <Compile Include="Contextos\PersistenciaFakeBase.cs" />
+    <Compile Include="Contextos\RepositorioFake.cs" />
+    <Compile Include="Contextos\Tables\ContextoFake.cs" />
+    <Compile Include="Contextos\Tables\IContextoFake.cs" />
+    <Compile Include="Contextos\Tables\PersistenciaFake.cs" />
+    <Compile Include="Contextos\Tables\RepositorioFake.cs" />
+    <Compile Include="DataParametersCollectionFake.cs" />
+    <Compile Include="DataReaderFake.cs" />
+    <Compile Include="DbCommandFake.cs" />
+    <Compile Include="DbDataParameterFake.cs" />
+    <Compile Include="DbFactoryFake.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransacaoFake.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RepositorioGenerico.Dictionary\RepositorioGenerico.Dictionary.csproj">
+      <Project>{9D2D5527-AE1F-4E34-BB44-B32021DEF5E8}</Project>
+      <Name>RepositorioGenerico.Dictionary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Exceptions\RepositorioGenerico.Exceptions.csproj">
+      <Project>{A7E998C3-769E-47A6-BF19-C9D7274C8287}</Project>
+      <Name>RepositorioGenerico.Exceptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Framework\RepositorioGenerico.Framework.csproj">
+      <Project>{53EB1B72-56B5-4E92-B331-EE5C9C38E80B}</Project>
+      <Name>RepositorioGenerico.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
+      <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
+      <Name>RepositorioGenerico.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
+      <Project>{84fb8077-5393-478d-b4b4-e524332b5ddd}</Project>
+      <Name>RepositorioGenerico.Pattern</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Search\RepositorioGenerico.Search.csproj">
+      <Project>{A3B44073-69DD-49BD-8B34-D5AE8A295E2C}</Project>
+      <Name>RepositorioGenerico.Search</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
