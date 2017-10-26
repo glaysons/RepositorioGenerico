@@ -2,18 +2,19 @@
 
 RepositorioGenerico é um Framework ORM OpenSource escrito em C# para utilização em projetos com qualquer quantidade de tabelas.
 
-Este ORM foi padronizado totalmente em português e já é utilizado em ambiente com mais dem 1000 tabelas.
+Este ORM foi padronizado totalmente em português e já é utilizado em ambiente com mais de 1000 tabelas.
 
 ### Porque RepositorioGenerico? ###
 
- - Utiliza o padrão de projeto de repositório genérico
- - Integrado com AutoFac
+ - Utiliza o padrão de projeto **Repository Pattern**
+ - Integrado com injetor de dependências **AutoFac**
  - Mapeamento da estrutura dos objetos é feito sobre demanda
  - Utilização de anotações para definição dos padrões
- - Possibilidade de utilização das anotações no padrão **DataAnnotations**
+ - Possibilidade de utilização das anotações no padrão **DataAnnotations** em inglês
  - Possibilidade de desenvolvimento de validadores na forma de anotações
  - Preparado para utilização com tabelas com múltiplos campos na chave
  - Permite utilização de contextos simples ou transacionais
+ - Sincronização de relacionamentos *filhos* é feita automáticamente
  - **Suporte a Sql Server**, por enquanto!
 
 ### Como Utilizar ###
