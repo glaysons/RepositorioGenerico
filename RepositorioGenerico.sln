@@ -34,6 +34,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Diction
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Dictionary.Test", "RepositorioGenerico.Dictionary.Test\RepositorioGenerico.Dictionary.Test.csproj", "{7AB4B163-2CF3-4AF1-8069-AAA798EBC65E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient", "RepositorioGenerico.SqlClient\RepositorioGenerico.SqlClient.csproj", "{BCBF1D03-158B-4213-A446-1A40E4D3F210}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient.Test", "RepositorioGenerico.SqlClient.Test\RepositorioGenerico.SqlClient.Test.csproj", "{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +96,14 @@ Global
 		{7AB4B163-2CF3-4AF1-8069-AAA798EBC65E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AB4B163-2CF3-4AF1-8069-AAA798EBC65E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AB4B163-2CF3-4AF1-8069-AAA798EBC65E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCBF1D03-158B-4213-A446-1A40E4D3F210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCBF1D03-158B-4213-A446-1A40E4D3F210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCBF1D03-158B-4213-A446-1A40E4D3F210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCBF1D03-158B-4213-A446-1A40E4D3F210}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
