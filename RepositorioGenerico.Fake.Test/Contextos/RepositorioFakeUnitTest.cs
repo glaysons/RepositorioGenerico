@@ -29,7 +29,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 		private RepositorioFake<ObjetoDeTestes> CriarRepositorioComDados(bool validar = false)
 		{
-			var contexto = DbFactoryFake.CriarContexto();
+			var contexto = FabricaFake.CriarContexto();
 			var repositorio = (RepositorioFake<ObjetoDeTestes>)contexto.Repositorio<ObjetoDeTestes>();
 			repositorio.DesativarValidacoes();
 			GerarRegistrosDoObjetoDeTestesNoContexto(contexto);

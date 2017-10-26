@@ -2,7 +2,7 @@
 
 namespace RepositorioGenerico.Fake
 {
-	public static class DbFactoryFake
+	public static class FabricaFake
 	{
 		public static IContextoFake CriarContexto()
 		{

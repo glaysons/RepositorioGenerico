@@ -7,6 +7,7 @@ Este ORM foi padronizado totalmente em português e já é utilizado em ambiente
 ### Porque RepositorioGenerico? ###
 
  - Utiliza o padrão de projeto **Repository Pattern**
+ - Suporte a **Testes Automatizados**
  - Integrado com injetor de dependências **AutoFac**
  - Mapeamento da estrutura dos objetos é feito sobre demanda
  - Utilização de anotações para definição dos padrões
@@ -15,12 +16,12 @@ Este ORM foi padronizado totalmente em português e já é utilizado em ambiente
  - Preparado para utilização com tabelas com múltiplos campos na chave
  - Permite utilização de contextos simples ou transacionais
  - Sincronização de relacionamentos *filhos* é feita automaticamente
- - **Suporte a Sql Server**, por enquanto!
- - Suporte a **Testes Automatizados**
+ - Suporte apenas ao **Sql Server**, por enquanto!
+ - Suporte a execução de **procedures**
 
-### Como Utilizar ###
+## Como Utilizar ##
 
-**Definir os Objetos**
+### Definir os Objetos ###
 
 Todas as tabelas que serão utilizadas no contexto devem ser definidas e devem herdar o objeto **RepositorioGenerico.Entities.Entidade**
 
@@ -100,14 +101,14 @@ Se o nome das tabelas for diferente do nome dos objetos, basta configurar o nome
   }
 ```
 
-**Criar um Contexto**
+### Criar um Contexto ###
 
 ```
   var cs = ConfigurationManager.ConnectionStrings["Conexao"].ConnectionString;
-  IContexto contexto = RepositorioGenerico.SqlClient.DbFactory.CriarContexto(cs);
+  IContexto contexto = RepositorioGenerico.SqlClient.Fabrica.CriarContexto(cs);
 ```
 
-**Adicionar Registros**
+### Adicionar Registros ###
 
 ```
   var registro = new ObjetoDeTestes()
@@ -125,7 +126,7 @@ Se o nome das tabelas for diferente do nome dos objetos, basta configurar o nome
   contexto.Salvar();
 ```
 
-**Consultar Registros**
+### Consultar Registros ###
 
 Este ORM ainda não possui uma estrutura de conversão de expressões Linq para Sql, assim, foi desenvolvido um formato fluente de desenvolvimento das consultas.
 
@@ -154,7 +155,7 @@ Outra forma de realizar consultas no banco de dados é utilizar o método **Cons
   var registroDireto = repositorio.Consultar(123);
 ```
 
-**Alterar Registros**
+### Alterar Registros ###
 
 ```
   var registroParaAlteracao = repositorio.Buscar.Um(consultarUm);
@@ -165,7 +166,7 @@ Outra forma de realizar consultas no banco de dados é utilizar o método **Cons
   contexto.Salvar();
 ```
 
-**Excluir Registros**
+### Excluir Registros ###
 
 ```
   var registroParaExclusao = repositorio.Buscar.Um(consultarUm);
@@ -174,7 +175,7 @@ Outra forma de realizar consultas no banco de dados é utilizar o método **Cons
   contexto.Salvar();
 ```
 
-**Validar Registros**
+### Validar Registros ###
 
 Todo processo de inclusão/alteração gera uma validação automática nos objetos envolvidos, porém, estes sempre geram exceções.
 Caso seja necessário fazer uma leitura dos erros encontrados, basta executar o método **Valido** do repositório.
@@ -194,7 +195,7 @@ Caso seja necessário fazer uma leitura dos erros encontrados, basta executar o 
 
 É possível desativar as validações ao inserir/alterar itens, basta utilizar o método **DesativarValidacoes()** para desativar ou **AtivarValidacoes()** para ativar.
 
-**Registros em Memória**
+### Registros em Memória ###
 
 Sempre que o contexto é salvo, os registros utilizados no processo de inclusão/alteração/exclusão ficam na memória, assim, caso seja necessário realizar a leitura dos mesmos, basta utilizar o método **Itens()**.
 
@@ -203,10 +204,41 @@ Sempre que o contexto é salvo, os registros utilizados no processo de inclusão
     ToDo(itemEmMemoria);
 ```
 
-**Criando novos Objetos**
+### Criando novos Objetos ###
 
 Sempre que precisar gerar novos objetos, utilize o método **Criar**, pois, o objeto é preenchido automaticamente com base em seus valores padrões.
 
 ```
   var novoRegistro = repositorio.Criar();
+```
+
+### Criando Testes ###
+
+Recomendamos que desenvolva todas as classes de negócio dependendo apenas de **IRepositorio<*SeuObjeto*>***, assim, suas regras estarão menos dependente da estrutura de banco ou da transação. O objetivo é que estas regras não saibam se o repositório está utilizando o Sql Server ou Oracle, muito menos se é um banco de dados falso (***Fake***).
+
+Para montar um contexto de testes, basta executar o método ***RepositorioGenerico.Fake.FabricaFake.CriarContexto()*** e em seguida adicionar todos os registros que deverão ser encontrados no contexto.
+
+```
+  var contextoFalso = RepositorioGenerico.Fake.FabricaFake.CriarContexto();
+  contextoFalso.AdicionarRegistro(new ObjetoDeTestes() { Nome = "A", DataHora = DateTime.Now });
+  contextoFalso.AdicionarRegistro(new ObjetoDeTestes() { Nome = "B", DataHora = DateTime.Now });
+  contextoFalso.AdicionarRegistro(new ObjetoDeTestes() { Nome = "C", DataHora = DateTime.Now });
+```
+
+Vamos considerar a regra de negócios abaixo:
+
+```
+  public ObjetoDeTestes ConsultarNomesContendoB(IRepositorio<ObjetoDeTestes> tabelaDeObjetos)
+  {
+    var nomeContendoB = tabelaDeObjetos.Buscar.CriarQuery()
+      .AdicionarCondicao(e => e.Nome).Contenha("B");
+    return tabelaDeObjetos.Buscar.Um(nomeContendoB);
+  }
+```
+
+Ao escrever o teste com o cenário descrito acima, basta validar se o método encontrou um objeto válido!
+
+```
+  var objeto = ConsultarNomesContendoB(contextoFalso.Repositorio<ObjetoDeTestes>());
+  Assert.IsNotNull(objeto);
 ```

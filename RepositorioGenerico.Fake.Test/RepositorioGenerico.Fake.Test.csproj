@@ -74,7 +74,7 @@
     <Compile Include="Contextos\ContextoFakeUnitTest.cs" />
     <Compile Include="Contextos\ContextoFakeBaseUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DbFactoryUnitTest.cs" />
+    <Compile Include="FabricaFakeUnitTest.cs" />
     <Compile Include="DataReaderFakeUnitTest.cs" />
     <Compile Include="TransacaoFakeUnitTest.cs" />
   </ItemGroup>

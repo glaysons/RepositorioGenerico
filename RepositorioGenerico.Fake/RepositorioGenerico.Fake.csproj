@@ -63,7 +63,7 @@
     <Compile Include="DataReaderFake.cs" />
     <Compile Include="DbCommandFake.cs" />
     <Compile Include="DbDataParameterFake.cs" />
-    <Compile Include="DbFactoryFake.cs" />
+    <Compile Include="FabricaFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransacaoFake.cs" />
   </ItemGroup>

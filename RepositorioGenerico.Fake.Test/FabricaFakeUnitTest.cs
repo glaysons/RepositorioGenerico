@@ -8,12 +8,12 @@ using RepositorioGenerico.Test;
 namespace RepositorioGenerico.Fake.Test
 {
 	[TestClass]
-	public class DbFactoryUnitTest
+	public class FabricaFakeUnitTest
 	{
 
 		private IContexto CriarContextoParaTestes()
 		{
-			var contexto = DbFactoryFake.CriarContexto();
+			var contexto = FabricaFake.CriarContexto();
 
 			contexto.AdicionarRegistro(new ObjetoDeTestes() { Codigo = 1, Nome = "Teste de cadastros do nome A" });
 			contexto.AdicionarRegistro(new ObjetoDeTestes() { Codigo = 2, Nome = "Teste de cadastros do nome B" });
@@ -27,14 +27,14 @@ namespace RepositorioGenerico.Fake.Test
 		[TestMethod]
 		public void SeCriarUmContextoFakeNaoDeveGerarErro()
 		{
-			Action act = () => DbFactoryFake.CriarContexto();
+			Action act = () => FabricaFake.CriarContexto();
 			act.ShouldNotThrow();
 		}
 
 		[TestMethod]
 		public void SeCriarUmContextoLegadoFakeNaoDeveGerarErro()
 		{
-			Action act = () => DbFactoryFake.CriarContextoLegado();
+			Action act = () => FabricaFake.CriarContextoLegado();
 			act.ShouldNotThrow();
 		}
 
