@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RepositorioGenerico.Fake.Contextos;
 using RepositorioGenerico.Framework;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.Fake.Test.Contextos
 {

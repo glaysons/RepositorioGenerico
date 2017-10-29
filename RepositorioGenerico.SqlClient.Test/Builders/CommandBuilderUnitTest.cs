@@ -8,7 +8,7 @@ using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Entities.Anotacoes;
 using RepositorioGenerico.Framework.Helpers;
 using RepositorioGenerico.SqlClient.Builders;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.SqlClient.Test.Builders
 {

@@ -41,26 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dicionario.cs" />
-    <Compile Include="DicionarioCache.cs" />
-    <Compile Include="EstadoObjetoFactory.cs" />
-    <Compile Include="Helpers\DataAnnotationHelper.cs" />
-    <Compile Include="Builders\DataTableBuilder.cs" />
-    <Compile Include="IDicionario.cs" />
-    <Compile Include="Itens\ItemDicionario.cs" />
-    <Compile Include="Itens\ItemDicionarioBuilder.cs" />
-    <Compile Include="Itens\ItemDicionarioFactory.cs" />
-    <Compile Include="Mapas\CampoMapaDicionario.cs" />
-    <Compile Include="Mapas\Mapa.cs" />
-    <Compile Include="Mapas\MapaItemDicionarioBuilder.cs" />
-    <Compile Include="Mapas\Patterns\IConsultadorCamposDaTabela.cs" />
-    <Compile Include="Mapas\Patterns\IMapa.cs" />
-    <Compile Include="Mapas\TabelaMapaDicionario.cs" />
-    <Compile Include="OpcoesAutoIncremento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Relacionamentos\Relacionamento.cs" />
-    <Compile Include="Relacionamentos\TiposRelacionamento.cs" />
-    <Compile Include="Validadores\ValidadorDicionario.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RepositorioGenerico.Exceptions\RepositorioGenerico.Exceptions.csproj">

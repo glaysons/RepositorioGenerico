@@ -3,7 +3,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Pattern.Contextos;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.Fake.Test
 {

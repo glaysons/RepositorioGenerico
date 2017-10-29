@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.SqlClient.Contextos;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.SqlClient.Test.Contextos
 {

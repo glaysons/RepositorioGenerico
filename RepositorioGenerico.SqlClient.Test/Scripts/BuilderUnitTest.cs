@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.SqlClient.Scripts;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.SqlClient.Test.Scripts
 {

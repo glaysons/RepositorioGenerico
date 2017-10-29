@@ -6,7 +6,7 @@ using RepositorioGenerico.Pattern;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Search;
 using RepositorioGenerico.SqlClient.Builders;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.SqlClient.Test
 {

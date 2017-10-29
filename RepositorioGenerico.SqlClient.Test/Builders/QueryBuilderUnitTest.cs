@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.SqlClient.Builders;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.SqlClient.Test.Builders
 {

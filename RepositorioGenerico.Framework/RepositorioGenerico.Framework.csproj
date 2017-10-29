@@ -39,23 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\AttributeHelper.cs" />
-    <Compile Include="Helpers\DataTableHelper.cs" />
-    <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Helpers\ExpressionHelper.cs" />
-    <Compile Include="HistoricoTransacional.cs" />
-    <Compile Include="IHistoricoTransacional.cs" />
-    <Compile Include="ItemHistoricoTransacional.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
       <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
       <Name>RepositorioGenerico.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Exceptions\RepositorioGenerico.Exceptions.csproj">
-      <Project>{A7E998C3-769E-47A6-BF19-C9D7274C8287}</Project>
-      <Name>RepositorioGenerico.Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
       <Project>{84FB8077-5393-478D-B4B4-E524332B5DDD}</Project>

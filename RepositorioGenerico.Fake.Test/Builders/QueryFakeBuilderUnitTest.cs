@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Fake.Builders;
 using RepositorioGenerico.Pattern.Buscadores;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.Fake.Test.Builders
 {

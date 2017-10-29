@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D736614D-5870-406C-80E3-A1647988FC69}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RepositorioGenerico</RootNamespace>
+    <AssemblyName>RepositorioGenerico</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dictionary\Builders\DataTableBuilder.cs" />
+    <Compile Include="Dictionary\Dicionario.cs" />
+    <Compile Include="Dictionary\DicionarioCache.cs" />
+    <Compile Include="Dictionary\EstadoObjetoFactory.cs" />
+    <Compile Include="Dictionary\Helpers\DataAnnotationHelper.cs" />
+    <Compile Include="Dictionary\IDicionario.cs" />
+    <Compile Include="Dictionary\Itens\ItemDicionario.cs" />
+    <Compile Include="Dictionary\Itens\ItemDicionarioBuilder.cs" />
+    <Compile Include="Dictionary\Itens\ItemDicionarioFactory.cs" />
+    <Compile Include="Dictionary\Mapas\CampoMapaDicionario.cs" />
+    <Compile Include="Dictionary\Mapas\Mapa.cs" />
+    <Compile Include="Dictionary\Mapas\MapaItemDicionarioBuilder.cs" />
+    <Compile Include="Dictionary\Mapas\Patterns\IConsultadorCamposDaTabela.cs" />
+    <Compile Include="Dictionary\Mapas\Patterns\IMapa.cs" />
+    <Compile Include="Dictionary\Mapas\TabelaMapaDicionario.cs" />
+    <Compile Include="Dictionary\OpcoesAutoIncremento.cs" />
+    <Compile Include="Dictionary\Relacionamentos\Relacionamento.cs" />
+    <Compile Include="Dictionary\Relacionamentos\TiposRelacionamento.cs" />
+    <Compile Include="Dictionary\Validadores\ValidadorDicionario.cs" />
+    <Compile Include="Exceptions\AQuantidadeDeCamposChaveNaLigacaoDoCampoEInvalidaException.cs" />
+    <Compile Include="Exceptions\CampoNullableInvalidoException.cs" />
+    <Compile Include="Exceptions\CampoPossuiPreenchimentoObrigatorioException.cs" />
+    <Compile Include="Exceptions\CampoPossuiTamanhoMaximoDePeenchimentoException.cs" />
+    <Compile Include="Exceptions\ChavePrimariaInvalidaException.cs" />
+    <Compile Include="Exceptions\DicionarioNaoSuportaMultiplosCamposAutoIncrementoException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelConsultarRelacionamentoVinculadoDevidoAoSeguinteErroException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelCriarMapaRelacionadoException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelDeterminarONomeDaTabelaFakeException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelEncontrarALigacaoEntreOsCamposException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelEncontrarUmaLigacaoParaOCampoException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelLocalizarMapaRelacionadoException.cs" />
+    <Compile Include="Exceptions\NaoSeraPossivelCriarUmDicionarioDeUmObjetoQueNaoHerdeObjetoBancoException.cs" />
+    <Compile Include="Exceptions\OsTiposDoCampoEPropriedadeNaoSaoOsMesmosException.cs" />
+    <Compile Include="Exceptions\PropriedadeInvalidaException.cs" />
+    <Compile Include="Exceptions\TabelaNaoPossuiInformacoesDeCamposDaTabelaException.cs" />
+    <Compile Include="Exceptions\TabelaPossuiApenasCamposChavesException.cs" />
+    <Compile Include="Exceptions\TipoDeObjetoInvalidoException.cs" />
+    <Compile Include="Exceptions\TransacaoJaIniciadaException.cs" />
+    <Compile Include="Exceptions\TransacaoNaoIniciadaException.cs" />
+    <Compile Include="Exceptions\ValoresChavePreenchimentoObrigatorioException.cs" />
+    <Compile Include="Framework\Helpers\AttributeHelper.cs" />
+    <Compile Include="Framework\Helpers\DataTableHelper.cs" />
+    <Compile Include="Framework\Helpers\EnumHelper.cs" />
+    <Compile Include="Framework\Helpers\ExpressionHelper.cs" />
+    <Compile Include="Framework\HistoricoTransacional.cs" />
+    <Compile Include="Framework\IHistoricoTransacional.cs" />
+    <Compile Include="Framework\ItemHistoricoTransacional.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\Buscador.cs" />
+    <Compile Include="Search\BuscadorLoader.cs" />
+    <Compile Include="Search\Buscador`.cs" />
+    <Compile Include="Search\Configurador.cs" />
+    <Compile Include="Search\ConfiguradorCondicao.cs" />
+    <Compile Include="Search\ConfiguradorCondicao`.cs" />
+    <Compile Include="Search\ConfiguradorParametro.cs" />
+    <Compile Include="Search\ConfiguradorParametro`.cs" />
+    <Compile Include="Search\ConfiguradorProcedure.cs" />
+    <Compile Include="Search\ConfiguradorProcedure`.cs" />
+    <Compile Include="Search\ConfiguradorQuery.cs" />
+    <Compile Include="Search\ConfiguradorQuery`.cs" />
+    <Compile Include="Search\Configurador`.cs" />
+    <Compile Include="Search\Conversores\Builder.cs" />
+    <Compile Include="Search\Conversores\Conversor.cs" />
+    <Compile Include="Search\Conversores\Conversor`.cs" />
+    <Compile Include="Search\IQueryBuilder.cs" />
+    <Compile Include="Search\IRelacionamentoBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pattern\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
+      <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
+      <Name>RepositorioGenerico.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
+      <Project>{84FB8077-5393-478D-B4B4-E524332B5DDD}</Project>
+      <Name>RepositorioGenerico.Pattern</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

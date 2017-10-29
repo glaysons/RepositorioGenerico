@@ -5,7 +5,7 @@ using RepositorioGenerico.Dictionary.Helpers;
 using RepositorioGenerico.Dictionary.Relacionamentos;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.SqlClient.Builders;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.SqlClient.Test.Builders
 {

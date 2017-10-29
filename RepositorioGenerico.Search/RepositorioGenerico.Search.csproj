@@ -40,39 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfiguradorCondicao.cs" />
-    <Compile Include="ConfiguradorCondicao`.cs" />
-    <Compile Include="ConfiguradorParametro`.cs" />
-    <Compile Include="ConfiguradorParametro.cs" />
-    <Compile Include="Conversores\Conversor`.cs" />
-    <Compile Include="IQueryBuilder.cs" />
-    <Compile Include="Buscador.cs" />
-    <Compile Include="BuscadorLoader.cs" />
-    <Compile Include="Buscador`.cs" />
-    <Compile Include="Configurador.cs" />
-    <Compile Include="ConfiguradorProcedure.cs" />
-    <Compile Include="ConfiguradorProcedure`.cs" />
-    <Compile Include="ConfiguradorQuery.cs" />
-    <Compile Include="ConfiguradorQuery`.cs" />
-    <Compile Include="Configurador`.cs" />
-    <Compile Include="Conversores\Builder.cs" />
-    <Compile Include="Conversores\Conversor.cs" />
-    <Compile Include="IRelacionamentoBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RepositorioGenerico.Dictionary\RepositorioGenerico.Dictionary.csproj">
-      <Project>{9D2D5527-AE1F-4E34-BB44-B32021DEF5E8}</Project>
-      <Name>RepositorioGenerico.Dictionary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Exceptions\RepositorioGenerico.Exceptions.csproj">
-      <Project>{A7E998C3-769E-47A6-BF19-C9D7274C8287}</Project>
-      <Name>RepositorioGenerico.Exceptions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Framework\RepositorioGenerico.Framework.csproj">
-      <Project>{53EB1B72-56B5-4E92-B331-EE5C9C38E80B}</Project>
-      <Name>RepositorioGenerico.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
       <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
       <Name>RepositorioGenerico.Entities</Name>

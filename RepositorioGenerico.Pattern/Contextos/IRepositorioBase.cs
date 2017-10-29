@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 namespace RepositorioGenerico.Pattern.Contextos
 {
 	public interface IRepositorioBase<in TLista, TItem>

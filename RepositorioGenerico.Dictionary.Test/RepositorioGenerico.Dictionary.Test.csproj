@@ -71,22 +71,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Helpers\DataAnnotationHelperUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DicionarioUnitTest.cs" />
-    <Compile Include="DicionarioCacheUnitTest.cs" />
-    <Compile Include="Relacionamentos\RelacionamentoUnitTest.cs" />
-    <Compile Include="EstadoObjetoFactoryUnitTest.cs" />
-    <Compile Include="Validadores\ValidadorDicionarioUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RepositorioGenerico.Dictionary\RepositorioGenerico.Dictionary.csproj">
-      <Project>{9d2d5527-ae1f-4e34-bb44-b32021def5e8}</Project>
-      <Name>RepositorioGenerico.Dictionary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Exceptions\RepositorioGenerico.Exceptions.csproj">
       <Project>{A7E998C3-769E-47A6-BF19-C9D7274C8287}</Project>
       <Name>RepositorioGenerico.Exceptions</Name>

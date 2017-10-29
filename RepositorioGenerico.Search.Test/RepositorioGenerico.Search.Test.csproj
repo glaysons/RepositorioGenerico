@@ -69,16 +69,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ConfiguradorUnitTest.cs" />
-    <Compile Include="ConfiguradorUnitTest`.cs" />
-    <Compile Include="Conversores\ConversorUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RepositorioGenerico.Dictionary\RepositorioGenerico.Dictionary.csproj">
-      <Project>{9D2D5527-AE1F-4E34-BB44-B32021DEF5E8}</Project>
-      <Name>RepositorioGenerico.Dictionary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Fake.Test\RepositorioGenerico.Fake.Test.csproj">
       <Project>{B7FD43B0-492A-41C0-A06F-C893F8819481}</Project>
       <Name>RepositorioGenerico.Fake.Test</Name>
@@ -90,10 +83,6 @@
     <ProjectReference Include="..\RepositorioGenerico.Fake\RepositorioGenerico.Fake.csproj">
       <Project>{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}</Project>
       <Name>RepositorioGenerico.Fake</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Framework\RepositorioGenerico.Framework.csproj">
-      <Project>{53EB1B72-56B5-4E92-B331-EE5C9C38E80B}</Project>
-      <Name>RepositorioGenerico.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
       <Project>{84FB8077-5393-478D-B4B4-E524332B5DDD}</Project>

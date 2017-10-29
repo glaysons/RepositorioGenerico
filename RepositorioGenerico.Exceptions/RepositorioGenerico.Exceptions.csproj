@@ -35,28 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AQuantidadeDeCamposChaveNaLigacaoDoCampoEInvalidaException.cs" />
-    <Compile Include="CampoNullableInvalidoException.cs" />
-    <Compile Include="CampoPossuiPreenchimentoObrigatorioException.cs" />
-    <Compile Include="CampoPossuiTamanhoMaximoDePeenchimentoException.cs" />
-    <Compile Include="ChavePrimariaInvalidaException.cs" />
-    <Compile Include="DicionarioNaoSuportaMultiplosCamposAutoIncrementoException.cs" />
-    <Compile Include="NaoFoiPossivelConsultarRelacionamentoVinculadoDevidoAoSeguinteErroException.cs" />
-    <Compile Include="NaoFoiPossivelCriarMapaRelacionadoException.cs" />
-    <Compile Include="NaoFoiPossivelDeterminarONomeDaTabelaFakeException.cs" />
-    <Compile Include="NaoFoiPossivelEncontrarALigacaoEntreOsCamposException.cs" />
-    <Compile Include="NaoFoiPossivelEncontrarUmaLigacaoParaOCampoException.cs" />
-    <Compile Include="NaoFoiPossivelLocalizarMapaRelacionadoException.cs" />
-    <Compile Include="NaoSeraPossivelCriarUmDicionarioDeUmObjetoQueNaoHerdeObjetoBancoException.cs" />
-    <Compile Include="OsTiposDoCampoEPropriedadeNaoSaoOsMesmosException.cs" />
-    <Compile Include="PropriedadeInvalidaException.cs" />
-    <Compile Include="TabelaNaoPossuiInformacoesDeCamposDaTabelaException.cs" />
-    <Compile Include="TabelaPossuiApenasCamposChavesException.cs" />
-    <Compile Include="TipoDeObjetoInvalidoException.cs" />
-    <Compile Include="TransacaoJaIniciadaException.cs" />
-    <Compile Include="TransacaoNaoIniciadaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValoresChavePreenchimentoObrigatorioException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

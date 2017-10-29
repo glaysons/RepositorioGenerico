@@ -4,7 +4,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Entities;
 using RepositorioGenerico.Fake.Contextos;
-using RepositorioGenerico.Test;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.Fake.Test.Contextos
 {

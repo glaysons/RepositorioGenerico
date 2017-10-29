@@ -79,14 +79,6 @@
     <Compile Include="TransacaoFakeUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RepositorioGenerico.Dictionary\RepositorioGenerico.Dictionary.csproj">
-      <Project>{9d2d5527-ae1f-4e34-bb44-b32021def5e8}</Project>
-      <Name>RepositorioGenerico.Dictionary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Exceptions\RepositorioGenerico.Exceptions.csproj">
-      <Project>{A7E998C3-769E-47A6-BF19-C9D7274C8287}</Project>
-      <Name>RepositorioGenerico.Exceptions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Fake\RepositorioGenerico.Fake.csproj">
       <Project>{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}</Project>
       <Name>RepositorioGenerico.Fake</Name>
@@ -95,21 +87,17 @@
       <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
       <Name>RepositorioGenerico.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Framework\RepositorioGenerico.Framework.csproj">
-      <Project>{53EB1B72-56B5-4E92-B331-EE5C9C38E80B}</Project>
-      <Name>RepositorioGenerico.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
       <Project>{84FB8077-5393-478D-B4B4-E524332B5DDD}</Project>
       <Name>RepositorioGenerico.Pattern</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Search\RepositorioGenerico.Search.csproj">
-      <Project>{A3B44073-69DD-49BD-8B34-D5AE8A295E2C}</Project>
-      <Name>RepositorioGenerico.Search</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico.Test\RepositorioGenerico.Test.csproj">
       <Project>{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42}</Project>
       <Name>RepositorioGenerico.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico\RepositorioGenerico.csproj">
+      <Project>{D736614D-5870-406C-80E3-A1647988FC69}</Project>
+      <Name>RepositorioGenerico</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

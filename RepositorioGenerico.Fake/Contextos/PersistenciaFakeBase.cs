@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Entities;
 using RepositorioGenerico.Pattern;
