@@ -70,10 +70,6 @@
       <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
       <Name>RepositorioGenerico.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
-      <Project>{84fb8077-5393-478d-b4b4-e524332b5ddd}</Project>
-      <Name>RepositorioGenerico.Pattern</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico\RepositorioGenerico.csproj">
       <Project>{D736614D-5870-406C-80E3-A1647988FC69}</Project>
       <Name>RepositorioGenerico</Name>

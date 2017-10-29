@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Entitie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Test", "RepositorioGenerico.Test\RepositorioGenerico.Test.csproj", "{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Pattern", "RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj", "{84FB8077-5393-478D-B4B4-E524332B5DDD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Fake", "RepositorioGenerico.Fake\RepositorioGenerico.Fake.csproj", "{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Fake.Test", "RepositorioGenerico.Fake.Test\RepositorioGenerico.Fake.Test.csproj", "{B7FD43B0-492A-41C0-A06F-C893F8819481}"
@@ -44,10 +42,6 @@ Global
 		{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84FB8077-5393-478D-B4B4-E524332B5DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84FB8077-5393-478D-B4B4-E524332B5DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84FB8077-5393-478D-B4B4-E524332B5DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84FB8077-5393-478D-B4B4-E524332B5DDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}.Release|Any CPU.ActiveCfg = Release|Any CPU
