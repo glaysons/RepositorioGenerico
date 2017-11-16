@@ -2,7 +2,7 @@
 
 namespace RepositorioGenerico.SqlClient.Test
 {
-	public static class ConnectionStringHelper
+	internal static class ConnectionStringHelper
 	{
 
 		public static string Consultar()

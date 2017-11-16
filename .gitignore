@@ -21,3 +21,11 @@
 /RepositorioGenerico.Test/obj
 /RepositorioGenerico.Pattern/bin/Debug
 /RepositorioGenerico.Pattern/obj/Debug
+/RepositorioGenerico/bin/Release
+/RepositorioGenerico/obj/Release
+/RepositorioGenerico.Entities.Test/bin/Release
+/RepositorioGenerico.Entities.Test/obj/Release
+/RepositorioGenerico.Pattern/bin/Release
+/RepositorioGenerico.Pattern/obj/Release
+/RepositorioGenerico.SqlClient.Test/bin/Release
+/RepositorioGenerico.SqlClient.Test/obj/Release
