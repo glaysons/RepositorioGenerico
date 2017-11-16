@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0BD97D14-1FD0-4075-B49D-C5295D1DF191}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,6 +23,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient.Test", "RepositorioGenerico.SqlClient.Test\RepositorioGenerico.SqlClient.Test.csproj", "{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico", "RepositorioGenerico\RepositorioGenerico.csproj", "{D736614D-5870-406C-80E3-A1647988FC69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Pattern", "RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj", "{DC4BE160-A1A2-4DA9-AF53-11108F0C7BD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{AAC1E12E-5C1D-42E4-B127-70FA6498BC31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,8 +66,18 @@ Global
 		{D736614D-5870-406C-80E3-A1647988FC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D736614D-5870-406C-80E3-A1647988FC69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D736614D-5870-406C-80E3-A1647988FC69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC4BE160-A1A2-4DA9-AF53-11108F0C7BD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC4BE160-A1A2-4DA9-AF53-11108F0C7BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC4BE160-A1A2-4DA9-AF53-11108F0C7BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC4BE160-A1A2-4DA9-AF53-11108F0C7BD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CCBD2BBA-A86A-4467-8C2A-DC08DAEE6D0F} = {AAC1E12E-5C1D-42E4-B127-70FA6498BC31}
+		{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42} = {AAC1E12E-5C1D-42E4-B127-70FA6498BC31}
+		{B7FD43B0-492A-41C0-A06F-C893F8819481} = {AAC1E12E-5C1D-42E4-B127-70FA6498BC31}
+		{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97} = {AAC1E12E-5C1D-42E4-B127-70FA6498BC31}
 	EndGlobalSection
 EndGlobal

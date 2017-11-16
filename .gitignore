@@ -3,3 +3,21 @@
 ################################################################################
 
 /packages
+/RepositorioGenerico/bin/Debug
+/RepositorioGenerico/obj/Debug
+/RepositorioGenerico.Entities/bin
+/RepositorioGenerico.Entities/obj
+/RepositorioGenerico.Entities.Test/bin/Debug
+/RepositorioGenerico.Entities.Test/obj/Debug
+/RepositorioGenerico.Fake/bin
+/RepositorioGenerico.Fake/obj
+/RepositorioGenerico.Fake.Test/bin
+/RepositorioGenerico.Fake.Test/obj
+/RepositorioGenerico.SqlClient/bin
+/RepositorioGenerico.SqlClient/obj
+/RepositorioGenerico.SqlClient.Test/bin/Debug
+/RepositorioGenerico.SqlClient.Test/obj/Debug
+/RepositorioGenerico.Test/bin
+/RepositorioGenerico.Test/obj
+/RepositorioGenerico.Pattern/bin/Debug
+/RepositorioGenerico.Pattern/obj/Debug

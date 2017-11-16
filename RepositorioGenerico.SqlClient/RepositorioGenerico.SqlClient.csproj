@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>RepositorioGenerico.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -70,10 +76,17 @@
       <Project>{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}</Project>
       <Name>RepositorioGenerico.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
+      <Project>{dc4be160-a1a2-4da9-af53-11108f0c7bd7}</Project>
+      <Name>RepositorioGenerico.Pattern</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RepositorioGenerico\RepositorioGenerico.csproj">
       <Project>{D736614D-5870-406C-80E3-A1647988FC69}</Project>
       <Name>RepositorioGenerico</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RepositorioGenerico.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
