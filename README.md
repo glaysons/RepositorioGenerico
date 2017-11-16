@@ -21,6 +21,30 @@ Este ORM foi padronizado totalmente em português e já é utilizado em ambiente
 
 ## Como Utilizar ##
 
+### Instalar ###
+
+Disponível via **nuget**.
+
+Camada de visualização:
+```
+  PM> Install-Package RepositorioGenerico.SqlClient
+```
+
+Camada de negócios:
+```
+  PM> Install-Package RepositorioGenerico
+```
+
+Projeto de testes unitários:
+```
+  PM> Install-Package RepositorioGenerico.Fake
+```
+
+Projeto apenas com **ValueObjects**:
+```
+  PM> Install-Package RepositorioGenerico.Pattern
+```
+
 ### Definir os Objetos ###
 
 Todas as tabelas que serão utilizadas no contexto devem ser definidas e devem herdar o objeto **RepositorioGenerico.Entities.Entidade**
