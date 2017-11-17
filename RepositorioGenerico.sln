@@ -8,27 +8,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Entities", "RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj", "{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Entities", "Source\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj", "{D37A5DB4-4DCD-4DBA-8916-E5D15BBA1497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Entities.Test", "RepositorioGenerico.Entities.Test\RepositorioGenerico.Entities.Test.csproj", "{CCBD2BBA-A86A-4467-8C2A-DC08DAEE6D0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Entities.Test", "Source\Tests\RepositorioGenerico.Entities.Test\RepositorioGenerico.Entities.Test.csproj", "{CCBD2BBA-A86A-4467-8C2A-DC08DAEE6D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Test", "RepositorioGenerico.Test\RepositorioGenerico.Test.csproj", "{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Test", "Source\Tests\RepositorioGenerico.Test\RepositorioGenerico.Test.csproj", "{0E2DCF2D-7FC3-42DD-A7B5-5854D4EE8B42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Fake", "RepositorioGenerico.Fake\RepositorioGenerico.Fake.csproj", "{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Fake", "Source\RepositorioGenerico.Fake\RepositorioGenerico.Fake.csproj", "{D960BDA6-C9E3-4AAF-9AAD-F76F98E7439D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Fake.Test", "RepositorioGenerico.Fake.Test\RepositorioGenerico.Fake.Test.csproj", "{B7FD43B0-492A-41C0-A06F-C893F8819481}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Fake.Test", "Source\Tests\RepositorioGenerico.Fake.Test\RepositorioGenerico.Fake.Test.csproj", "{B7FD43B0-492A-41C0-A06F-C893F8819481}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient", "RepositorioGenerico.SqlClient\RepositorioGenerico.SqlClient.csproj", "{BCBF1D03-158B-4213-A446-1A40E4D3F210}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient", "Source\RepositorioGenerico.SqlClient\RepositorioGenerico.SqlClient.csproj", "{BCBF1D03-158B-4213-A446-1A40E4D3F210}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient.Test", "RepositorioGenerico.SqlClient.Test\RepositorioGenerico.SqlClient.Test.csproj", "{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient.Test", "Source\Tests\RepositorioGenerico.SqlClient.Test\RepositorioGenerico.SqlClient.Test.csproj", "{7CF65999-B0EE-4796-8ED0-F1CA0CDDAB97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico", "RepositorioGenerico\RepositorioGenerico.csproj", "{D736614D-5870-406C-80E3-A1647988FC69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico", "Source\RepositorioGenerico\RepositorioGenerico.csproj", "{D736614D-5870-406C-80E3-A1647988FC69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Pattern", "RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj", "{DC4BE160-A1A2-4DA9-AF53-11108F0C7BD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.Pattern", "Source\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj", "{DC4BE160-A1A2-4DA9-AF53-11108F0C7BD7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{AAC1E12E-5C1D-42E4-B127-70FA6498BC31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient.Autofac", "RepositorioGenerico.SqlClient.Autofac\RepositorioGenerico.SqlClient.Autofac.csproj", "{75F4CE2B-BD29-4547-981C-0B9334C49BC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient.Autofac", "Source\RepositorioGenerico.SqlClient.Autofac\RepositorioGenerico.SqlClient.Autofac.csproj", "{75F4CE2B-BD29-4547-981C-0B9334C49BC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{75C528E9-EB16-4747-AB9D-32D79C33FC1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
