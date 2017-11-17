@@ -8,7 +8,7 @@ Este ORM foi padronizado totalmente em português e já é utilizado em ambiente
 
  - Utiliza o padrão de projeto **Repository Pattern**
  - Suporte a **Testes Automatizados**
- - Integrado com injetor de dependências **AutoFac**
+ - Integrado com injetor de dependências **Autofac**
  - Mapeamento da estrutura dos objetos é feito sobre demanda
  - Utilização de anotações para definição dos padrões
  - Possibilidade de utilização das anotações no padrão **DataAnnotations** em inglês
@@ -28,6 +28,11 @@ Disponível via **nuget**.
 Camada de visualização:
 ```
   PM> Install-Package RepositorioGenerico.SqlClient
+```
+
+Camada de visualização com injetor:
+```
+  PM> Install-Package RepositorioGenerico.SqlClient.Autofac
 ```
 
 Camada de negócios:

@@ -29,3 +29,5 @@
 /RepositorioGenerico.Pattern/obj/Release
 /RepositorioGenerico.SqlClient.Test/bin/Release
 /RepositorioGenerico.SqlClient.Test/obj/Release
+/RepositorioGenerico.SqlClient.AutoFac/bin/Release
+/RepositorioGenerico.SqlClient.AutoFac/obj/Release
