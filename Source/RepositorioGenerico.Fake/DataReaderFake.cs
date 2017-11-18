@@ -9,16 +9,16 @@ namespace RepositorioGenerico.Fake
 	{
 
 		private readonly DataView _dados;
-        private readonly int _top;
+		private readonly int _top;
 
 		private bool _podeLer;
 		private int _indiceRegistroAtual;
 		private DataRow _registroAtual;
 
 		public DataReaderFake(DataView dados) : this(dados, 0)
-        {
+		{
 
-        }
+		}
 
 		public DataReaderFake(DataView dados, int top)
 		{
@@ -26,7 +26,7 @@ namespace RepositorioGenerico.Fake
 			_indiceRegistroAtual = 0;
 			_registroAtual = null;
 			_dados = dados;
-            _top = top;
+			_top = top;
 		}
 
 		public override string GetName(int i)
@@ -61,8 +61,8 @@ namespace RepositorioGenerico.Fake
 		public override object GetValue(int i)
 		{
 			if ((i >= 0) && (i < _dados.Table.Columns.Count))
-				return (_registroAtual[i] == DBNull.Value) 
-					? null 
+				return (_registroAtual[i] == DBNull.Value)
+					? null
 					: _registroAtual[i];
 			throw new IndexOutOfRangeException();
 		}

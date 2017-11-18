@@ -35,5 +35,12 @@ namespace RepositorioGenerico.Search
 			Comando.CommandTimeout = 0;
 		}
 
+		public override void PrepararExistencia()
+		{
+			Comando.CommandType = CommandType.StoredProcedure;
+			Comando.CommandText = _nomeProcedure;
+			Comando.CommandTimeout = 0;
+		}
+
 	}
 }

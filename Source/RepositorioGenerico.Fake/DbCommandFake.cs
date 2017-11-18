@@ -7,6 +7,7 @@ namespace RepositorioGenerico.Fake
 {
 	public class DbCommandFake : IDbCommand
 	{
+		private const string PARAMETROSPROCEDURES = "RepositorioGenerico.Fake.Contextos.Procedure";
 
 		private readonly DataSet _bancoDeDadosVirtual;
 
@@ -37,12 +38,10 @@ namespace RepositorioGenerico.Fake
 
 		public void Prepare()
 		{
-			throw new NotImplementedException();
 		}
 
 		public void Cancel()
 		{
-			throw new NotImplementedException();
 		}
 
 		public IDbDataParameter CreateParameter()
@@ -52,28 +51,57 @@ namespace RepositorioGenerico.Fake
 
 		public int ExecuteNonQuery()
 		{
-			throw new NotImplementedException();
+			if (!_bancoDeDadosVirtual.Tables.Contains(PARAMETROSPROCEDURES))
+				throw new NaoFoiPossivelOResultadoDaProcedureFakeException(CommandText);
+			var view = ConsultarResultadoScalarDaProcedure();
+			if ((view.Count > 0) && (view[0]["RegistrosAfetados"] != DBNull.Value))
+				return Convert.ToInt32(view[0]["RegistrosAfetados"]);
+			return 0;
 		}
 
 		public IDataReader ExecuteReader()
 		{
+			if (CommandType == CommandType.StoredProcedure)
+				return CriarProcedure();
+			return CriarQuery();
+		}
+
+		private IDataReader CriarProcedure()
+		{
+			var nome = "__proc__" + CommandText;
+			if (_bancoDeDadosVirtual.Tables.Contains(nome))
+				return new DataReaderFake(_bancoDeDadosVirtual.Tables[nome].DefaultView, 0);
+			if (_bancoDeDadosVirtual.Tables.Contains(PARAMETROSPROCEDURES))
+				return new DataReaderFake(ConsultarResultadoScalarDaProcedure(), 0);
+			throw new NaoFoiPossivelOResultadoDaProcedureFakeException(CommandText);
+		}
+
+		private DataView ConsultarResultadoScalarDaProcedure()
+		{
+			var view = _bancoDeDadosVirtual.Tables[PARAMETROSPROCEDURES].DefaultView;
+			view.RowFilter = string.Concat("Nome = '", CommandText, "'");
+			return view;
+		}
+
+		private IDataReader CriarQuery()
+		{
 			var view = ConsultarTabelaComDadosVirtuais().DefaultView;
-            var sql = CommandText.ToLower();
-            var indiceTop = sql.IndexOf("select top ", StringComparison.Ordinal);
-            var fimTop = sql.IndexOf(" ", 11, StringComparison.Ordinal);
-            var top = ((indiceTop == 0) && (fimTop > 0))
-                ? Convert.ToInt32(sql.Substring(11, fimTop - 11))
-                : 0;
-            var indiceWhere = sql.IndexOf("where", StringComparison.Ordinal);
+			var sql = CommandText.ToLower();
+			var indiceTop = sql.IndexOf("select top ", StringComparison.Ordinal);
+			var fimTop = sql.IndexOf(" ", 11, StringComparison.Ordinal);
+			var top = ((indiceTop == 0) && (fimTop > 0))
+				? Convert.ToInt32(sql.Substring(11, fimTop - 11))
+				: 0;
+			var indiceWhere = sql.IndexOf("where", StringComparison.Ordinal);
 			var condicao = (indiceWhere > 0)
 				? ConsultarCondicaoParaFiltragem(CommandText.Substring(indiceWhere + 5))
 				: string.Empty;
-            var indiceOrderby = sql.IndexOf("order by", StringComparison.Ordinal);
-            if ((indiceOrderby > 0) && (indiceOrderby > indiceWhere))
-            {
-                condicao = condicao.Substring(0, indiceOrderby - indiceWhere - 8 + 1 - 5 + 1);
-                view.Sort = CommandText.Substring(indiceOrderby + 8);
-            }
+			var indiceOrderby = sql.IndexOf("order by", StringComparison.Ordinal);
+			if ((indiceOrderby > 0) && (indiceOrderby > indiceWhere))
+			{
+				condicao = condicao.Substring(0, indiceOrderby - indiceWhere - 8 + 1 - 5 + 1);
+				view.Sort = CommandText.Substring(indiceOrderby + 8);
+			}
 			if (!string.IsNullOrEmpty(condicao))
 				view.RowFilter = condicao;
 			return new DataReaderFake(view, top);

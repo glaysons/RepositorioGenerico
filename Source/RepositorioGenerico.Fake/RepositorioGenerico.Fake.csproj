@@ -65,6 +65,7 @@
     <Compile Include="Contextos\IContextoFake.cs" />
     <Compile Include="Contextos\PersistenciaFake.cs" />
     <Compile Include="Contextos\PersistenciaFakeBase.cs" />
+    <Compile Include="Contextos\Procedure.cs" />
     <Compile Include="Contextos\RepositorioFake.cs" />
     <Compile Include="Contextos\Tables\ContextoFake.cs" />
     <Compile Include="Contextos\Tables\IContextoFake.cs" />

@@ -8,22 +8,23 @@ namespace Business.Test
 	public class CidadeFactory
 	{
 
-		private IRepositorio<Cidade> _repositorio;
+		private IContextoFake _contexto;
+
+		public IContextoFake Contexto
+		{
+			get { return _contexto ?? (_contexto = CriarContexto()); }
+		}
 
 		public IRepositorio<Cidade> Repositorio
 		{
-			get
-			{
-				return _repositorio
-					?? (_repositorio = CriarRepositorio());
-			}
+			get { return Contexto.Repositorio<Cidade>(); }
 		}
 
-		private IRepositorio<Cidade> CriarRepositorio()
+		private IContextoFake CriarContexto()
 		{
 			var contexto = RepositorioGenerico.Fake.FabricaFake.CriarContexto();
 			PreencherCidadesDeExemplo(contexto);
-			return contexto.Repositorio<Cidade>();
+			return contexto;
 		}
 
 		private void PreencherCidadesDeExemplo(IContextoFake contexto)
@@ -46,9 +47,9 @@ namespace Business.Test
 			return new ConsultaCidadeBusiness(Repositorio);
 		}
 
-		public void ExistemClientesVinculados(ConsultaCidadeBusiness consultador, bool v)
+		public void ExistemClientesVinculados(bool existe)
 		{
-			throw new NotImplementedException();
+			Contexto.DefinirResultadoScalarProcedure("spExistemClientesVinculados", existe);
 		}
 
 	}

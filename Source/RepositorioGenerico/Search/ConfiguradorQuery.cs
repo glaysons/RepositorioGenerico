@@ -5,7 +5,7 @@ using RepositorioGenerico.Pattern.Buscadores;
 namespace RepositorioGenerico.Search
 {
 
-	public class ConfiguradorQuery : Configurador, IConfiguracaoQuery, IDisposable
+	public class ConfiguradorQuery : Configurador, IConfiguracaoQuery
 	{
 
 		private readonly IQueryBuilder _queryBuilder;
@@ -95,9 +95,5 @@ namespace RepositorioGenerico.Search
 			Comando.CommandText = _queryBuilder.GerarScriptExistencia(null);
 		}
 
-		public void Dispose()
-		{
-			Comando.Dispose();
-		}
 	}
 }

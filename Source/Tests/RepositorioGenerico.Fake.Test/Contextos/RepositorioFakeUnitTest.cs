@@ -103,7 +103,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 			repositorio.Quantidade
 				.Should()
-				.Be(6);
+				.Be(0);
 		}
 
 		[TestMethod]
@@ -147,7 +147,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 			repositorio.Quantidade
 				.Should()
-				.Be(6);
+				.Be(0);
 
 			Action validacao = () => repositorio.Validar(novo);
 
@@ -183,6 +183,10 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 		{
 			var repositorio = CriarRepositorioComDados(validar: true);
 
+			repositorio.Quantidade
+				.Should()
+				.Be(0);
+
 			var novo = new ObjetoDeTestes
 			{
 				Nome = "Nomes Corretos"
@@ -200,7 +204,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 			repositorio.Quantidade
 				.Should()
-				.Be(7);
+				.Be(1);
 		}
 
 		[TestMethod]
@@ -223,13 +227,17 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 			repositorio.Quantidade
 				.Should()
-				.Be(6);
+				.Be(0);
 		}
 
 		[TestMethod]
 		public void SeDesativarAsValidacoesDeveSerPossivelInserirUmObjetoInvalido()
 		{
 			var repositorio = CriarRepositorioComDados();
+
+			repositorio.Quantidade
+				.Should()
+				.Be(0);
 
 			repositorio.DesativarValidacoes();
 
@@ -245,7 +253,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 			repositorio.Quantidade
 				.Should()
-				.Be(7);
+				.Be(1);
 		}
 
 	}

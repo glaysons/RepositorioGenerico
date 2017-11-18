@@ -74,6 +74,7 @@
     <Compile Include="Exceptions\NaoFoiPossivelEncontrarALigacaoEntreOsCamposException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelEncontrarUmaLigacaoParaOCampoException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelLocalizarMapaRelacionadoException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelOResultadoDaProcedureFakeException.cs" />
     <Compile Include="Exceptions\NaoSeraPossivelCriarUmDicionarioDeUmObjetoQueNaoHerdeObjetoBancoException.cs" />
     <Compile Include="Exceptions\OsTiposDoCampoEPropriedadeNaoSaoOsMesmosException.cs" />
     <Compile Include="Exceptions\PropriedadeInvalidaException.cs" />

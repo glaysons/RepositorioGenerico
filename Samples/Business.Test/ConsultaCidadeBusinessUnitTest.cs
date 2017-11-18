@@ -47,7 +47,7 @@ namespace Business.Test
 			var factory = new CidadeFactory();
 			var consultador = factory.CriarConsultador();
 
-			factory.ExistemClientesVinculados(consultador, true);
+			factory.ExistemClientesVinculados(existe: true);
 
 			var cidade = new Cidade() {
 				Id = 1,
@@ -66,7 +66,7 @@ namespace Business.Test
 			var factory = new CidadeFactory();
 			var consultador = factory.CriarConsultador();
 
-			factory.ExistemClientesVinculados(consultador, false);
+			factory.ExistemClientesVinculados(existe: false);
 
 			var cidade = new Cidade()
 			{
@@ -77,7 +77,7 @@ namespace Business.Test
 
 			consultador.ExistemClientesVinculados(cidade)
 				.Should()
-				.BeTrue();
+				.BeFalse();
 		}
 
 	}

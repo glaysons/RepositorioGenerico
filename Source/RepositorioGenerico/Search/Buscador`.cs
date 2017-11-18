@@ -38,7 +38,7 @@ namespace RepositorioGenerico.Search
 		public IConfiguracaoProcedure<TObjeto> CriarProcedure(string nome)
 		{
 			var procedure = new ConfiguradorProcedure<TObjeto>(_comando.CriarComando(), _dicionario);
-			procedure.DefinirProcedure();
+			procedure.DefinirProcedure(nome);
 			return procedure;
 		}
 

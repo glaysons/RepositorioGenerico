@@ -33,7 +33,7 @@ namespace RepositorioGenerico.Dictionary.Itens
 				id: id,
 				alias: alias,
 				nome: nome,
-				tipoBanco: (coluna == null) ? DbType.Object : ConverterSqlDbTypeParaDbType(EnumHelper.FromString<SqlDbType>(coluna.NomeDoTipo)),
+				tipoBanco: (coluna == null) ? DbType.Object : ConverterSqlDbTypeParaDbType(EnumHelper.FromString<SqlDbType>(coluna.NomeDoTipo ?? "Variant")),
 				tipoLocal: (nullable) ? ConsultarTipoDaColunaNullable(propriedade) : propriedade.PropertyType,
 				chave: DataAnnotationHelper.ChavePrimaria(propriedadeReferenciada),
 				obrigatorio: DataAnnotationHelper.Obrigatorio(propriedadeReferenciada),

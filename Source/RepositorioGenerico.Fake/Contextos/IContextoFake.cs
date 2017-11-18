@@ -11,5 +11,11 @@ namespace RepositorioGenerico.Fake.Contextos
 
 		void AdicionarRegistro<TObjeto>(TObjeto registro) where TObjeto : IEntidade;
 
+		void DefinirResultadoProcedure<TObjeto>(string nome, IList<TObjeto> registros) where TObjeto : IEntidade;
+
+		void DefinirResultadoScalarProcedure(string nome, object valor);
+
+		void DefinirResultadoNonQueryProcedure(string nome, int registrosAfetados);
+
 	}
 }

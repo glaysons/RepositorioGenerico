@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using RepositorioGenerico.Dictionary.Builders;
@@ -136,7 +137,6 @@ namespace RepositorioGenerico.Fake.Contextos
 			model.EstadoEntidade = EstadosEntidade.Novo;
 			_persistencia.Dados.Add(model);
 			_contexto.Transacoes.AdicionarTransacao(_persistencia, model);
-			_bancoDeDadosVirtual.Rows.Add(DataTableBuilder.ConverterItemEmDataRow(_bancoDeDadosVirtual, model));
 			if (SalvarFilhos && FilhosRepositorio != null)
 			{
 				var chave = _persistencia.Dicionario.ConsultarValoresDaChave(model);

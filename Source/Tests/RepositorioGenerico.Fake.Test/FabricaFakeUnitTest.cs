@@ -43,8 +43,13 @@ namespace RepositorioGenerico.Fake.Test
 		{
 			var contexto = CriarContextoParaTestes();
 			var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+
 			repositorio.Quantidade
-				.Should().Be(5);
+				.Should().Be(0);
+
+			repositorio.Buscar.Todos()
+				.Should()
+				.HaveCount(5);
 		}
 
 		[TestMethod]
