@@ -37,14 +37,6 @@
     <AssemblyOriginatorKeyFile>RepositorioGenerico.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RepositorioGenerico.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b205877ad21d4617, processorArchitecture=MSIL">
-      <HintPath>..\packages\RepositorioGenerico.Pattern.1.0.0\lib\net40\RepositorioGenerico.Entities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RepositorioGenerico.Pattern, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b205877ad21d4617, processorArchitecture=MSIL">
-      <HintPath>..\packages\RepositorioGenerico.Pattern.1.0.0\lib\net40\RepositorioGenerico.Pattern.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -119,8 +111,17 @@
     <Compile Include="Search\IRelacionamentoBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="RepositorioGenerico.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
+      <Project>{d37a5db4-4dcd-4dba-8916-e5d15bba1497}</Project>
+      <Name>RepositorioGenerico.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
+      <Project>{dc4be160-a1a2-4da9-af53-11108f0c7bd7}</Project>
+      <Name>RepositorioGenerico.Pattern</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
