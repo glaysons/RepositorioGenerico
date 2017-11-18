@@ -32,3 +32,5 @@
 /Source/RepositorioGenerico.SqlClient.Autofac/obj/Debug
 /Samples/Business/bin/Debug
 /Samples/Entities/bin/Debug
+/Samples/Business.Test/obj/Debug
+/Samples/Business.Test/bin/Debug

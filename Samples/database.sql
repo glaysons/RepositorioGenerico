@@ -14,6 +14,7 @@ GO
 CREATE TABLE [dbo].[Cidades](
 	[CodCidade] [int] IDENTITY(1,1) NOT NULL,
 	[Nome] [varchar](50) NOT NULL,
+	[Estado] [varchar](2) NOT NULL,
  CONSTRAINT [PK_Cidades] PRIMARY KEY CLUSTERED 
 (
 	[CodCidade] ASC

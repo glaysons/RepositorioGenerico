@@ -19,6 +19,9 @@ namespace Entities
 		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMinimo(10), TamanhoMaximo(50)]
 		public string Nome { get; set; }
 
+		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMinimo(2), TamanhoMaximo(2)]
+		public string Estado { get; set; }
+
 		/// <summary>
 		/// Relacionamento Descendente
 		/// </summary>
