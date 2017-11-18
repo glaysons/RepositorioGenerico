@@ -35,19 +35,14 @@ Camada de visualização com injetor:
   PM> Install-Package RepositorioGenerico.SqlClient.Autofac
 ```
 
-Camada de negócios:
+Camada de negócios e projeto apenas com **ValueObjects**:
 ```
-  PM> Install-Package RepositorioGenerico
+  PM> Install-Package RepositorioGenerico.Pattern
 ```
 
 Projeto de testes unitários:
 ```
   PM> Install-Package RepositorioGenerico.Fake
-```
-
-Projeto apenas com **ValueObjects**:
-```
-  PM> Install-Package RepositorioGenerico.Pattern
 ```
 
 ### Definir os Objetos ###

@@ -24,3 +24,11 @@
 /Source/Tests/RepositorioGenerico.Test/bin
 /Source/Tests/RepositorioGenerico.Test/obj
 /TestResults
+/Samples/Business/obj/Release
+/Samples/Entities/obj/Release
+/Samples/Business/bin/Release
+/Samples/Business/obj/Debug
+/Samples/Entities/obj/Debug
+/Source/RepositorioGenerico.SqlClient.Autofac/obj/Debug
+/Samples/Business/bin/Debug
+/Samples/Entities/bin/Debug
