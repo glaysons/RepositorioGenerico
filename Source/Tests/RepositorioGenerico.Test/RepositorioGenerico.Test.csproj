@@ -72,11 +72,14 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Dictionary\Builders\DataTableBuilderUnitTest.cs" />
     <Compile Include="Dictionary\DicionarioCacheUnitTest.cs" />
     <Compile Include="Dictionary\DicionarioUnitTest.cs" />
     <Compile Include="Dictionary\EstadoObjetoFactoryUnitTest.cs" />
