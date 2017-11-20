@@ -27,9 +27,9 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 				.Be("C");
 		}
 
-		private RepositorioFake<ObjetoDeTestes> CriarRepositorioComDados(bool validar = false)
+		private RepositorioFake<ObjetoDeTestes> CriarRepositorioComDados(bool validar = false, IContextoFake contextoFixo = null)
 		{
-			var contexto = FabricaFake.CriarContexto();
+			var contexto = contextoFixo ?? FabricaFake.CriarContexto();
 			var repositorio = (RepositorioFake<ObjetoDeTestes>)contexto.Repositorio<ObjetoDeTestes>();
 			repositorio.DesativarValidacoes();
 			GerarRegistrosDoObjetoDeTestesNoContexto(contexto);
@@ -49,26 +49,32 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 		}
 
 		[TestMethod]
-		public void SeExcluirOUltimoItemOPenultimoDeveraSerConsideradoUltimoRegistro()
+		public void SeExcluirUmItemOMesmoNaoDeveraSerConsultado()
 		{
-			var repositorio = CriarRepositorioComDados();
-			var ultimo = repositorio.Itens().Last();
+			var contexto = FabricaFake.CriarContexto();
+			var repositorio = CriarRepositorioComDados(contextoFixo: contexto);
 
-			repositorio.Excluir(ultimo);
-
-			var penultimo = repositorio.Itens().Last();
-
-			penultimo
+			repositorio.Quantidade
 				.Should()
-				.NotBeNull();
+				.Be(0);
 
-			penultimo.Codigo
+			repositorio.Buscar.Todos()
 				.Should()
-				.Be(5);
+				.HaveCount(6);
 
-			penultimo.Nome
+			var registro = repositorio.Consultar(3);
+			repositorio.Excluir(registro);
+
+			repositorio.Quantidade
 				.Should()
-				.Be("E");
+				.Be(0);
+
+			contexto.Salvar();
+
+			repositorio.Buscar.Todos()
+				.Should()
+				.HaveCount(5);
+
 		}
 
 		[TestMethod]

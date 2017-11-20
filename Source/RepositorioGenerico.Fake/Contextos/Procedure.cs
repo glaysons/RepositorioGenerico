@@ -3,6 +3,7 @@ using RepositorioGenerico.Entities.Anotacoes;
 
 namespace RepositorioGenerico.Fake.Contextos
 {
+	[Tabela("RepositorioGenerico.Fake.Contextos.Procedure")]
 	internal class Procedure : Entidade
 	{
 

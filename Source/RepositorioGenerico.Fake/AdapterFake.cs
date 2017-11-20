@@ -6,110 +6,58 @@ using RepositorioGenerico.Dictionary.Itens;
 using RepositorioGenerico.Entities;
 using RepositorioGenerico.Entities.Anotacoes;
 using RepositorioGenerico.Pattern;
+using RepositorioGenerico.Fake.Contextos;
+using RepositorioGenerico.Dictionary.Builders;
 
 namespace RepositorioGenerico.Fake
 {
-	internal class AdapterFake<TObjeto> : IDisposable where TObjeto : IEntidade
+	internal class AdapterFake<TObjeto> where TObjeto : IEntidade
 	{
+
 		private readonly Dicionario _dicionario;
-
-		private IDbCommand _insert;
-		private IDbCommand _update;
-		private IDbCommand _delete;
-		private IDbCommand _autoInc;
-
-		private int? _ultimoIncremento;
-
-		private IDbCommand Insert
-		{
-			get { return _insert ?? (_insert = CriarComandoInsert()); }
-		}
-
-		private IDbCommand Update
-		{
-			get { return _update ?? (_update = CriarComandoUpdate()); }
-		}
-
-		private IDbCommand Delete
-		{
-			get { return _delete ?? (_delete = CriarComandoDelete()); }
-		}
-
-		private IDbCommand AutoIncremento
-		{
-			get { return _autoInc ?? (_autoInc = CriarComandoAutoIncremento()); }
-		}
 
 		public AdapterFake(Dicionario dicionario)
 		{
 			_dicionario = dicionario;
 		}
 
-		private IDbCommand CriarComandoInsert()
+		public void Salvar(IConexao conexao, TObjeto model)
 		{
-			return new Mock<IDbCommand>().Object;
-		}
+			if ((model == null) || (model.EstadoEntidade == EstadosEntidade.NaoModificado))
+				return;
 
-		private IDbCommand CriarComandoUpdate()
-		{
-			return new Mock<IDbCommand>().Object;
-		}
-
-		private IDbCommand CriarComandoDelete()
-		{
-			return new Mock<IDbCommand>().Object;
-		}
-
-		private IDbCommand CriarComandoAutoIncremento()
-		{
-			return new Mock<IDbCommand>().Object;
-		}
-
-		public void Salvar(IConexao conexao, TObjeto registro)
-		{
-			IDbCommand comando = null;
-
-			if ((registro.EstadoEntidade == EstadosEntidade.Novo) || (registro.EstadoEntidade == EstadosEntidade.Modificado))
+			var tabela = (conexao as ContextoFake).ConsultarTabelaDoBancoDeDadosVirtual(typeof(TObjeto));
+			var registro = DataTableBuilder.ConverterItemEmDataRow(tabela, model, novoRegistro: model.EstadoEntidade == EstadosEntidade.Novo);
+			switch (model.EstadoEntidade)
 			{
-				comando = (registro.EstadoEntidade == EstadosEntidade.Novo)
-					? Insert
-					: Update;
-				if (_dicionario.AutoIncremento == OpcoesAutoIncremento.Calculado)
-					CalcularAutoIncremento(conexao, registro);
-			}
-			else if (registro.EstadoEntidade == EstadosEntidade.Excluido)
-				comando = Delete;
+				case EstadosEntidade.Novo:
+					tabela.Rows.Add(registro);
+					if (_dicionario.AutoIncremento == OpcoesAutoIncremento.Identity)
+					{
+						var autoIncremento = Convert.ToInt32(registro[ConsultarColunaIdentity(tabela)]);
+						AtribuirValorAutoIncremento(Incremento.Identity, item => item.Propriedade.SetValue(model, autoIncremento, null));
+					}
+					break;
 
-			if ((registro.EstadoEntidade == EstadosEntidade.Novo) && (_dicionario.AutoIncremento == OpcoesAutoIncremento.Identity))
-			{
-				var autoIncremento = ExecutarComandoInsertComIdentity(conexao, comando);
-				AtribuirValorAutoIncremento(Incremento.Identity, item => item.Propriedade.SetValue(registro, autoIncremento, null));
+				case EstadosEntidade.Modificado:
+					AtualizarRegistro(tabela, registro);
+					break;
+
+				case EstadosEntidade.Excluido:
+					ExcluirRegistro(tabela, registro);
+					break;
 			}
-			else
-				ExecutarComando(conexao, comando);
 		}
 
-		private void CalcularAutoIncremento(IConexao conexao, TObjeto registro)
+		private int ConsultarColunaIdentity(DataTable tabela)
 		{
-			var valor = _ultimoIncremento;
-
-			if (!valor.HasValue)
+			for (var indice = 0; indice < tabela.Columns.Count; indice++)
 			{
-				var comando = AutoIncremento;
-				conexao.DefinirConexao(comando);
-				valor = Convert.ToInt32(comando.ExecuteScalar());
+				var coluna = tabela.Columns[indice];
+				if (coluna.AutoIncrement)
+					return indice;
 			}
-
-			AtribuirValorAutoIncremento(Incremento.Calculado, item => item.Propriedade.SetValue(registro, valor, null));
-
-			if (_dicionario.QuantidadeCamposNaChave == 1)
-				_ultimoIncremento = valor + 1;
-		}
-
-		private int ExecutarComandoInsertComIdentity(IConexao conexao, IDbCommand comando)
-		{
-			conexao.DefinirConexao(comando);
-			return Convert.ToInt32(comando.ExecuteScalar());
+			return - 1;
 		}
 
 		private void AtribuirValorAutoIncremento(Incremento opcao, Action<ItemDicionario> atribuir)
@@ -122,68 +70,51 @@ namespace RepositorioGenerico.Fake
 				}
 		}
 
-		private void ExecutarComando(IConexao conexao, IDbCommand comando)
+		private void AtualizarRegistro(DataTable tabela, DataRow registro)
 		{
-			if (comando == null)
-				return;
-			conexao.DefinirConexao(comando);
-			var afetados = comando.ExecuteNonQuery();
-			if (afetados == 0)
+			var chave = _dicionario.ConsultarValoresDaChave(registro);
+			var registroExistente = tabela.Rows.Find(chave);
+			var tabelaImportada = registro.Table;
+			if ((registroExistente == null) || (tabelaImportada == null))
 				throw new DBConcurrencyException();
+			for (int indice = 0; indice < tabela.Columns.Count; indice++)
+			{
+				var campoImportado = tabelaImportada.Columns.IndexOf(tabela.Columns[indice].ColumnName);
+				if (campoImportado > -1)
+					registroExistente[indice] = registro[campoImportado];
+			}
+		}
+
+		private void ExcluirRegistro(DataTable tabela, DataRow registro)
+		{
+			var chave = _dicionario.ConsultarValoresDaChave(registro);
+			var registroExistente = tabela.Rows.Find(chave);
+			if (registroExistente == null)
+				throw new DBConcurrencyException();
+			registroExistente.Delete();
 		}
 
 		public void Salvar(IConexao conexao, DataRow registro)
 		{
-			IDbCommand comando = null;
+			if ((registro == null) || (registro.RowState == DataRowState.Unchanged) || (registro.RowState == DataRowState.Detached))
+				return;
 
-			if ((registro.RowState == DataRowState.Added) || (registro.RowState == DataRowState.Modified))
+			var tabela = (conexao as ContextoFake).ConsultarTabelaDoBancoDeDadosVirtual(typeof(TObjeto));
+
+			switch (registro.RowState)
 			{
-				comando = (registro.RowState == DataRowState.Added)
-					? Insert
-					: Update;
-				if (_dicionario.AutoIncremento == OpcoesAutoIncremento.Calculado)
-					CalcularAutoIncremento(conexao, registro);
+				case DataRowState.Added:
+					tabela.Rows.Add(registro);
+					break;
+
+				case DataRowState.Modified:
+					AtualizarRegistro(tabela, registro);
+					break;
+
+				case DataRowState.Deleted:
+					ExcluirRegistro(tabela, registro);
+					break;
 			}
-			else if (registro.RowState == DataRowState.Deleted)
-				comando = Delete;
-
-			if (_dicionario.AutoIncremento == OpcoesAutoIncremento.Identity)
-			{
-				var autoIncremento = ExecutarComandoInsertComIdentity(conexao, comando);
-				AtribuirValorAutoIncremento(Incremento.Identity, item => registro[item.Nome] = autoIncremento);
-			}
-			else
-				ExecutarComando(conexao, comando);
-		}
-
-		private void CalcularAutoIncremento(IConexao conexao, DataRow registro)
-		{
-			var valor = _ultimoIncremento;
-
-			if (!valor.HasValue)
-			{
-				conexao.DefinirConexao(AutoIncremento);
-				valor = Convert.ToInt32(AutoIncremento.ExecuteScalar());
-			}
-
-			AtribuirValorAutoIncremento(Incremento.Calculado, item => registro[item.Nome] = valor);
-
-			if (_dicionario.QuantidadeCamposNaChave == 1)
-				_ultimoIncremento = valor + 1;
-		}
-
-		public void Dispose()
-		{
-			Dispose(_autoInc);
-			Dispose(_insert);
-			Dispose(_update);
-			Dispose(_delete);
-		}
-
-		public void Dispose(IDbCommand comando)
-		{
-			if (comando != null)
-				comando.Dispose();
 		}
 
 	}

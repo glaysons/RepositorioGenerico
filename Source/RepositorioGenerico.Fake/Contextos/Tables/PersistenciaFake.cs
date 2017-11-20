@@ -4,10 +4,11 @@ using RepositorioGenerico.Dictionary.Builders;
 using RepositorioGenerico.Entities;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Pattern;
+using System;
 
 namespace RepositorioGenerico.Fake.Contextos.Tables
 {
-	public class PersistenciaFake<TObjeto> : PersistenciaFakeBase<TObjeto, DataTable, DataRow> where TObjeto : IEntidade
+	public class PersistenciaFake<TObjeto> : PersistenciaFakeBase<TObjeto, DataTable, DataRow>, IDisposable where TObjeto : IEntidade
 	{
 		private DataTable _dados;
 
@@ -53,9 +54,8 @@ namespace RepositorioGenerico.Fake.Contextos.Tables
 			item.AcceptChanges();
 		}
 
-		public override void Dispose()
+		public void Dispose()
 		{
-			base.Dispose();
 			if (_dados != null)
 				_dados.Dispose();
 		}

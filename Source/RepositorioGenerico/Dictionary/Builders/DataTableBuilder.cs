@@ -30,6 +30,12 @@ namespace RepositorioGenerico.Dictionary.Builders
 			coluna.AllowDBNull = !itemDicionario.Obrigatorio;
 			if (itemDicionario.TamanhoMaximo > 0)
 				coluna.MaxLength = itemDicionario.TamanhoMaximo;
+			if (itemDicionario.OpcaoGeracao == Entities.Anotacoes.Incremento.Identity)
+			{
+				coluna.AutoIncrement = true;
+				coluna.AutoIncrementSeed = 1;
+				coluna.AutoIncrementStep = 1;
+			}
 		}
 
 		private static void DefinirChavePrimaria(Dicionario dicionario, DataTable tabela)
@@ -40,12 +46,14 @@ namespace RepositorioGenerico.Dictionary.Builders
 			tabela.PrimaryKey = campos.ToArray();
 		}
 
-		public static DataRow ConverterItemEmDataRow<TObjeto>(DataTable tabela, TObjeto item)
+		public static DataRow ConverterItemEmDataRow<TObjeto>(DataTable tabela, TObjeto item, bool novoRegistro = false)
 		{
 			var registro = tabela.NewRow();
 			var propriedades = typeof(TObjeto).GetProperties();
 			foreach (DataColumn coluna in tabela.Columns)
 			{
+				if (novoRegistro && coluna.AutoIncrement)
+					continue;
 				var propriedade = propriedades.SingleOrDefault(p => p.Name == coluna.ColumnName || p.Name == coluna.Caption);
 				if (propriedade != null)
 						registro[coluna] = propriedade.GetValue(item, null) ?? DBNull.Value;

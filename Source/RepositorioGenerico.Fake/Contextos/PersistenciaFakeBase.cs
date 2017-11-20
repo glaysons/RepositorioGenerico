@@ -6,7 +6,7 @@ using RepositorioGenerico.Pattern.Contextos;
 
 namespace RepositorioGenerico.Fake.Contextos
 {
-	public abstract class PersistenciaFakeBase<TObjeto, TLista, TItem> : IPersistencia, IDisposable where TObjeto : IEntidade
+	public abstract class PersistenciaFakeBase<TObjeto, TLista, TItem> : IPersistencia where TObjeto : IEntidade
 	{
 
 		private readonly Dicionario _dicionario;
@@ -33,12 +33,6 @@ namespace RepositorioGenerico.Fake.Contextos
 		public abstract TItem Criar();
 
 		public abstract void Salvar(IConexao conexao, object registro);
-
-		public virtual void Dispose()
-		{
-			if (_atualizador != null)
-				_atualizador.Dispose();
-		}
 
 	}
 }

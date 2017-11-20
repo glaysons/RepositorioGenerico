@@ -41,12 +41,12 @@ namespace RepositorioGenerico.Fake.Contextos
 			Repositorios.Add(nome, repositorio);
 		}
 
-		private DataTable ConsultarTabelaDoBancoDeDadosVirtual(Type tipo, string nomeTabela = null)
+		public DataTable ConsultarTabelaDoBancoDeDadosVirtual(Type tipo, string nomeTabela = null)
 		{
-			var nome = nomeTabela ?? tipo.FullName;
+			var dicionario = DicionarioCache.Consultar(tipo);
+			var nome = nomeTabela ?? dicionario.Nome;
 			if (!BancoDeDadosVirtual.Tables.Contains(nome))
 			{
-				var dicionario = DicionarioCache.Consultar(tipo);
 				var tabela = DataTableBuilder.CriarDataTable(dicionario);
 				tabela.TableName = nome;
 				BancoDeDadosVirtual.Tables.Add(tabela);

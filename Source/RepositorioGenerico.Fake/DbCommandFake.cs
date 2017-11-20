@@ -102,8 +102,7 @@ namespace RepositorioGenerico.Fake
 				condicao = condicao.Substring(0, indiceOrderby - indiceWhere - 8 + 1 - 5 + 1);
 				view.Sort = CommandText.Substring(indiceOrderby + 8);
 			}
-			if (!string.IsNullOrEmpty(condicao))
-				view.RowFilter = condicao;
+			view.RowFilter = condicao;
 			return new DataReaderFake(view, top);
 		}
 

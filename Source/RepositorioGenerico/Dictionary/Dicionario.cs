@@ -13,6 +13,7 @@ using RepositorioGenerico.Entities.Anotacoes.Validadores;
 using RepositorioGenerico.Entities.Mapas;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Framework.Helpers;
+using System.Data;
 
 namespace RepositorioGenerico.Dictionary
 {
@@ -262,6 +263,18 @@ namespace RepositorioGenerico.Dictionary
 			foreach (var campo in ConsultarCamposChave())
 			{
 				resultado[n] = campo.Propriedade.GetValue(registro, null);
+				n++;
+			}
+			return resultado;
+		}
+
+		public object[] ConsultarValoresDaChave(DataRow registro)
+		{
+			var resultado = new object[QuantidadeCamposNaChave];
+			var n = 0;
+			foreach (var campo in ConsultarCamposChave())
+			{
+				resultado[n] = registro[campo.Nome];
 				n++;
 			}
 			return resultado;

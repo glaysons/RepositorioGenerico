@@ -23,15 +23,6 @@ namespace RepositorioGenerico.Fake
 
 		public DataTable ConsultarTabela(IConfiguracao configuracao)
 		{
-			//var configurador = ConsultarConfiguradorBusca(configuracao as Configurador);
-			//var tabela = new DataTable();
-			//using (var conexao = _conexao.CriarConexaoSemTransacao())
-			//using (var adapter = new SqlDataAdapter(configurador.Comando as SqlCommand))
-			//{
-			//	configurador.Comando.Connection = conexao;
-			//	adapter.Fill(tabela);
-			//}
-			//return tabela;
 			return null;
 		}
 

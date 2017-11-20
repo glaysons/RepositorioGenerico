@@ -6,6 +6,7 @@ using RepositorioGenerico.Test.Objetos;
 using System;
 using RepositorioGenerico.Pattern.Contextos;
 using RepositorioGenerico.Pattern.Buscadores;
+using RepositorioGenerico.Entities;
 
 namespace RepositorioGenerico.Fake.Test.Contextos
 {
@@ -328,6 +329,154 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			novoValor
 				.Should()
 				.Be(17);
+		}
+
+		[TestMethod]
+		public void SeAdicionarUmRegistroNoContextoESalvarOMesmoDeveSerEncontrado()
+		{
+			var contexto = CriarContextoParaTestes();
+			var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+
+			repositorio.Quantidade
+				.Should().Be(0);
+
+			repositorio.Buscar.Todos()
+				.Should()
+				.HaveCount(5);
+
+			var objeto = new ObjetoDeTestes()
+			{
+				Codigo = 100,
+				Nome = "Nome Que Pode Ser Inserido",
+				Duplo = 123.56,
+				Decimal = 234.67M,
+				Logico = true,
+				DataHora = DateTime.Now
+			};
+
+			repositorio.Inserir(objeto);
+
+			objeto.EstadoEntidade
+				.Should()
+				.Be(EstadosEntidade.Novo);
+
+			repositorio.Quantidade
+				.Should()
+				.Be(1);
+
+			repositorio.Buscar.Todos()
+				.Should()
+				.HaveCount(5);
+
+			contexto.Salvar();
+
+			objeto.EstadoEntidade
+				.Should()
+				.Be(EstadosEntidade.NaoModificado);
+
+			objeto.Codigo
+				.Should()
+				.Be(6);
+
+			repositorio.Buscar.Todos()
+				.Should()
+				.HaveCount(6);
+
+		}
+
+		[TestMethod]
+		public void SeAtualizarUmRegistroNoContextoOMesmoDeveSerAtualizado()
+		{
+			var contexto = CriarContextoParaTestes();
+			var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+
+			repositorio.Quantidade
+				.Should().Be(0);
+
+			repositorio.Buscar.Todos()
+				.Should()
+				.HaveCount(5);
+
+			var configAtual = repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Codigo).Igual(3);
+
+			var registroAtual = repositorio.Buscar.Um(configAtual);
+
+			registroAtual
+				.Should()
+				.NotBeNull();
+
+			registroAtual.Nome
+				.Should()
+				.Be("Teste de cadastros do nome C");
+
+			registroAtual.Duplo
+				.Should()
+				.Be(0);
+
+			registroAtual.Decimal
+				.Should()
+				.Be(0);
+
+			registroAtual.Logico
+				.Should()
+				.BeFalse();
+
+
+			var objetoEncontrado = repositorio.Consultar(3);
+			objetoEncontrado.Nome = "Nome Que Pode Ser Atualizado";
+			objetoEncontrado.Duplo = 123.56;
+			objetoEncontrado.Decimal = 234.67M;
+			objetoEncontrado.Logico = true;
+
+			repositorio.Atualizar(objetoEncontrado);
+
+			objetoEncontrado.EstadoEntidade
+				.Should()
+				.Be(EstadosEntidade.Modificado);
+
+			repositorio.Quantidade
+				.Should()
+				.Be(1);
+
+			repositorio.Buscar.Todos()
+				.Should()
+				.HaveCount(5);
+
+			contexto.Salvar();
+
+			objetoEncontrado.EstadoEntidade
+				.Should()
+				.Be(EstadosEntidade.NaoModificado);
+
+			objetoEncontrado.Codigo
+				.Should()
+				.Be(3);
+
+			var config = repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Codigo).Igual(3);
+
+			var registroAlterado = repositorio.Buscar.Um(config);
+
+			registroAlterado
+				.Should()
+				.NotBeNull();
+
+			registroAlterado.Nome
+				.Should()
+				.Be("Nome Que Pode Ser Atualizado");
+
+			registroAlterado.Duplo
+				.Should()
+				.Be(123.56);
+
+			registroAlterado.Decimal
+				.Should()
+				.Be(234.67M);
+
+			registroAlterado.Logico
+				.Should()
+				.BeTrue();
 		}
 
 	}
