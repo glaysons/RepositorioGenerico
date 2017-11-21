@@ -1,0 +1,26 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ConverterBancoParaEntidades.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Conexao" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Server=(local); Database=RepositorioGenerico; integrated security=false; user id=sa; pwd=123456; min pool size=10; MultipleActiveResultSets=True;</Value>
+    </Setting>
+    <Setting Name="ScriptConsultaTabelas" Type="System.String" Scope="User">
+      <Value Profile="(Default)">select name
+from sysobjects
+where xtype = 'U'</Value>
+    </Setting>
+    <Setting Name="Usings" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RepositorioGenerico.Entities
+RepositorioGenerico.Entities.Anotacoes
+System
+System.Collections.Generic</Value>
+    </Setting>
+    <Setting Name="Namespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Entidade</Value>
+    </Setting>
+    <Setting Name="PastaDestino" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

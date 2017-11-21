@@ -35,3 +35,5 @@
 /Samples/Business.Test/obj/Debug
 /Samples/Business.Test/bin/Debug
 /Source/RepositorioGenerico.SqlClient.Autofac/bin/Debug
+/Tools/ConverterBancoParaEntidades/bin/Debug
+/Tools/ConverterBancoParaEntidades/obj/Debug

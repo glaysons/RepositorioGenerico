@@ -38,6 +38,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Samples\Entitie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business.Test", "Samples\Business.Test\Business.Test.csproj", "{DF2664FD-2124-486F-8005-285A5E784A26}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{9380E1F4-AA27-4B30-878F-3ED357396282}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConverterBancoParaEntidades", "Tools\ConverterBancoParaEntidades\ConverterBancoParaEntidades.csproj", "{0565248E-AA08-42B6-9002-DD36486A488D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +100,10 @@ Global
 		{DF2664FD-2124-486F-8005-285A5E784A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF2664FD-2124-486F-8005-285A5E784A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF2664FD-2124-486F-8005-285A5E784A26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0565248E-AA08-42B6-9002-DD36486A488D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0565248E-AA08-42B6-9002-DD36486A488D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0565248E-AA08-42B6-9002-DD36486A488D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0565248E-AA08-42B6-9002-DD36486A488D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,5 +116,6 @@ Global
 		{08476C78-5854-49E2-987E-AE90CF79F9A2} = {75C528E9-EB16-4747-AB9D-32D79C33FC1F}
 		{7E1AB1E3-8F86-41AF-8EAD-1D883F37350D} = {75C528E9-EB16-4747-AB9D-32D79C33FC1F}
 		{DF2664FD-2124-486F-8005-285A5E784A26} = {75C528E9-EB16-4747-AB9D-32D79C33FC1F}
+		{0565248E-AA08-42B6-9002-DD36486A488D} = {9380E1F4-AA27-4B30-878F-3ED357396282}
 	EndGlobalSection
 EndGlobal

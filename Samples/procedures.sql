@@ -7,8 +7,8 @@ if (object_id('spExistemClientesVinculados') is not null)
 go
 
 create procedure spExistemClientesVinculados
-	@cidade int
+	@CodCidade int
 as
 	select	top 1 1
 	from	Clientes
-	where	(CodCidade = @cidade)
+	where	(CodCidade = @CodCidade)
