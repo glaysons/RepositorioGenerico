@@ -190,7 +190,7 @@
 			this.txtTrocarPastaDestino.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtTrocarPastaDestino.Location = new System.Drawing.Point(711, 342);
 			this.txtTrocarPastaDestino.Name = "txtTrocarPastaDestino";
-			this.txtTrocarPastaDestino.Size = new System.Drawing.Size(75, 24);
+			this.txtTrocarPastaDestino.Size = new System.Drawing.Size(75, 27);
 			this.txtTrocarPastaDestino.TabIndex = 8;
 			this.txtTrocarPastaDestino.Text = "Trocar";
 			this.txtTrocarPastaDestino.UseVisualStyleBackColor = false;
@@ -341,6 +341,7 @@
 			this.Name = "Main";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":: Converter Banco de Dados em Entidades ::";
+			this.Load += new System.EventHandler(this.Main_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
