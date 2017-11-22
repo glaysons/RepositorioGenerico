@@ -51,6 +51,8 @@
 			this.txtConnectionString = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.txtHerancaPadrao = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.txtLog = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -80,14 +82,14 @@
 			this.checkTabelas.FormattingEnabled = true;
 			this.checkTabelas.Location = new System.Drawing.Point(16, 235);
 			this.checkTabelas.Name = "checkTabelas";
-			this.checkTabelas.Size = new System.Drawing.Size(228, 251);
+			this.checkTabelas.Size = new System.Drawing.Size(228, 334);
 			this.checkTabelas.TabIndex = 5;
 			// 
 			// linkSelecionarTodas
 			// 
 			this.linkSelecionarTodas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.linkSelecionarTodas.AutoSize = true;
-			this.linkSelecionarTodas.Location = new System.Drawing.Point(12, 502);
+			this.linkSelecionarTodas.Location = new System.Drawing.Point(12, 609);
 			this.linkSelecionarTodas.Name = "linkSelecionarTodas";
 			this.linkSelecionarTodas.Size = new System.Drawing.Size(55, 21);
 			this.linkSelecionarTodas.TabIndex = 6;
@@ -99,7 +101,7 @@
 			// 
 			this.linkSelecionarNenhuma.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.linkSelecionarNenhuma.AutoSize = true;
-			this.linkSelecionarNenhuma.Location = new System.Drawing.Point(73, 502);
+			this.linkSelecionarNenhuma.Location = new System.Drawing.Point(73, 609);
 			this.linkSelecionarNenhuma.Name = "linkSelecionarNenhuma";
 			this.linkSelecionarNenhuma.Size = new System.Drawing.Size(80, 21);
 			this.linkSelecionarNenhuma.TabIndex = 7;
@@ -111,7 +113,7 @@
 			// 
 			this.linkInverterSelecao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.linkInverterSelecao.AutoSize = true;
-			this.linkInverterSelecao.Location = new System.Drawing.Point(159, 502);
+			this.linkInverterSelecao.Location = new System.Drawing.Point(159, 609);
 			this.linkInverterSelecao.Name = "linkInverterSelecao";
 			this.linkInverterSelecao.Size = new System.Drawing.Size(69, 21);
 			this.linkInverterSelecao.TabIndex = 8;
@@ -202,7 +204,7 @@
 			this.butGerar.BackColor = System.Drawing.Color.Silver;
 			this.butGerar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.butGerar.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.butGerar.Location = new System.Drawing.Point(534, 480);
+			this.butGerar.Location = new System.Drawing.Point(534, 587);
 			this.butGerar.Name = "butGerar";
 			this.butGerar.Size = new System.Drawing.Size(123, 40);
 			this.butGerar.TabIndex = 9;
@@ -216,7 +218,7 @@
 			this.butSair.BackColor = System.Drawing.Color.Silver;
 			this.butSair.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.butSair.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.butSair.Location = new System.Drawing.Point(663, 480);
+			this.butSair.Location = new System.Drawing.Point(663, 587);
 			this.butSair.Name = "butSair";
 			this.butSair.Size = new System.Drawing.Size(123, 40);
 			this.butSair.TabIndex = 10;
@@ -308,12 +310,38 @@
 			this.txtHerancaPadrao.TabIndex = 17;
 			this.txtHerancaPadrao.Text = "Entidade";
 			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(250, 436);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(47, 21);
+			this.label8.TabIndex = 18;
+			this.label8.Text = "LOG:";
+			// 
+			// txtLog
+			// 
+			this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtLog.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtLog.Location = new System.Drawing.Point(250, 459);
+			this.txtLog.Multiline = true;
+			this.txtLog.Name = "txtLog";
+			this.txtLog.ReadOnly = true;
+			this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.txtLog.Size = new System.Drawing.Size(536, 122);
+			this.txtLog.TabIndex = 19;
+			this.txtLog.WordWrap = false;
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.White;
-			this.ClientSize = new System.Drawing.Size(798, 532);
+			this.ClientSize = new System.Drawing.Size(798, 639);
+			this.Controls.Add(this.txtLog);
+			this.Controls.Add(this.label8);
 			this.Controls.Add(this.txtHerancaPadrao);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.butSair);
@@ -341,6 +369,7 @@
 			this.Name = "Main";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":: Converter Banco de Dados em Entidades ::";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
 			this.Load += new System.EventHandler(this.Main_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -372,6 +401,8 @@
 		private System.Windows.Forms.Button butSair;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.TextBox txtHerancaPadrao;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox txtLog;
 	}
 }
 

@@ -48,8 +48,16 @@
     <Compile Include="Constantes\Linguagem.cs" />
     <Compile Include="Consultadores\Factory.cs" />
     <Compile Include="Consultadores\DataClient.cs" />
+    <Compile Include="Geradores\CriadorArquivos.cs" />
+    <Compile Include="Geradores\CSharp\Gerador.cs" />
+    <Compile Include="Geradores\CSharp\GeradorCamposTabela.cs" />
+    <Compile Include="Geradores\CSharp\GeradorRelacionamentoAscendente.cs" />
+    <Compile Include="Geradores\CSharp\GeradorRelacionamentoDescendente.cs" />
+    <Compile Include="Geradores\Factory.cs" />
     <Compile Include="Interfaces\IConfiguracao.cs" />
     <Compile Include="Interfaces\IConsultador.cs" />
+    <Compile Include="Interfaces\IGerador.cs" />
+    <Compile Include="Interfaces\IGeradorPropriedade.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,9 +92,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Geradores\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

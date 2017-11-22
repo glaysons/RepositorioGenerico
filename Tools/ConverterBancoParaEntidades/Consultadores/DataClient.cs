@@ -14,7 +14,7 @@ namespace ConverterBancoParaEntidades.Consultadores
 			_configuracao = configuracao;
 		}
 
-		public string[] Consultar()
+		public string[] ConsultarTabelas()
 		{
 			var itens = new List<string>();
 

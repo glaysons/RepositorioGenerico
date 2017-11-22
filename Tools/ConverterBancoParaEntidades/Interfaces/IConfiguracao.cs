@@ -21,5 +21,7 @@ namespace ConverterBancoParaEntidades.Interfaces
 
 		string[] Tabelas { get; }
 
+		void AdicionarLog(params string[] mensagem);
+
 	}
 }

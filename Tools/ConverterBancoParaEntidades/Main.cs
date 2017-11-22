@@ -8,6 +8,9 @@ namespace ConverterBancoParaEntidades
 {
 	public partial class Main : Form, IConfiguracao
 	{
+
+		private IConsultador _ultimoConsutador = null;
+
 		public string Conexao
 		{
 			get { return txtConnectionString.Text; }
@@ -62,6 +65,13 @@ namespace ConverterBancoParaEntidades
 			return itens.ToArray();
 		}
 
+		public void AdicionarLog(params string[] mensagem)
+		{
+			txtLog.AppendText(string.Concat(mensagem));
+			txtLog.AppendText("\r\n");
+			Application.DoEvents();
+		}
+
 		private void Salvar()
 		{
 			Properties.Settings.Default.Save();
@@ -81,8 +91,8 @@ namespace ConverterBancoParaEntidades
 		{
 			try
 			{
-				var consultador = Consultadores.Factory.CriarConsultador(this);
-				var itens = consultador.Consultar();
+				_ultimoConsutador = Consultadores.Factory.CriarConsultador(this);
+				var itens = _ultimoConsutador.ConsultarTabelas();
 				checkTabelas.Items.Clear();
 				checkTabelas.Items.AddRange(itens);
 			}
@@ -120,14 +130,30 @@ namespace ConverterBancoParaEntidades
 
 		private void butGerar_Click(object sender, EventArgs e)
 		{
-			Salvar();
+			try
+			{
+				var gerador = Geradores.Factory.CriarGerador(this, _ultimoConsutador);
+				if (Utils.UsuarioConfirma("Deseja gerar os arquivos das tabelas selecionadas?"))
+				{
+					txtLog.Clear();
+					gerador.Gerar();
+					Utils.MensagemInformacao("Geração dos arquivos concluída com sucesso!");
+				}
+			}
+			catch (Exception ex)
+			{
+				Utils.MensagemErro("Não foi possível gerar os arquivos das tabelas devido ao seguinte erro: ", ex.Message);
+			}
 		}
 
 		private void butSair_Click(object sender, EventArgs e)
 		{
-			Salvar();
 			Application.Exit();
 		}
 
+		private void Main_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			Salvar();
+		}
 	}
 }

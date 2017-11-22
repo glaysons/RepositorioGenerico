@@ -50,8 +50,7 @@ namespace ConverterBancoParaEntidades.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RepositorioGenerico.Entities\r\nRepositorioGenerico.Entities.Anotacoes\r\nSystem\r\nSys" +
-            "tem.Collections.Generic")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Usings {
             get {
                 return ((string)(this["Usings"]));

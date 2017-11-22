@@ -1,9 +1,9 @@
 ﻿namespace ConverterBancoParaEntidades.Interfaces
 {
-	public interface IConsultador
+	public interface IGerador
 	{
 
-		string[] ConsultarTabelas();
+		void Gerar();
 
 	}
 }

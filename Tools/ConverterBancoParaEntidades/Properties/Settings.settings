@@ -11,10 +11,7 @@ from sysobjects
 where xtype = 'U'</Value>
     </Setting>
     <Setting Name="Usings" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RepositorioGenerico.Entities
-RepositorioGenerico.Entities.Anotacoes
-System
-System.Collections.Generic</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Namespace" Type="System.String" Scope="User">
       <Value Profile="(Default)">Entidade</Value>
