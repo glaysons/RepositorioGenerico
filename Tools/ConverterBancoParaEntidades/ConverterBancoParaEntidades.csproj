@@ -54,6 +54,7 @@
     <Compile Include="Geradores\CriadorArquivos.cs" />
     <Compile Include="Geradores\CSharp\Gerador.cs" />
     <Compile Include="Geradores\CSharp\GeradorCamposTabela.cs" />
+    <Compile Include="Geradores\CSharp\GeradorRegiao.cs" />
     <Compile Include="Geradores\CSharp\GeradorRelacionamentoAscendente.cs" />
     <Compile Include="Geradores\CSharp\GeradorRelacionamentoDescendente.cs" />
     <Compile Include="Geradores\Factory.cs" />

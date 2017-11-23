@@ -17,15 +17,9 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 
 		public void Gerar(string tabela, StreamWriter arquivo)
 		{
-			GerarInicioRegiao(arquivo);
+			GeradorRegiao.GerarInicio(arquivo, "Estrutura da Tabela");
 			GerarPropriedades(tabela, arquivo);
-			GerarFimRegiao(arquivo);
-		}
-
-		private void GerarInicioRegiao(StreamWriter arquivo)
-		{
-			arquivo.WriteLine("\t\t#region Estrutura da Tabela");
-			arquivo.WriteLine();
+			GeradorRegiao.GerarFim(arquivo);
 		}
 
 		private void GerarPropriedades(string tabela, StreamWriter arquivo)
@@ -105,10 +99,5 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 			}
 		}
 
-		private void GerarFimRegiao(StreamWriter arquivo)
-		{
-			arquivo.WriteLine("\t\t#endregion");
-			arquivo.WriteLine();
-		}
 	}
 }
