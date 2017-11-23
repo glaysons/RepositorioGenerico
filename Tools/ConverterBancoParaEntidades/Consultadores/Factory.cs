@@ -1,6 +1,5 @@
 ﻿using System;
 using ConverterBancoParaEntidades.Interfaces;
-using System.Data.SqlClient;
 
 namespace ConverterBancoParaEntidades.Consultadores
 {
@@ -10,7 +9,7 @@ namespace ConverterBancoParaEntidades.Consultadores
 		public static IConsultador CriarConsultador(IConfiguracao configuracao)
 		{
 			Validar(configuracao);
-			return new DataClient<SqlConnection>(configuracao);
+			return new SqlClient(configuracao);
 		}
 
 		private static void Validar(IConfiguracao configuracao)

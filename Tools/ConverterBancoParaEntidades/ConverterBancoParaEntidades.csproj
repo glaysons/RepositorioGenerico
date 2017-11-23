@@ -46,8 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constantes\Linguagem.cs" />
+    <Compile Include="Constantes\TipoCampo.cs" />
     <Compile Include="Consultadores\Factory.cs" />
     <Compile Include="Consultadores\DataClient.cs" />
+    <Compile Include="Consultadores\SqlClient.cs" />
+    <Compile Include="Estruturas\Campo.cs" />
     <Compile Include="Geradores\CriadorArquivos.cs" />
     <Compile Include="Geradores\CSharp\Gerador.cs" />
     <Compile Include="Geradores\CSharp\GeradorCamposTabela.cs" />

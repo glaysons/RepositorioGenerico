@@ -68,6 +68,9 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 
 		private void EscreverInicioTabela(string tabela, StreamWriter a)
 		{
+			a.Write("\t[Tabela(\"");
+			a.Write(tabela);
+			a.WriteLine("\")]");
 			a.WriteLine(string.Concat("\tpublic partial class ", tabela, " : ", _configuracao.HerancaPadrao));
 			a.WriteLine("\t{");
 			a.WriteLine();

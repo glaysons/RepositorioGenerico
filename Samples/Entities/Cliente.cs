@@ -9,9 +9,7 @@ namespace Entities
 	public class Cliente : Entidade
 	{
 
-		/// <summary>
-		/// Estrutura da Tabela
-		/// </summary>
+		#region Estrutura da Tabela
 
 		[Chave, Coluna(Nome = "CodCliente", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
@@ -39,6 +37,8 @@ namespace Entities
 
 		[Coluna(NomeDoTipo = "bit")]
 		public bool Vip { get; set; }
+
+		#endregion
 
 		/// <summary>
 		/// Relacionamento Ascendente

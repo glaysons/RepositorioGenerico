@@ -1,13 +1,20 @@
-﻿using ConverterBancoParaEntidades.Interfaces;
+﻿using ConverterBancoParaEntidades.Constantes;
+using ConverterBancoParaEntidades.Estruturas;
+using ConverterBancoParaEntidades.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 
 namespace ConverterBancoParaEntidades.Consultadores
 {
-	public class DataClient<TDriver> : IConsultador where TDriver : IDbConnection, new()
+	public abstract class DataClient<TDriver> : IConsultador where TDriver : IDbConnection, new()
 	{
 
 		private IConfiguracao _configuracao;
+
+		protected IConfiguracao Configuracao
+		{
+			get { return _configuracao; }
+		}
 
 		public DataClient(IConfiguracao configuracao)
 		{
@@ -26,7 +33,7 @@ namespace ConverterBancoParaEntidades.Consultadores
 					comando.CommandText = _configuracao.ScriptConsultaTabelas;
 					comando.CommandTimeout = 0;
 					conexao.Open();
-					var reader = comando.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+					var reader = comando.ExecuteReader(CommandBehavior.CloseConnection);
 					while (reader.Read())
 						itens.Add(reader.GetString(0));
 				}
@@ -34,6 +41,8 @@ namespace ConverterBancoParaEntidades.Consultadores
 
 			return itens.ToArray();
 		}
+
+		public abstract IEnumerable<Campo> ConsultarCamposDaTabela(string tabela);
 
 	}
 }

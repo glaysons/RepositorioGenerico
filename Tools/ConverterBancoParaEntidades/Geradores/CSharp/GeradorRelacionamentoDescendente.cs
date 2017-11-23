@@ -20,7 +20,7 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 
 		public void Gerar(string tabela, StreamWriter arquivo)
 		{
-			throw new NotImplementedException();
+
 		}
 
 	}

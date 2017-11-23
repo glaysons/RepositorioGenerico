@@ -11,6 +11,7 @@ Este ORM foi padronizado totalmente em português e já é utilizado em ambiente
  - Integrado com injetor de dependências **Autofac**
  - Mapeamento da estrutura dos objetos é feito sobre demanda
  - Utilização de anotações para definição dos padrões
+ - Permite criar validadores personalizados como anotações
  - Possibilidade de utilização das anotações no padrão **DataAnnotations** em inglês
  - Possibilidade de desenvolvimento de validadores na forma de anotações
  - Preparado para utilização com tabelas com múltiplos campos na chave
