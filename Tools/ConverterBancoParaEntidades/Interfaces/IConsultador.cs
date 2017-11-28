@@ -8,7 +8,11 @@ namespace ConverterBancoParaEntidades.Interfaces
 
 		string[] ConsultarTabelas();
 
-		IEnumerable<Campo> ConsultarCamposDaTabela(string tabela);
+		IList<Campo> ConsultarCamposDaTabela(string tabela);
+
+		IEnumerable<Relacionamento> ConsultarRelacionamentosAscendentesDaTabela(string tabela);
+
+		IEnumerable<Relacionamento> ConsultarRelacionamentosDescendentesDaTabela(string tabela);
 
 	}
 }

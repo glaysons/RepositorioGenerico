@@ -18,7 +18,7 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 		{
 			_configuracao = configuracao;
 			_consultador = consultador;
-			_geradorCampos = new GeradorCamposTabela(consultador);
+			_geradorCampos = new GeradorCamposTabela();
 			_geradorAscendente = new GeradorRelacionamentoAscendente(consultador);
 			_geradorDescendente = new GeradorRelacionamentoDescendente(consultador);
 		}
@@ -39,14 +39,15 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 		private void GerarArquivo(string tabela)
 		{
 			var arquivo = tabela + ".cs";
+			var campos = _consultador.ConsultarCamposDaTabela(tabela);
 			CriadorArquivos.Salvar(_configuracao.PastaDeDestino, arquivo, a =>
 			{
 				EscreverUsings(a);
 				EscreverInicioNamespace(a);
 				EscreverInicioTabela(tabela, a);
-				_geradorCampos.Gerar(tabela, a);
-				_geradorAscendente.Gerar(tabela, a);
-				_geradorDescendente.Gerar(tabela, a);
+				_geradorCampos.Gerar(tabela, campos, a);
+				_geradorAscendente.Gerar(tabela, campos, a);
+				_geradorDescendente.Gerar(tabela, campos, a);
 				EscreverFimTabela(a);
 				EscreverFimNamespace(a);
 			});

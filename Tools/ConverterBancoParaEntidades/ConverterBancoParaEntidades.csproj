@@ -51,7 +51,9 @@
     <Compile Include="Consultadores\DataClient.cs" />
     <Compile Include="Consultadores\SqlClient.cs" />
     <Compile Include="Estruturas\Campo.cs" />
+    <Compile Include="Estruturas\Relacionamento.cs" />
     <Compile Include="Geradores\CriadorArquivos.cs" />
+    <Compile Include="Geradores\CSharp\ConversorDeTipos.cs" />
     <Compile Include="Geradores\CSharp\Gerador.cs" />
     <Compile Include="Geradores\CSharp\GeradorCamposTabela.cs" />
     <Compile Include="Geradores\CSharp\GeradorRegiao.cs" />

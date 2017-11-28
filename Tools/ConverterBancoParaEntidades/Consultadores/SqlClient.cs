@@ -27,7 +27,7 @@ namespace ConverterBancoParaEntidades.Consultadores
 
 		}
 
-		public override IEnumerable<Campo> ConsultarCamposDaTabela(string tabela)
+		public override IList<Campo> ConsultarCamposDaTabela(string tabela)
 		{
 			using (var conexao = new SqlConnection())
 			{
@@ -141,6 +141,74 @@ namespace ConverterBancoParaEntidades.Consultadores
 				return TipoCampo.Imagem;
 
 			return TipoCampo.Object;
+		}
+
+		public override IEnumerable<Relacionamento> ConsultarRelacionamentosAscendentesDaTabela(string tabela)
+		{
+			using (var conexao = new SqlConnection())
+			{
+				conexao.ConnectionString = Configuracao.Conexao;
+				conexao.Open();
+				var lista = new List<Relacionamento>();
+
+				using (var comando = conexao.CreateCommand())
+				{
+					comando.CommandText = string.Concat("exec sp_foreign_keys_rowset2 @foreignkey_tab_name = '", tabela, "'");
+					comando.CommandTimeout = 0;
+
+					var reader = comando.ExecuteReader();
+
+					while (reader.Read())
+						AdicionarNovoRelacionamentoAscendenteNaLista(lista, reader);
+				}
+
+				return lista;
+			}
+		}
+
+		private void AdicionarNovoRelacionamentoAscendenteNaLista(List<Relacionamento> lista, SqlDataReader reader)
+		{
+			var relacionamento = new Relacionamento();
+			relacionamento.Ordem = Convert.ToInt32(reader["ORDINAL"]);
+			relacionamento.Nome = reader["FK_NAME"].ToString();
+			relacionamento.TabelaChavePrimaria = reader["PK_TABLE_NAME"].ToString();
+			relacionamento.ColunaChavePrimaria = reader["PK_COLUMN_NAME"].ToString();
+			relacionamento.ColunaChaveEstrangeira = reader["FK_COLUMN_NAME"].ToString();
+			lista.Add(relacionamento);
+		}
+
+		public override IEnumerable<Relacionamento> ConsultarRelacionamentosDescendentesDaTabela(string tabela)
+		{
+			using (var conexao = new SqlConnection())
+			{
+				conexao.ConnectionString = Configuracao.Conexao;
+				conexao.Open();
+				var lista = new List<Relacionamento>();
+
+				using (var comando = conexao.CreateCommand())
+				{
+					comando.CommandText = string.Concat("exec sp_fkeys '", tabela, "'");
+					comando.CommandTimeout = 0;
+
+					var reader = comando.ExecuteReader();
+
+					while (reader.Read())
+						AdicionarNovoRelacionamentoDescendenteNaLista(lista, reader);
+				}
+
+				return lista;
+			}
+		}
+
+		private void AdicionarNovoRelacionamentoDescendenteNaLista(List<Relacionamento> lista, SqlDataReader reader)
+		{
+			var relacionamento = new Relacionamento();
+			relacionamento.Ordem = Convert.ToInt32(reader["KEY_SEQ"]);
+			relacionamento.Nome = reader["FK_NAME"].ToString();
+			relacionamento.TabelaChavePrimaria = reader["PKTABLE_NAME"].ToString();
+			relacionamento.TabelaChaveEstrangeira = reader["FKTABLE_NAME"].ToString();
+			relacionamento.ColunaChaveEstrangeira = reader["FKCOLUMN_NAME"].ToString();
+			lista.Add(relacionamento);
 		}
 
 	}

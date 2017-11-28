@@ -1,8 +1,8 @@
-﻿using ConverterBancoParaEntidades.Constantes;
-using ConverterBancoParaEntidades.Estruturas;
+﻿using ConverterBancoParaEntidades.Estruturas;
 using ConverterBancoParaEntidades.Interfaces;
 using System.Collections.Generic;
 using System.Data;
+using System;
 
 namespace ConverterBancoParaEntidades.Consultadores
 {
@@ -42,7 +42,11 @@ namespace ConverterBancoParaEntidades.Consultadores
 			return itens.ToArray();
 		}
 
-		public abstract IEnumerable<Campo> ConsultarCamposDaTabela(string tabela);
+		public abstract IList<Campo> ConsultarCamposDaTabela(string tabela);
+
+		public abstract IEnumerable<Relacionamento> ConsultarRelacionamentosAscendentesDaTabela(string tabela);
+
+		public abstract IEnumerable<Relacionamento> ConsultarRelacionamentosDescendentesDaTabela(string tabela);
 
 	}
 }

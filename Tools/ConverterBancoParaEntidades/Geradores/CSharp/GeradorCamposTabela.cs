@@ -2,29 +2,22 @@
 using ConverterBancoParaEntidades.Estruturas;
 using ConverterBancoParaEntidades.Interfaces;
 using ConverterBancoParaEntidades.Constantes;
+using System.Collections.Generic;
 
 namespace ConverterBancoParaEntidades.Geradores.CSharp
 {
 	public class GeradorCamposTabela : IGeradorPropriedade
 	{
 
-		private IConsultador _consultador;
-
-		public GeradorCamposTabela(IConsultador consultador)
-		{
-			_consultador = consultador;
-		}
-
-		public void Gerar(string tabela, StreamWriter arquivo)
+		public void Gerar(string tabela, IList<Campo> campos, StreamWriter arquivo)
 		{
 			GeradorRegiao.GerarInicio(arquivo, "Estrutura da Tabela");
-			GerarPropriedades(tabela, arquivo);
+			GerarPropriedades(tabela, campos, arquivo);
 			GeradorRegiao.GerarFim(arquivo);
 		}
 
-		private void GerarPropriedades(string tabela, StreamWriter arquivo)
+		private void GerarPropriedades(string tabela, IList<Campo> campos, StreamWriter arquivo)
 		{
-			var campos = _consultador.ConsultarCamposDaTabela(tabela);
 			foreach (var campo in campos)
 			{
 				GerarAtributosChave(arquivo, campo);
@@ -72,31 +65,13 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 		private void GerarPropriedade(StreamWriter arquivo, Campo campo)
 		{
 			arquivo.Write("\t\tpublic ");
-			arquivo.Write(ConsultarTipoDoCampo(campo.TipoInterno));
+			arquivo.Write(ConversorDeTipos.ConsultarTipoDoCampo(campo.TipoInterno));
 			if ((!campo.Obrigatorio) && (campo.TipoInterno != TipoCampo.String))
 				arquivo.Write("?");
 			arquivo.Write(" ");
 			arquivo.Write(campo.NomeCampo);
-			arquivo.Write(" { get; set; }");
-			arquivo.WriteLine(";");
+			arquivo.WriteLine(" { get; set; }");
 			arquivo.WriteLine();
-		}
-
-		private string ConsultarTipoDoCampo(TipoCampo tipo)
-		{
-			switch (tipo)
-			{
-				case TipoCampo.String: return "string";
-				case TipoCampo.Inteiro: return "int";
-				case TipoCampo.Boolean: return "bool";
-				case TipoCampo.Decimal: return "decimal";
-				case TipoCampo.DateTime: return "System.DateTime";
-				case TipoCampo.Double: return "double";
-				case TipoCampo.Guid: return "System.Guid";
-				case TipoCampo.Imagem: return "System.Drawing.Image";
-				default:
-					return "object";
-			}
 		}
 
 	}
