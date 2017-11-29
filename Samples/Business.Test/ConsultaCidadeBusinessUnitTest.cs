@@ -80,5 +80,32 @@ namespace Business.Test
 				.BeFalse();
 		}
 
+		[TestMethod]
+		public void SeConsultarCidadeExistentePorCodigoDeveEncontrar()
+		{
+			var factory = new CidadeFactory();
+			var consultador = factory.CriarConsultador();
+
+			var cidade = consultador.ConsultarCidade(1);
+
+			cidade
+				.Should().NotBeNull();
+
+			cidade.Nome
+				.Should().Be("Cuiabá");
+		}
+
+		[TestMethod]
+		public void SeConsultarUmaCidadeInexistentePorCodigoDeveRetornarNulo()
+		{
+			var factory = new CidadeFactory();
+			var consultador = factory.CriarConsultador();
+
+			var cidade = consultador.ConsultarCidade(99);
+
+			cidade
+				.Should().BeNull();
+		}
+
 	}
 }
