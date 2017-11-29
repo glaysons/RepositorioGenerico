@@ -14,6 +14,13 @@ namespace Business
 			_repositorio = repositorio;
 		}
 
+		public Cidade ConsultarCidade(int codigo)
+		{
+			var config = _repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Id).Igual(codigo);
+			return _repositorio.Buscar.Um(config);
+		}
+
 		public bool ExisteCidadeCadastrada(Cidade cidade)
 		{
 			var config = _repositorio.Buscar.CriarQuery()
