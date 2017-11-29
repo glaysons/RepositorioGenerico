@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -80,6 +88,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -274,6 +285,36 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
+      <Project>{d37a5db4-4dcd-4dba-8916-e5d15bba1497}</Project>
+      <Name>RepositorioGenerico.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\RepositorioGenerico.Pattern\RepositorioGenerico.Pattern.csproj">
+      <Project>{dc4be160-a1a2-4da9-af53-11108f0c7bd7}</Project>
+      <Name>RepositorioGenerico.Pattern</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\RepositorioGenerico.SqlClient.Autofac\RepositorioGenerico.SqlClient.Autofac.csproj">
+      <Project>{75f4ce2b-bd29-4547-981c-0b9334c49bc0}</Project>
+      <Name>RepositorioGenerico.SqlClient.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\RepositorioGenerico.SqlClient\RepositorioGenerico.SqlClient.csproj">
+      <Project>{bcbf1d03-158b-4213-a446-1a40e4d3f210}</Project>
+      <Name>RepositorioGenerico.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\RepositorioGenerico\RepositorioGenerico.csproj">
+      <Project>{d736614d-5870-406c-80e3-a1647988fc69}</Project>
+      <Name>RepositorioGenerico</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{08476c78-5854-49e2-987e-ae90cf79f9a2}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{7e1ab1e3-8f86-41af-8ead-1d883f37350d}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
