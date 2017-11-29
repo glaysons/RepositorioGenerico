@@ -37,3 +37,5 @@
 /Source/RepositorioGenerico.SqlClient.Autofac/bin/Debug
 /Tools/ConverterBancoParaEntidades/bin/Debug
 /Tools/ConverterBancoParaEntidades/obj/Debug
+/Samples/Business.Mvc/bin
+/Samples/Business.Mvc/obj/Debug
