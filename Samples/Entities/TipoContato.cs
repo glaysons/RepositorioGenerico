@@ -8,25 +8,25 @@ namespace Entities
 	public class TipoContato : Entidade
 	{
 
-		/// <summary>
-		/// Estrutura da Tabela
-		/// </summary>
+		#region Estrutura da Tabela
 
 		[Chave, Coluna(Nome = "CodFilho", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
 
-		[Obrigatorio, Coluna(NomeDoTipo = "varchar")]
+		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMaximo(50)]
 		public string Nome { get; set; }
 
-		/// <summary>
-		/// Relacionamento Descendente
-		/// </summary>
+		#endregion
+
+		#region Relacionamentos Descendentes
 
 		[PropriedadeDeLigacaoEstrangeira("Tipo")]
 		public virtual ICollection<ContatoDoCliente> ContatosDosClientes { get; set; }
 
 		[PropriedadeDeLigacaoEstrangeira("Tipo")]
 		public virtual ICollection<ContatoDoFilho> ContatosDosFilhos { get; set; }
+
+		#endregion
 
 	}
 }

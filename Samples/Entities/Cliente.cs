@@ -30,7 +30,7 @@ namespace Entities
 		public string Bairro { get; set; }
 
 		[Coluna(Nome = "CodCidade", NomeDoTipo = "int")]
-		public int IdCidade { get; set; }
+		public int? IdCidade { get; set; }
 
 		[Coluna(NomeDoTipo = "bit")]
 		public bool RetemImpostos { get; set; }
@@ -40,22 +40,22 @@ namespace Entities
 
 		#endregion
 
-		/// <summary>
-		/// Relacionamento Ascendente
-		/// </summary>
+		#region Relacionamentos Ascendentes
 
 		[ChaveEstrangeira("IdCidade")]
 		public virtual Cidade Cidade { get; set; }
 
-		/// <summary>
-		/// Relacionamento Descendente
-		/// </summary>
+		#endregion
+
+		#region Relacionamentos Descendentes
 
 		[PropriedadeDeLigacaoEstrangeira("Cliente")]
 		public virtual ICollection<Filho> Filhos { get; set; }
 
 		[PropriedadeDeLigacaoEstrangeira("Cliente")]
 		public virtual ICollection<ContatoDoCliente> Contatos { get; set; }
+
+		#endregion
 
 	}
 }

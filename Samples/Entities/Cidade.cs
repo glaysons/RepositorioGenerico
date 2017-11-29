@@ -9,9 +9,7 @@ namespace Entities
 	public class Cidade: Entidade
 	{
 
-		/// <summary>
-		/// Estrutura da Tabela
-		/// </summary>
+		#region Estrutura da Tabela
 
 		[Chave, Coluna(Nome = "CodCidade", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
@@ -22,13 +20,14 @@ namespace Entities
 		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMinimo(2), TamanhoMaximo(2)]
 		public string Estado { get; set; }
 
-		/// <summary>
-		/// Relacionamento Descendente
-		/// </summary>
+		#endregion
+
+		#region Relacionamentos Descendentes
 
 		[PropriedadeDeLigacaoEstrangeira("Cidade")]
 		public ICollection<Cliente> Clientes { get; set; }
 
+		#endregion
 
 	}
 }

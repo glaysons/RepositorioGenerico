@@ -9,9 +9,7 @@ namespace Entities
 	public class Filho : Entidade
 	{
 
-		/// <summary>
-		/// Estrutura da Tabela
-		/// </summary>
+		#region Estrutura da Tabela
 
 		[Chave, Coluna(Nome = "CodFilho", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
@@ -19,33 +17,33 @@ namespace Entities
 		[Obrigatorio, Coluna(Nome = "CodCliente", NomeDoTipo = "int")]
 		public int IdCliente { get; set; }
 
-		[Obrigatorio, Coluna(NomeDoTipo = "varchar")]
+		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMaximo(50)]
 		public string Nome { get; set; }
 
 		[Coluna(NomeDoTipo = "bit")]
 		public bool MoraComOsPais { get; set; }
 
 		[Obrigatorio, Coluna(NomeDoTipo = "int")]
-		public bool Idade { get; set; }
+		public int Idade { get; set; }
 
 		[Coluna(NomeDoTipo = "datetime")]
 		public DateTime? DataDeNascimento { get; set; }
 
-		/// <summary>
-		/// Relacionamento Ascendente
-		/// </summary>
+		#endregion
+
+		#region Relacionamentos Ascendentes
 
 		[ChaveEstrangeira("IdCliente")]
 		public virtual Cliente Cliente { get; set; }
 
-		/// <summary>
-		/// Relacionamento Descendente
-		/// </summary>
+		#endregion
+
+		#region Relacionamentos Descendentes
 
 		[PropriedadeDeLigacaoEstrangeira("Filho")]
 		public virtual ICollection<ContatoDoFilho> Contatos { get; set; }
 
-
+		#endregion
 
 	}
 }
