@@ -25,7 +25,7 @@ namespace Entities
 		#region Relacionamentos Descendentes
 
 		[PropriedadeDeLigacaoEstrangeira("Cidade")]
-		public ICollection<Cliente> Clientes { get; set; }
+		public virtual ICollection<Cliente> Clientes { get; set; }
 
 		#endregion
 

@@ -1,6 +1,7 @@
 ﻿using Entities;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Pattern.Contextos;
+using System.Collections.Generic;
 
 namespace Business
 {
@@ -12,6 +13,11 @@ namespace Business
 		public ConsultaCidadeBusiness(IRepositorio<Cidade> repositorio)
 		{
 			_repositorio = repositorio;
+		}
+
+		public IEnumerable<Cidade> ConsultarTodasAsCidades()
+		{
+			return _repositorio.Buscar.Todos();
 		}
 
 		public Cidade ConsultarCidade(int codigo)

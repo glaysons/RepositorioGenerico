@@ -7,6 +7,21 @@ namespace Business.Test
 	[TestClass]
 	public class ConsultaCidadeBusinessUnitTest
 	{
+
+		[TestMethod]
+		public void SeConsultarTodasAsCidadesDeveEncontrarApenasOsRegistrosConfiguradosNaFactory()
+		{
+			var factory = new CidadeFactory();
+			var consultador = factory.CriarConsultador();
+
+			consultador.ConsultarTodasAsCidades()
+				.Should()
+				.HaveCount(6);
+
+			factory.Repositorio.Quantidade
+				.Should().Be(0);
+		}
+
 		[TestMethod]
 		public void SeExistirUmaCidadeCadastradaDeveRetornarVerdadeiro()
 		{
