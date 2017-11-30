@@ -46,6 +46,7 @@
     <Compile Include="Dictionary\Builders\DataTableBuilder.cs" />
     <Compile Include="Dictionary\Dicionario.cs" />
     <Compile Include="Dictionary\DicionarioCache.cs" />
+    <Compile Include="Dictionary\Dicionario`.cs" />
     <Compile Include="Dictionary\EstadoObjetoFactory.cs" />
     <Compile Include="Dictionary\Helpers\DataAnnotationHelper.cs" />
     <Compile Include="Dictionary\IDicionario.cs" />

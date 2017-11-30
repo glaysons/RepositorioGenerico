@@ -28,6 +28,12 @@ namespace RepositorioGenerico.SqlClient.Contextos
 
 		}
 
+		public Persistencia(Dicionario<TObjeto> dicionario)
+			: base(dicionario)
+		{
+
+		}
+
 		public override TObjeto ConsultarUltimoRegistro()
 		{
 			var ultimo = Quantidade - 1;

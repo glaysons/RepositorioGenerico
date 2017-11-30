@@ -28,15 +28,14 @@ namespace RepositorioGenerico.SqlClient.Autofac
 		public static void RegisterModels(ContainerBuilder builder, Assembly assembly)
 		{
 			var tipoEntidade = typeof(Entidade);
-			var tipoDicionario = typeof(Dicionario);
+			var tipoDicionario = typeof(Dicionario<>);
 			var tipoPersistencia = typeof(Persistencia<>);
 			var tipoRepositorio = typeof(Repositorio<>);
 			var tipoIRepositorio = typeof(IRepositorio<>);
 
 			foreach (var tipo in (assembly.GetTypes().Where(tipo => tipoEntidade.IsAssignableFrom(tipo))))
 			{
-				builder.RegisterType(tipoDicionario)
-					.WithParameter("tipo", tipo)
+				builder.RegisterType(tipoDicionario.MakeGenericType(tipo))
 					.SingleInstance();
 
 				builder.RegisterType(tipoPersistencia.MakeGenericType(tipo))
