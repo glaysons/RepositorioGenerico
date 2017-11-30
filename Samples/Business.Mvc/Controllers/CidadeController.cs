@@ -25,19 +25,18 @@ namespace Business.Mvc.Controllers
 
 		public ActionResult Create()
 		{
-			ViewBag.Novo = true;
 			return ExibirPaginaParaCriarOuEditar();
 		}
 
 		private ActionResult ExibirPaginaParaCriarOuEditar(Cidade cidade = null)
 		{
+			ViewBag.Novo = (cidade == null);
 			return View("CreateEdit", cidade);
 		}
 
 		[HttpPost]
 		public ActionResult Create(Cidade cidade)
 		{
-			ViewBag.Novo = true;
 			ViewBag.MensagemErro = "";
 			try
 			{
@@ -55,6 +54,55 @@ namespace Business.Mvc.Controllers
 		private ActionResult RedirecionarParaPaginaInicialDaCidade()
 		{
 			return Redirect("~/Cidade");
+		}
+
+		public ActionResult Edit(int id)
+		{
+			return ExibirPaginaParaCriarOuEditar(_consulta.ConsultarCidade(id));
+		}
+
+		[HttpPost]
+		public ActionResult Edit(Cidade cidade)
+		{
+			ViewBag.MensagemErro = "";
+			try
+			{
+				_manutencao.Atualizar(cidade);
+				_contexto.Salvar();
+				return RedirecionarParaPaginaInicialDaCidade();
+			}
+			catch (Exception ex)
+			{
+				ViewBag.MensagemErro = ex.Message;
+				return ExibirPaginaParaCriarOuEditar(cidade);
+			}
+		}
+
+		public ActionResult Details(int id)
+		{
+			return View(_consulta.ConsultarCidade(id));
+		}
+
+		public ActionResult Delete(int id)
+		{
+			return View(_consulta.ConsultarCidade(id));
+		}
+
+		[HttpPost]
+		public ActionResult Delete(Cidade cidade)
+		{
+			ViewBag.MensagemErro = "";
+			try
+			{
+				_manutencao.Excluir(cidade);
+				_contexto.Salvar();
+				return RedirecionarParaPaginaInicialDaCidade();
+			}
+			catch (Exception ex)
+			{
+				ViewBag.MensagemErro = ex.Message;
+				return View(cidade);
+			}
 		}
 
 	}
