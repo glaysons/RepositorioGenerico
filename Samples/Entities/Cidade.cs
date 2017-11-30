@@ -14,7 +14,7 @@ namespace Entities
 		[Chave, Coluna(Nome = "CodCidade", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
 
-		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMinimo(10), TamanhoMaximo(50)]
+		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMinimo(5), TamanhoMaximo(50)]
 		public string Nome { get; set; }
 
 		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMinimo(2), TamanhoMaximo(2)]

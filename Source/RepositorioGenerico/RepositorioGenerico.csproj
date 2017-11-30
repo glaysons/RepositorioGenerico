@@ -66,6 +66,7 @@
     <Compile Include="Exceptions\AQuantidadeDeCamposChaveNaLigacaoDoCampoEInvalidaException.cs" />
     <Compile Include="Exceptions\CampoNullableInvalidoException.cs" />
     <Compile Include="Exceptions\CampoPossuiPreenchimentoObrigatorioException.cs" />
+    <Compile Include="Exceptions\CampoPossuiTamanhoMinimoDePeenchimentoException.cs" />
     <Compile Include="Exceptions\CampoPossuiTamanhoMaximoDePeenchimentoException.cs" />
     <Compile Include="Exceptions\ChavePrimariaInvalidaException.cs" />
     <Compile Include="Exceptions\DicionarioNaoSuportaMultiplosCamposAutoIncrementoException.cs" />

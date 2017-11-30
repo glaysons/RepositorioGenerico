@@ -37,6 +37,7 @@ namespace RepositorioGenerico.Dictionary.Itens
 				tipoLocal: (nullable) ? ConsultarTipoDaColunaNullable(propriedade) : propriedade.PropertyType,
 				chave: DataAnnotationHelper.ChavePrimaria(propriedadeReferenciada),
 				obrigatorio: DataAnnotationHelper.Obrigatorio(propriedadeReferenciada),
+				tamanhoMinimo: DataAnnotationHelper.ConsultarTamanhoMinimo(propriedadeReferenciada),
 				tamanhoMaximo: DataAnnotationHelper.ConsultarTamanhoMaximo(propriedadeReferenciada),
 				ordem: (coluna == null) ? 0 : coluna.Ordem,
 				opcaoGeracao: DataAnnotationHelper.ConsultarOpcaoGeracao(propriedadeReferenciada),

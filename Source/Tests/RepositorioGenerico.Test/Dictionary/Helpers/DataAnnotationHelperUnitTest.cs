@@ -78,6 +78,22 @@ namespace RepositorioGenerico.Test.Dictionary.Helpers
 		}
 
 		[TestMethod]
+		public void SeConsultarOTamanhoMinimoDeUmaPropriedadeDeveTrazerValorCorreto()
+		{
+			var propriedade = typeof(ObjetoDeTestes).GetProperty("Nome");
+			DataAnnotationHelper.ConsultarTamanhoMinimo(propriedade)
+				.Should().Be(5);
+		}
+
+		[TestMethod]
+		public void SeConsultarOTamanhoMinimoDeUmaPropriedadeQueNaoPossuiOAtributoDeveTrazerZero()
+		{
+			var propriedade = typeof(ObjetoDeTestes).GetProperty("Codigo");
+			DataAnnotationHelper.ConsultarTamanhoMinimo(propriedade)
+				.Should().Be(0);
+		}
+
+		[TestMethod]
 		public void SeConsultarOTamanhoMaximoDeUmaPropriedadeDeveTrazerValorCorreto()
 		{
 			var propriedade = typeof(ObjetoDeTestes).GetProperty("Nome");

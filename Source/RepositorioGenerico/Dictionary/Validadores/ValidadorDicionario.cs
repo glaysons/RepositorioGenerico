@@ -79,6 +79,7 @@ namespace RepositorioGenerico.Dictionary.Validadores
 		private void Validar(ItemDicionario item, object valor)
 		{
 			ValidarObrigatorio(item, valor);
+			ValidarTamanhoMinimo(item, valor);
 			ValidarTamanhoMaximo(item, valor);
 			ValidarValidacoesPersonalizadas(item, valor);
 		}
@@ -90,6 +91,15 @@ namespace RepositorioGenerico.Dictionary.Validadores
 			var erro = (valor == null) || (valor == DBNull.Value);
 			if (erro)
 				throw new CampoPossuiPreenchimentoObrigatorioException(item.AliasOuNome);
+		}
+
+		private void ValidarTamanhoMinimo(ItemDicionario item, object valor)
+		{
+			if (item.TamanhoMinimo < 1)
+				return;
+			var erro = ((valor != null) && (valor != DBNull.Value) && (valor.ToString().Trim().Length < item.TamanhoMinimo));
+			if (erro)
+				throw new CampoPossuiTamanhoMinimoDePeenchimentoException(item.AliasOuNome, item.TamanhoMinimo);
 		}
 
 		private void ValidarTamanhoMaximo(ItemDicionario item, object valor)
@@ -131,6 +141,7 @@ namespace RepositorioGenerico.Dictionary.Validadores
 		private IEnumerable<Action<ItemDicionario, object>> ConsultarValidadores(ItemDicionario item)
 		{
 			yield return ValidarObrigatorio;
+			yield return ValidarTamanhoMinimo;
 			yield return ValidarTamanhoMaximo;
 
 			if (item.Validacoes == null) 

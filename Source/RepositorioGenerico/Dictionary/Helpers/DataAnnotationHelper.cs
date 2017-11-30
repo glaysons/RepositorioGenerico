@@ -34,6 +34,13 @@ namespace RepositorioGenerico.Dictionary.Helpers
 			return (atributo != null);
 		}
 
+		public static int ConsultarTamanhoMinimo(PropertyInfo propriedade)
+		{
+			var atributo = AttributeHelper.Consultar<TamanhoMinimoAttribute>(propriedade);
+			return (atributo == null) 
+				? 0 
+				: atributo.Tamanho;
+		}
 
 		public static int ConsultarTamanhoMaximo(PropertyInfo propriedade)
 		{

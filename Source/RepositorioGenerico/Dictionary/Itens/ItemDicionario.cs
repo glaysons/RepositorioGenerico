@@ -27,6 +27,8 @@ namespace RepositorioGenerico.Dictionary.Itens
 
 		public bool Obrigatorio { get; private set; }
 
+		public int TamanhoMinimo { get; private set; }
+
 		public int TamanhoMaximo { get; private set; }
 
 		public int Ordem { get; private set; }
@@ -44,7 +46,7 @@ namespace RepositorioGenerico.Dictionary.Itens
 		public Relacionamento Ligacao { get; private set; }
 
 		public ItemDicionario(int id, string alias, string nome, DbType tipoBanco, Type tipoLocal, bool chave, bool obrigatorio, 
-			int tamanhoMaximo, int ordem, Incremento opcaoGeracao, object valorPadrao, bool mapeado, PropertyInfo propriedade,
+			int tamanhoMinimo, int tamanhoMaximo, int ordem, Incremento opcaoGeracao, object valorPadrao, bool mapeado, PropertyInfo propriedade,
 			IList<IValidadorPropriedadeAttribute> validacoes, Relacionamento ligacao)
 		{
 			Id = id;
@@ -56,6 +58,7 @@ namespace RepositorioGenerico.Dictionary.Itens
 			TipoLocal = tipoLocal;
 			Chave = chave;
 			Obrigatorio = obrigatorio || chave;
+			TamanhoMinimo = tamanhoMinimo;
 			TamanhoMaximo = tamanhoMaximo;
 			Ordem = ordem;
 			OpcaoGeracao = opcaoGeracao;

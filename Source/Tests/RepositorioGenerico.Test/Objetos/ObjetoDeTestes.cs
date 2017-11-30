@@ -19,7 +19,7 @@ namespace RepositorioGenerico.Test.Objetos
 		[Coluna(Ordem = 1, NomeDoTipo = "int")]
 		public int? CodigoNulo { get; set; }
 
-		[Obrigatorio, TamanhoMaximo(50)]
+		[Obrigatorio, TamanhoMinimo(5), TamanhoMaximo(50)]
 		[Coluna(Ordem = 2, NomeDoTipo = "varchar")]
 		[ValidadorDePropriedade]
 		[ValidadorDePropriedade2]
