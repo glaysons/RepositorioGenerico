@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace RepositorioGenerico.Entities.Anotacoes.Validadores
 {
@@ -7,7 +8,7 @@ namespace RepositorioGenerico.Entities.Anotacoes.Validadores
 	public abstract class ValidadorPropriedadeAttribute : Attribute, IValidadorPropriedadeAttribute
 	{
 
-		public abstract void Validar(object valorDaPropriedade);
+		public abstract void Validar(PropertyInfo propriedade, object valorDaPropriedade);
 
 	}
 

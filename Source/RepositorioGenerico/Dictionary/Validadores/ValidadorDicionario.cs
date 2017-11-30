@@ -106,7 +106,7 @@ namespace RepositorioGenerico.Dictionary.Validadores
 			if (item.Validacoes == null)
 				return;
 			foreach (var validador in item.Validacoes)
-				validador.Validar(valor);
+				validador.Validar(item.Propriedade, valor);
 		}
 
 		public IEnumerable<string> Valido(ItemDicionario item, object valor)
@@ -139,7 +139,7 @@ namespace RepositorioGenerico.Dictionary.Validadores
 			foreach (var validador in item.Validacoes)
 			{
 				var val = validador;
-				Action<ItemDicionario, object> validacao = (i, v) => val.Validar(v);
+				Action<ItemDicionario, object> validacao = (i, v) => val.Validar(i.Propriedade, v);
 				yield return validacao;
 			}
 		}
