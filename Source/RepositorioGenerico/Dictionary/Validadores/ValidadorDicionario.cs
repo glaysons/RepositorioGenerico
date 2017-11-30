@@ -89,6 +89,8 @@ namespace RepositorioGenerico.Dictionary.Validadores
 			if (!item.Obrigatorio)
 				return;
 			var erro = (valor == null) || (valor == DBNull.Value);
+			if ((!erro) && (valor.GetType() == typeof(string)))
+				erro = string.IsNullOrWhiteSpace((string)valor);
 			if (erro)
 				throw new CampoPossuiPreenchimentoObrigatorioException(item.AliasOuNome);
 		}
@@ -97,7 +99,7 @@ namespace RepositorioGenerico.Dictionary.Validadores
 		{
 			if (item.TamanhoMinimo < 1)
 				return;
-			var erro = ((valor != null) && (valor != DBNull.Value) && (valor.ToString().Trim().Length < item.TamanhoMinimo));
+			var erro = ((valor != null) && (valor != DBNull.Value) && (valor.GetType() == typeof(string)) && (((string)valor).Trim().Length < item.TamanhoMinimo));
 			if (erro)
 				throw new CampoPossuiTamanhoMinimoDePeenchimentoException(item.AliasOuNome, item.TamanhoMinimo);
 		}
@@ -106,7 +108,7 @@ namespace RepositorioGenerico.Dictionary.Validadores
 		{
 			if (item.TamanhoMaximo < 1)
 				return;
-			var erro = ((valor != null) && (valor != DBNull.Value) && (valor.ToString().Length > item.TamanhoMaximo));
+			var erro = ((valor != null) && (valor != DBNull.Value) && (valor.GetType() == typeof(string)) && (((string)valor).Length > item.TamanhoMaximo));
 			if (erro)
 				throw new CampoPossuiTamanhoMaximoDePeenchimentoException(item.AliasOuNome, item.TamanhoMaximo);
 		}
