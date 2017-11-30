@@ -1,9 +1,6 @@
 ﻿using Entities;
 using RepositorioGenerico.Pattern.Contextos;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Business.Mvc.Controllers
@@ -28,13 +25,36 @@ namespace Business.Mvc.Controllers
 
 		public ActionResult Create()
 		{
-			return View();
+			ViewBag.Novo = true;
+			return ExibirPaginaParaCriarOuEditar();
+		}
+
+		private ActionResult ExibirPaginaParaCriarOuEditar(Cidade cidade = null)
+		{
+			return View("CreateEdit", cidade);
 		}
 
 		[HttpPost]
 		public ActionResult Create(Cidade cidade)
 		{
-			throw new NotImplementedException();
+			ViewBag.Novo = true;
+			ViewBag.MensagemErro = "";
+			try
+			{
+				_manutencao.Cadastrar(cidade);
+				_contexto.Salvar();
+				return RedirecionarParaPaginaInicialDaCidade();
+			}
+			catch (Exception ex)
+			{
+				ViewBag.MensagemErro = ex.Message;
+				return ExibirPaginaParaCriarOuEditar(cidade);
+			}
+		}
+
+		private ActionResult RedirecionarParaPaginaInicialDaCidade()
+		{
+			return Redirect("~/Cidade");
 		}
 
 	}
