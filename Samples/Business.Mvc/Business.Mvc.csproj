@@ -208,6 +208,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\TipoContatoController.cs" />
     <Compile Include="Controllers\CidadeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -281,6 +282,10 @@
     <Content Include="Views\Cidade\CreateEdit.cshtml" />
     <Content Include="Views\Cidade\Details.cshtml" />
     <Content Include="Views\Cidade\Delete.cshtml" />
+    <Content Include="Views\TipoContato\Index.cshtml" />
+    <Content Include="Views\TipoContato\CreateEdit.cshtml" />
+    <Content Include="Views\TipoContato\Details.cshtml" />
+    <Content Include="Views\TipoContato\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
