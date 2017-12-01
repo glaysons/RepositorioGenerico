@@ -31,6 +31,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioGenerico.SqlClient.Autofac", "Source\RepositorioGenerico.SqlClient.Autofac\RepositorioGenerico.SqlClient.Autofac.csproj", "{75F4CE2B-BD29-4547-981C-0B9334C49BC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{75C528E9-EB16-4747-AB9D-32D79C33FC1F}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\database.sql = Samples\database.sql
+		Samples\procedures.sql = Samples\procedures.sql
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Samples\Business\Business.csproj", "{08476C78-5854-49E2-987E-AE90CF79F9A2}"
 EndProject
