@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Business.Cidades;
+using Entities;
 using RepositorioGenerico.Pattern.Contextos;
 using System;
 using System.Web.Mvc;

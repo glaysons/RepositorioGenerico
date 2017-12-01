@@ -71,10 +71,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CidadeFactory.cs" />
+    <Compile Include="Cidades\CidadeFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ManutencaoCidadeBusinessUnitTest.cs" />
-    <Compile Include="ConsultaCidadeBusinessUnitTest.cs" />
+    <Compile Include="Cidades\ManutencaoCidadeBusinessUnitTest.cs" />
+    <Compile Include="Cidades\ConsultaCidadeBusinessUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

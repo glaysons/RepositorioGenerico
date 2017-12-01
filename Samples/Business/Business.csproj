@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsultaCidadeBusiness.cs" />
-    <Compile Include="ManutencaoCidadeBusiness.cs" />
+    <Compile Include="Cidades\ConsultaCidadeBusiness.cs" />
+    <Compile Include="Cidades\ManutencaoCidadeBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

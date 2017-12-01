@@ -2,7 +2,7 @@
 using RepositorioGenerico.Pattern.Contextos;
 using System;
 
-namespace Business
+namespace Business.Cidades
 {
 	public class ManutencaoCidadeBusiness
 	{

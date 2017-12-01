@@ -3,7 +3,7 @@ using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Pattern.Contextos;
 using System.Collections.Generic;
 
-namespace Business
+namespace Business.Cidades
 {
 	public class ConsultaCidadeBusiness
 	{

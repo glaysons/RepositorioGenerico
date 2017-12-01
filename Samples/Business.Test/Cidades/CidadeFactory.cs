@@ -1,9 +1,9 @@
 ﻿using Entities;
 using RepositorioGenerico.Pattern.Contextos;
 using RepositorioGenerico.Fake.Contextos;
-using System;
+using Business.Cidades;
 
-namespace Business.Test
+namespace Business.Test.Cidades
 {
 	public class CidadeFactory
 	{

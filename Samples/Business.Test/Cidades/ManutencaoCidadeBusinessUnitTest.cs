@@ -4,7 +4,7 @@ using Entities;
 using FluentAssertions;
 using RepositorioGenerico.Entities;
 
-namespace Business.Test
+namespace Business.Test.Cidades
 {
 	[TestClass]
 	public class ManutencaoCidadeBusinessUnitTest

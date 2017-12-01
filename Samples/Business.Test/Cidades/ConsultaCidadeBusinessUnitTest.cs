@@ -2,7 +2,7 @@
 using Entities;
 using FluentAssertions;
 
-namespace Business.Test
+namespace Business.Test.Cidades
 {
 	[TestClass]
 	public class ConsultaCidadeBusinessUnitTest

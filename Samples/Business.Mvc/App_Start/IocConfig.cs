@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Business.Cidades;
 using Entities;
 using System.Configuration;
 using System.Linq;
