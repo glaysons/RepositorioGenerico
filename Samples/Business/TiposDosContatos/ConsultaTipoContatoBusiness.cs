@@ -30,7 +30,7 @@ namespace Business.TiposDosContatos
 		public bool ExisteTipoContatoCadastrado(TipoContato tipoContato)
 		{
 			var config = _repositorio.Buscar.CriarQuery()
-				.AdicionarCondicao(c => c.Id).Seja(Operadores.Diferente, tipoContato.Id)
+				.AdicionarCondicao(c => c.Id).Diferente(tipoContato.Id)
 				.AdicionarCondicao(c => c.Nome).Igual(tipoContato.Nome);
 			return _repositorio.Buscar.Existe(config);
 		}

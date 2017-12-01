@@ -30,7 +30,7 @@ namespace Business.Cidades
 		public bool ExisteCidadeCadastrada(Cidade cidade)
 		{
 			var config = _repositorio.Buscar.CriarQuery()
-				.AdicionarCondicao(c => c.Id).Seja(Operadores.Diferente, cidade.Id)
+				.AdicionarCondicao(c => c.Id).Diferente(cidade.Id)
 				.AdicionarCondicao(c => c.Nome).Igual(cidade.Nome)
 				.AdicionarCondicao(c => c.Estado).Igual(cidade.Estado);
 			return _repositorio.Buscar.Existe(config);
