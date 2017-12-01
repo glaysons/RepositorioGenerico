@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+	<metadata minClientVersion="2.12">
+		<id>RepositorioGenerico</id>
+		<version>$version$</version>
+		<title>Repositório Genérico</title>
+		<authors>Glayson Sergio</authors>
+		<owners>Glayson Sergio</owners>
+		<projectUrl>https://github.com/glaysons/RepositorioGenerico</projectUrl>
+		<iconUrl>https://github.com/glaysons/RepositorioGenerico/blob/master/RepositorioGenericoIcon.min.png?raw=true</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>RepositorioGenerico é um Framework ORM OpenSource escrito em C# para utilização em projetos com qualquer quantidade de tabelas.</description>
+		<copyright>Copyright © Glayson Sergio 2017</copyright>
+		<tags>IRepository ORM generic repository repositorio generico more 1000 tables</tags>
+		<dependencies>
+			<dependency id="RepositorioGenerico.Pattern" version="$version$" />
+		</dependencies>
+	</metadata>
+</package>

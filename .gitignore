@@ -39,3 +39,9 @@
 /Tools/ConverterBancoParaEntidades/obj/Debug
 /Samples/Business.Mvc/bin
 /Samples/Business.Mvc/obj/Debug
+/Samples/Business.Mvc/obj/Release
+/Samples/Business.Test/obj/Release
+/Tools/ConverterBancoParaEntidades/obj/Release
+/Samples/Business.Test/bin/Release
+/Samples/Entities/bin/Release
+/Tools/ConverterBancoParaEntidades/bin/Release
