@@ -75,6 +75,56 @@ namespace RepositorioGenerico.Search
 			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Igual, DbType.DateTime, valor);
 		}
 
+		public IConfiguracaoQuery Diferente(string valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.String, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(int valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Int32, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(int? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Int32, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(bool valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Boolean, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(double valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Double, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(double? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Double, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(decimal valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Decimal, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(decimal? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Decimal, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(DateTime valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.DateTime, valor);
+		}
+
+		public IConfiguracaoQuery Diferente(DateTime? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.DateTime, valor);
+		}
+
 		public IConfiguracaoQuery InicieCom(string valor)
 		{
 			return AdicionarCondicaoEConfiguracaoQuery(OperadoresTexto.Contendo, DbType.String, valor + "%");

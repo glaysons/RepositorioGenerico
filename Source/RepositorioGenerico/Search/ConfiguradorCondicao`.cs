@@ -77,6 +77,57 @@ namespace RepositorioGenerico.Search
 			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Igual, DbType.DateTime, valor);
 		}
 
+		public IConfiguracaoQuery<TObjeto> Diferente(string valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.String, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(int valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Int32, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(int? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Int32, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(bool valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Boolean, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(double valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Double, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(double? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Double, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(decimal valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Decimal, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(decimal? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.Decimal, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(DateTime valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.DateTime, valor);
+		}
+
+		public IConfiguracaoQuery<TObjeto> Diferente(DateTime? valor)
+		{
+			return AdicionarCondicaoEConfiguracaoQuery(Operadores.Diferente, DbType.DateTime, valor);
+		}
+
+
 		public IConfiguracaoQuery<TObjeto> InicieCom(string valor)
 		{
 			return AdicionarCondicaoEConfiguracaoQuery(OperadoresTexto.Contendo, DbType.String, valor + "%");

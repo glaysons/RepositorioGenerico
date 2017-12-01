@@ -17,6 +17,17 @@ namespace RepositorioGenerico.Pattern.Buscadores
 		IConfiguracaoQuery<TObjeto> Igual(DateTime valor);
 		IConfiguracaoQuery<TObjeto> Igual(DateTime? valor);
 
+		IConfiguracaoQuery<TObjeto> Diferente(string valor);
+		IConfiguracaoQuery<TObjeto> Diferente(int valor);
+		IConfiguracaoQuery<TObjeto> Diferente(int? valor);
+		IConfiguracaoQuery<TObjeto> Diferente(bool valor);
+		IConfiguracaoQuery<TObjeto> Diferente(double valor);
+		IConfiguracaoQuery<TObjeto> Diferente(double? valor);
+		IConfiguracaoQuery<TObjeto> Diferente(decimal valor);
+		IConfiguracaoQuery<TObjeto> Diferente(decimal? valor);
+		IConfiguracaoQuery<TObjeto> Diferente(DateTime valor);
+		IConfiguracaoQuery<TObjeto> Diferente(DateTime? valor);
+
 		IConfiguracaoQuery<TObjeto> InicieCom(string valor);
 		IConfiguracaoQuery<TObjeto> TermineCom(string valor);
 		IConfiguracaoQuery<TObjeto> Contenha(string valor);
