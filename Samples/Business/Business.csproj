@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Cidades\ConsultaCidadeBusiness.cs" />
     <Compile Include="Cidades\ManutencaoCidadeBusiness.cs" />
+    <Compile Include="Clientes\ConsultaClienteBusiness.cs" />
+    <Compile Include="Clientes\ManutencaoClienteBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TiposDosContatos\ConsultaTipoContatoBusiness.cs" />
     <Compile Include="TiposDosContatos\ManutencaoTipoContatoBusiness.cs" />

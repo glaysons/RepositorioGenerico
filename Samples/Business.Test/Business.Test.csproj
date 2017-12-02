@@ -72,6 +72,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Cidades\CidadeFactory.cs" />
+    <Compile Include="Clientes\ConsultaClienteBusinessUnitTest.cs" />
+    <Compile Include="Clientes\ManutencaoClienteBusinessUnitTest.cs" />
+    <Compile Include="Clientes\ClienteFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cidades\ManutencaoCidadeBusinessUnitTest.cs" />
     <Compile Include="Cidades\ConsultaCidadeBusinessUnitTest.cs" />
