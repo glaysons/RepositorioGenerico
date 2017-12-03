@@ -25,7 +25,7 @@ namespace RepositorioGenerico.Test.Objetos
 		[Coluna(Ordem = 3, Nome = "CampoComOpcoesInteiras", NomeDoTipo = "int")]
 		public EnumDeTestes Opcao { get; set; }
 
-		[Coluna(Ordem = 4, Nome = "CampoComOpcoesString", NomeDoTipo = "varchar"), TamanhoMaximo(1)]
+		[Coluna(Ordem = 4, Nome = "CampoComOpcoesString", NomeDoTipo = "varchar")]
 		public EnumDeStrings Letra { get; set; }
 
 		[ChaveEstrangeira("CodigoFilho")]

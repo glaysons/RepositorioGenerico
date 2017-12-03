@@ -28,25 +28,22 @@
 
 		public void AplicarChaveAscendente(object[] chaveAscendente, object objeto)
 		{
-			var n = 0;
-			foreach (var campoEstrangeiro in ChaveEstrangeira)
+			for (var n = 0; n < ChaveEstrangeira.Length; n++)
 			{
-				var campo = Dicionario.ConsultarPorCampo(campoEstrangeiro);
+				var campo = Dicionario.ConsultarPorPropriedade(ChaveEstrangeira[n]);
 				campo.Propriedade.SetValue(objeto, chaveAscendente[n], null);
-				n++;
 			}
 		}
 
 		public bool PossuiChaveAscendente(object[] chaveAscendente, object objeto)
 		{
 			var n = 0;
-			foreach (var campoEstrangeiro in ChaveEstrangeira)
+			for (n = 0; n < ChaveEstrangeira.Length; n++)
 			{
-				var campo = Dicionario.ConsultarPorCampo(campoEstrangeiro);
+				var campo = Dicionario.ConsultarPorPropriedade(ChaveEstrangeira[n]);
 				var valor = campo.Propriedade.GetValue(objeto, null);
 				if (!Equals(chaveAscendente[n], valor))
 					return false;
-				n++;
 			}
 			return (n > 0);
 		}

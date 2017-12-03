@@ -171,7 +171,7 @@ namespace RepositorioGenerico.Test.Dictionary.Helpers
 		{
 			var propriedade = typeof(FilhoDoObjetoDeTestes).GetProperty("Pai");
 			DataAnnotationHelper.ConsultarForeignKey(propriedade)
-				.Should().Be("CodigoPai");
+				.Should().Be("IdPai");
 		}
 
 		[TestMethod]
@@ -207,7 +207,7 @@ namespace RepositorioGenerico.Test.Dictionary.Helpers
 		{
 			var propriedade = typeof(ObjetoDeTestes).GetProperty("Filhos");
 			DataAnnotationHelper.ConsultarForeignKeyDaInverseProperty(propriedade, typeof(ICollection<FilhoDoObjetoDeTestes>))
-				.Should().Be("CodigoPai");
+				.Should().Be("IdPai");
 		}
 
 		[TestMethod]
@@ -215,7 +215,7 @@ namespace RepositorioGenerico.Test.Dictionary.Helpers
 		{
 			var propriedade = typeof(ObjetoMapeadoDeTestes).GetProperty("MapeadoComFilhos");
 			DataAnnotationHelper.ConsultarForeignKeyDaInverseProperty(propriedade, typeof(ICollection<FilhoMapeadoDoObjetoMapeadoDeTestes>))
-				.Should().Be("CodigoPai");
+				.Should().Be("IdPai");
 		}
 
 	}

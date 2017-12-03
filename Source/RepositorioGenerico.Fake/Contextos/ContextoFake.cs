@@ -5,6 +5,7 @@ using RepositorioGenerico.Dictionary.Builders;
 using RepositorioGenerico.Entities;
 using RepositorioGenerico.Pattern.Contextos;
 using System.Data;
+using System.Collections;
 
 namespace RepositorioGenerico.Fake.Contextos
 {
@@ -56,15 +57,43 @@ namespace RepositorioGenerico.Fake.Contextos
 
 		public void AdicionarRegistros<TObjeto>(IList<TObjeto> registros) where TObjeto : IEntidade
 		{
-			var tabela = ConsultarTabelaDoBancoDeDadosVirtual(typeof(TObjeto));
+			AdicionarRegistros(typeof(TObjeto), registros);
+		}
+
+		private void AdicionarRegistros(Type tipo, IEnumerable registros, Action<object> atualizar = null)
+		{
+			var dicionario = DicionarioCache.Consultar(tipo);
+			var tabela = ConsultarTabelaDoBancoDeDadosVirtual(tipo);
 			foreach (var registro in registros)
-				tabela.Rows.Add(DataTableBuilder.ConverterItemEmDataRow(tabela, registro));
+			{
+				atualizar?.Invoke(registro);
+				AdicionarRegistro(dicionario, tabela, registro);
+			}
+		}
+
+		private void AdicionarRegistro(Dicionario dicionario, DataTable tabela, object registro)
+		{
+			tabela.Rows.Add(DataTableBuilder.ConverterItemEmDataRow(tabela, registro));
+			if (dicionario.PossuiCamposFilho)
+			{
+				var chave = dicionario.ConsultarValoresDaChave(registro);
+				foreach (var item in dicionario.ConsultarCamposFilho())
+				{
+					var valores = item.Propriedade.GetValue(registro, null);
+					if (valores == null)
+						continue;
+					AdicionarRegistros(item.Ligacao.Dicionario.Tipo, (IEnumerable)valores,
+						(r) => item.Ligacao.AplicarChaveAscendente(chave, r));
+				}
+			}
 		}
 
 		public void AdicionarRegistro<TObjeto>(TObjeto registro) where TObjeto : IEntidade
 		{
-			var tabela = ConsultarTabelaDoBancoDeDadosVirtual(typeof(TObjeto));
-			tabela.Rows.Add(DataTableBuilder.ConverterItemEmDataRow(tabela, registro));
+			var tipo = typeof(TObjeto);
+			var dicionario = DicionarioCache.Consultar(tipo);
+			var tabela = ConsultarTabelaDoBancoDeDadosVirtual(tipo);
+			AdicionarRegistro(dicionario, tabela, registro);
 		}
 
 		public void DefinirResultadoProcedure<TObjeto>(string nomeProcedure, IList<TObjeto> registros) where TObjeto : IEntidade

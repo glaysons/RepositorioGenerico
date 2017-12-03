@@ -9,9 +9,9 @@ namespace RepositorioGenerico.Entities.Anotacoes
 
 		public string Nome { get; private set; }
 
-		public ChaveEstrangeiraAttribute(string nome)
+		public ChaveEstrangeiraAttribute(string propriedadesSeparadasPorVirgula)
 		{
-			Nome = nome;
+			Nome = propriedadesSeparadasPorVirgula;
 		}
 
 	}

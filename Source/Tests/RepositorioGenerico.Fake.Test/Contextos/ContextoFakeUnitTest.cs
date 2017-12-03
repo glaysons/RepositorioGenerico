@@ -64,6 +64,148 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 		}
 
 		[TestMethod]
+		public void SeAdicionarRegistrosFilhosNoContextoORepositorioNaoDeveSerModificadoMasDeveSerConsultado()
+		{
+			var contexto = new ContextoFake();
+
+			var repositorioPai = contexto.Repositorio<ObjetoDeTestes>();
+			var repositorioFilho = contexto.Repositorio<FilhoDoObjetoDeTestes>();
+
+			repositorioPai.Quantidade
+				.Should()
+				.Be(0);
+
+			repositorioFilho.Quantidade
+				.Should()
+				.Be(0);
+
+			contexto.AdicionarRegistro(new ObjetoDeTestes()
+			{
+				Codigo = 1,
+				Nome = "Nome Valido Para Adicao",
+				Filhos = new List<FilhoDoObjetoDeTestes>()
+				{
+					new FilhoDoObjetoDeTestes()
+					{
+						IdPai = 999,
+						Id = 2,
+						Nome = "Filho Valido Para Adicao"
+					}
+				}
+			});
+
+			repositorioPai.Quantidade
+				.Should()
+				.Be(0);
+
+			repositorioFilho.Quantidade
+				.Should()
+				.Be(0);
+
+			var config = repositorioFilho.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Id).Igual(2);
+
+			var registroFilho = repositorioFilho.Buscar.Um(config);
+
+			registroFilho
+				.Should()
+				.NotBeNull();
+
+			registroFilho.Id
+				.Should()
+				.Be(2);
+
+			registroFilho.IdPai
+				.Should()
+				.Be(1);
+
+			registroFilho.Nome
+				.Should()
+				.Be("Filho Valido Para Adicao");
+		}
+
+		[TestMethod]
+		public void SeAdicionarRegistrosNetosNoContextoORepositorioNaoDeveSerModificadoMasDeveSerConsultado()
+		{
+			var contexto = new ContextoFake();
+
+			var repositorioPai = contexto.Repositorio<ObjetoDeTestes>();
+			var repositorioFilho = contexto.Repositorio<FilhoDoObjetoDeTestes>();
+			var repositorioNeto = contexto.Repositorio<NetoDoObjetoDeTestes>();
+
+			repositorioPai.Quantidade
+				.Should()
+				.Be(0);
+
+			repositorioFilho.Quantidade
+				.Should()
+				.Be(0);
+
+			repositorioNeto.Quantidade
+				.Should()
+				.Be(0);
+
+			contexto.AdicionarRegistro(new ObjetoDeTestes()
+			{
+				Codigo = 1,
+				Nome = "Nome Valido Para Adicao",
+				Filhos = new List<FilhoDoObjetoDeTestes>()
+				{
+					new FilhoDoObjetoDeTestes()
+					{
+						IdPai = 1,
+						Id = 2,
+						Nome = "Filho Valido Para Adicao",
+						Netos = new List<NetoDoObjetoDeTestes>()
+						{
+							new NetoDoObjetoDeTestes()
+							{
+								CodigoFilho = 999,
+								CodigoNeto = 3,
+								NomeNeto = "Neto Valido Para Adicao",
+								Opcao = EnumDeTestes.Opcao2,
+								Letra = EnumDeStrings.OpcaoC
+							}
+						}
+					}
+				}
+			});
+
+			repositorioPai.Quantidade
+				.Should()
+				.Be(0);
+
+			repositorioFilho.Quantidade
+				.Should()
+				.Be(0);
+
+			repositorioNeto.Quantidade
+				.Should()
+				.Be(0);
+
+			var config = repositorioNeto.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.CodigoNeto).Igual(3);
+
+			var registroNeto = repositorioNeto.Buscar.Um(config);
+
+			registroNeto
+				.Should()
+				.NotBeNull();
+
+			registroNeto.CodigoNeto
+				.Should()
+				.Be(3);
+
+			registroNeto.CodigoFilho
+				.Should()
+				.Be(2);
+
+			registroNeto.NomeNeto
+				.Should()
+				.Be("Neto Valido Para Adicao");
+		}
+
+		[TestMethod]
 		public void SeCarregarRegistrosOContextoDeveConterRegistrosParaBuscaApenas()
 		{
 			var contexto = CriarContextoParaTestes();

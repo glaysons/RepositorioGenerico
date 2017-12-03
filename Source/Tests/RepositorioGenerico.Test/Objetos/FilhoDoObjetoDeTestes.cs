@@ -9,17 +9,17 @@ namespace RepositorioGenerico.Test.Objetos
 	{
 
 		[Chave, Obrigatorio, AutoIncremento(Incremento.Identity)]
-		[Coluna(Ordem = 0, NomeDoTipo = "int")]
-		public int CodigoFilho { get; set; }
+		[Coluna(Nome = "CodigoFilho", Ordem = 0, NomeDoTipo = "int")]
+		public int Id { get; set; }
 
 		[Obrigatorio, TamanhoMaximo(50)]
-		[Coluna(Ordem = 1, NomeDoTipo = "varchar")]
-		public string NomeFilho { get; set; }
+		[Coluna(Nome = "NomeFilho", Ordem = 1, NomeDoTipo = "varchar")]
+		public string Nome { get; set; }
 
-		[Coluna(Ordem = 2, NomeDoTipo = "int")]
-		public int CodigoPai { get; set; }
+		[Coluna(Nome = "CodigoPai", Ordem = 2, NomeDoTipo = "int")]
+		public int IdPai { get; set; }
 
-		[ChaveEstrangeira("CodigoPai")]
+		[ChaveEstrangeira("IdPai")]
 		public virtual ObjetoDeTestes Pai { get; set; }
 
 		[PropriedadeDeLigacaoEstrangeira("Filho")]

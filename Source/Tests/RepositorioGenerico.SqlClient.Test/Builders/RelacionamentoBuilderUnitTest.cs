@@ -30,7 +30,7 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 			relacionamentoBuilder.CriarScriptConsultaRelacionamentoAscendente(relacionamentoAscendente, scriptQueConsultaFilhoQueTeraPaiCarregado)
 				.Should()
 				.Be("with[d]as(" +
-						"select[CodigoFilho],[NomeFilho],[CodigoPai] " +
+						"select[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai] " +
 						"from[ObjetoVirtualFilho]" +
 						"where([CodigoFilho]=@_p0) )" +
 				    "select[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo]," +
@@ -39,7 +39,7 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 				    "where(exists(" +
 						"select top 1 1 " +
 						"from[d]" +
-						"where(t.[Codigo]=d.[CodigoPai])))");
+						"where(t.[Codigo]=d.[IdPai])))");
 		}
 
 		[TestMethod]
@@ -66,12 +66,12 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 						"from[ObjetoVirtual]" +
 						"where([Codigo]=@_p0) " +
 				    ")" +
-				    "select[CodigoFilho],[NomeFilho],[CodigoPai]" +
+					"select[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai]" +
 				    "from[ObjetoVirtualFilho][t]" +
 				    "where(exists(" +
 						"select top 1 1 " +
 						"from[d]" +
-						"where(t.[CodigoPai]=d.[Codigo])))");
+						"where(t.[IdPai]=d.[Codigo])))");
 		}
 
 	}

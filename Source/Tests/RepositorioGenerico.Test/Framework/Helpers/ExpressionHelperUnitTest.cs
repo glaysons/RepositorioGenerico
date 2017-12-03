@@ -19,9 +19,9 @@ namespace RepositorioGenerico.Test.Framework.Helpers
 			{
 				Filhos = new List<FilhoDoObjetoDeTestes>
 				{
-					new FilhoDoObjetoDeTestes() {CodigoFilho = 1, NomeFilho = "A"},
-					new FilhoDoObjetoDeTestes() {CodigoFilho = 2, NomeFilho = "B"},
-					new FilhoDoObjetoDeTestes() {CodigoFilho = 3, NomeFilho = "C"}
+					new FilhoDoObjetoDeTestes() {Id = 1, Nome = "A"},
+					new FilhoDoObjetoDeTestes() {Id = 2, Nome = "B"},
+					new FilhoDoObjetoDeTestes() {Id = 3, Nome = "C"}
 				}
 			};
 			return objeto;

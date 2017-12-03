@@ -185,9 +185,9 @@ namespace RepositorioGenerico.Dictionary.Test
 
 			var objeto = new FilhoDoObjetoDeTestes()
 			{
-				CodigoFilho = 123,
-				NomeFilho = "Testes ABC",
-				CodigoPai = 775
+				Id = 123,
+				Nome = "Testes ABC",
+				IdPai = 775
 			};
 
 			dicionario.ConsultarValoresDaChave(objeto, new[] { "CodigoPai" })

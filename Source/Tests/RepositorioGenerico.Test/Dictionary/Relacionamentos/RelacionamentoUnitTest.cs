@@ -21,7 +21,7 @@ namespace RepositorioGenerico.Test.Dictionary.Relacionamentos
 
 			relacionamento.AplicarChaveAscendente(new object[] { 123 }, filho);
 
-			filho.CodigoPai
+			filho.IdPai
 				.Should().Be(123);
 		}
 
@@ -30,7 +30,7 @@ namespace RepositorioGenerico.Test.Dictionary.Relacionamentos
 		{
 			var filho = new FilhoDoObjetoDeTestes()
 			{
-				CodigoPai = 123
+				IdPai = 123
 			};
 
 			var dicionario = new Dicionario(typeof(FilhoDoObjetoDeTestes));
