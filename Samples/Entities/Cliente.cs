@@ -11,7 +11,7 @@ namespace Entities
 
 		#region Estrutura da Tabela
 
-		[Chave, Coluna(Nome = "CodCliente", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
+		[Chave, Coluna("CodCliente", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
 
 		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMinimo(10), TamanhoMaximo(50)]
@@ -20,21 +20,26 @@ namespace Entities
 		[Obrigatorio, Coluna(NomeDoTipo = "int")]
 		public int Idade { get; set; }
 
+		[Descricao("Endereço")]
 		[Coluna(NomeDoTipo = "varchar"), TamanhoMaximo(250)]
 		public string Endereco { get; set; }
 
-		[Coluna(Nome = "CreditoDisponivel", NomeDoTipo = "decimal")]
+		[Descricao("Crédito Disp.")]
+		[Coluna("CreditoDisponivel", NomeDoTipo = "decimal")]
 		public decimal? Credito { get; set; }
 
 		[Coluna(NomeDoTipo = "varchar"), TamanhoMaximo(250)]
 		public string Bairro { get; set; }
 
-		[Coluna(Nome = "CodCidade", NomeDoTipo = "int")]
+		[Descricao("Cidade")]
+		[Coluna("CodCidade", NomeDoTipo = "int")]
 		public int? IdCidade { get; set; }
 
+		[Descricao("Retem Imp.?")]
 		[Coluna(NomeDoTipo = "bit")]
 		public bool RetemImpostos { get; set; }
 
+		[Descricao("V.I.P.?")]
 		[Coluna(NomeDoTipo = "bit")]
 		public bool Vip { get; set; }
 

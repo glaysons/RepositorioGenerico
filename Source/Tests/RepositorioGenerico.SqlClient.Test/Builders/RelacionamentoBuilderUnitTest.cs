@@ -32,10 +32,15 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 				.Be("with[d]as(" +
 						"select[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai] " +
 						"from[ObjetoVirtualFilho]" +
-						"where([CodigoFilho]=@_p0) )" +
+						"where([CodigoFilho]=@_p0) " +
+					")," + 
+					"[t]as(" +
+						"select[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo]," + 
+							"[Decimal],[DecimalNulo],[Logico],[DataHora],[DataHoraNulo]" +
+						"from[ObjetoVirtual][t])" +
 				    "select[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo]," +
 						"[Decimal],[DecimalNulo],[Logico],[DataHora],[DataHoraNulo]" +
-				    "from[ObjetoVirtual][t]" +
+				    "from[t]" +
 				    "where(exists(" +
 						"select top 1 1 " +
 						"from[d]" +
@@ -65,9 +70,11 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 							"[DecimalNulo],[Logico],[DataHora],[DataHoraNulo] " +
 						"from[ObjetoVirtual]" +
 						"where([Codigo]=@_p0) " +
-				    ")" +
-					"select[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai]" +
-				    "from[ObjetoVirtualFilho][t]" +
+					"),[t]as(" +
+						"select[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai]" +
+						"from[ObjetoVirtualFilho][t])" +
+					"select[Id],[Nome],[IdPai]" +
+				    "from[t]" +
 				    "where(exists(" +
 						"select top 1 1 " +
 						"from[d]" +

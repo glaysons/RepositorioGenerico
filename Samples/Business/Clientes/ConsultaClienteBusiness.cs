@@ -16,7 +16,9 @@ namespace Business.Clientes
 
 		public IEnumerable<Cliente> ConsultarTodosOsClientes()
 		{
-			return _repositorio.Buscar.Todos();
+			var config = _repositorio.Buscar.CriarQuery();
+			config.CarregarPropriedade(c => c.Filhos);
+			return _repositorio.Buscar.Varios(config);
 		}
 
 		public Cliente ConsultarCliente(int codigo)

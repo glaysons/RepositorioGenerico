@@ -103,6 +103,7 @@
     <Compile Include="Anotacoes\CompararAttribute.cs" />
     <Compile Include="Anotacoes\AutoIncrementoAttribute.cs" />
     <Compile Include="Anotacoes\Incremento.cs" />
+    <Compile Include="Anotacoes\RequeridoAttribute.cs" />
     <Compile Include="Anotacoes\ValorPadraoAttribute.cs" />
     <Compile Include="Anotacoes\DescricaoAttribute.cs" />
     <Compile Include="Anotacoes\ChaveEstrangeiraAttribute.cs" />

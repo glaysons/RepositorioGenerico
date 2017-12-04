@@ -13,6 +13,15 @@ namespace RepositorioGenerico.Entities.Anotacoes
 
 		public string NomeDoTipo { get; set; }
 
+		public ColunaAttribute()
+		{
+		}
+
+		public ColunaAttribute(string nome)
+		{
+			Nome = nome;
+		}
+
 	}
 
 }

@@ -9,13 +9,13 @@ namespace Entities
 
 		#region Estrutura da Tabela
 
-		[Chave, Coluna(Nome = "CodContatoFilho", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
+		[Chave, Coluna("CodContatoFilho", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
 
-		[Obrigatorio, Coluna(Nome = "CodFilho", NomeDoTipo = "int")]
+		[Obrigatorio, Coluna("CodFilho", NomeDoTipo = "int")]
 		public int IdFilho { get; set; }
 
-		[Obrigatorio, Coluna(Nome = "CodTipoContato", NomeDoTipo = "int")]
+		[Obrigatorio, Coluna("CodTipoContato", NomeDoTipo = "int")]
 		public int IdTipoContato { get; set; }
 
 		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMaximo(50)]

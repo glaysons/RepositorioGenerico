@@ -18,7 +18,7 @@ namespace RepositorioGenerico.SqlClient.Builders
 			foreach (var chave in relacionamento.Dicionario.ConsultarCamposChave())
 			{
 				if (n < relacionamento.ChaveEstrangeira.Length)
-					sql.Append(string.Concat("(t.[", chave.Nome, "]=d.[", relacionamento.ChaveEstrangeira[n], "])and"));
+					sql.Append(string.Concat("(t.[", chave.AliasOuNome, "]=d.[", relacionamento.ChaveEstrangeira[n], "])and"));
 				n++;
 			}
 			if (n == 0 || n != relacionamento.ChaveEstrangeira.Length)
@@ -31,7 +31,7 @@ namespace RepositorioGenerico.SqlClient.Builders
 		private StringBuilder CriarScriptConsultaRelacionamentoBasico(Relacionamento relacionamento, string condicao)
 		{
 			var sql = new StringBuilder();
-			sql.Append(string.Concat("with[d]as(", condicao, ")"));
+			sql.Append(string.Concat("with[d]as(", condicao, "),[t]as("));
 			sql.Append("select");
 			foreach (var item in relacionamento.Dicionario.Itens)
 			{
@@ -41,7 +41,11 @@ namespace RepositorioGenerico.SqlClient.Builders
 				sql.Append(string.Concat("[", item.Nome, "]", alias, ","));
 			}
 			sql.Length -= 1;
-			sql.Append(string.Concat("from[", relacionamento.Dicionario.Nome, "][t]where(exists(select top 1 1 from[d]where"));
+			sql.Append(string.Concat("from[", relacionamento.Dicionario.Nome, "][t])select"));
+			foreach (var item in relacionamento.Dicionario.Itens)
+				sql.Append(string.Concat("[", item.AliasOuNome, "],"));
+			sql.Length -= 1;
+			sql.Append("from[t]where(exists(select top 1 1 from[d]where");
 			return sql;
 		}
 

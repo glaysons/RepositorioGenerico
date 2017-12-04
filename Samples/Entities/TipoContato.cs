@@ -10,7 +10,7 @@ namespace Entities
 
 		#region Estrutura da Tabela
 
-		[Chave, Coluna(Nome = "CodTipoContato", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
+		[Chave, Coluna("CodTipoContato", NomeDoTipo = "int"), AutoIncremento(Incremento.Identity)]
 		public int Id { get; set; }
 
 		[Obrigatorio, Coluna(NomeDoTipo = "varchar"), TamanhoMaximo(50)]
