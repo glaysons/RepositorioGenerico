@@ -286,7 +286,7 @@ namespace RepositorioGenerico.Dictionary
 			var n = 0;
 			foreach (var campo in foreign)
 			{
-				var item = ConsultarPorCampo(campo);
+				var item = ConsultarPorPropriedade(campo);
 				if (item == null)
 					continue;
 				resultado[n] = item.Propriedade.GetValue(registro, null);

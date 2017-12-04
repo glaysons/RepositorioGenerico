@@ -70,7 +70,7 @@ namespace RepositorioGenerico.Search
 			}
 			catch (Exception ex)
 			{
-				throw new NaoFoiPossivelConsultarRelacionamentoVinculadoDevidoAoSeguinteErroException(_dicionario.AliasOuNome, tipo.ToString(), item.Ligacao.Dicionario.AliasOuNome, ex.Message);
+				throw new NaoFoiPossivelConsultarRelacionamentoVinculadoException(_dicionario.AliasOuNome, tipo.ToString(), item.Ligacao.Dicionario.AliasOuNome, ex.Message);
 			}
 
 			var tipoModel = (tipo == TiposRelacionamento.Ascendente)

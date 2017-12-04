@@ -61,11 +61,13 @@
     <Compile Include="ConexaoFake.cs" />
     <Compile Include="Contextos\ContextoFake.cs" />
     <Compile Include="Contextos\ContextoFakeBase.cs" />
+    <Compile Include="DadosRelacionamento.cs" />
     <Compile Include="Contextos\FilhosRepositorioFake.cs" />
     <Compile Include="Contextos\IContextoFake.cs" />
     <Compile Include="Contextos\PersistenciaFake.cs" />
     <Compile Include="Contextos\PersistenciaFakeBase.cs" />
     <Compile Include="Contextos\Procedure.cs" />
+    <Compile Include="Contextos\RelacionamentoBuilderFake.cs" />
     <Compile Include="Contextos\RepositorioFake.cs" />
     <Compile Include="Contextos\Tables\ContextoFake.cs" />
     <Compile Include="Contextos\Tables\IContextoFake.cs" />

@@ -24,7 +24,7 @@ namespace RepositorioGenerico.Fake.Contextos
 
 		private static IRelacionamentoBuilder CriarRelacionamentoBuilder()
 		{
-			return new Mock<IRelacionamentoBuilder>().Object;
+			return new RelacionamentoBuilderFake();
 		}
 
 		protected Dictionary<string, object> Repositorios

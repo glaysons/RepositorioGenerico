@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using RepositorioGenerico.Dictionary.Builders;
 using RepositorioGenerico.Entities;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Pattern.Buscadores;

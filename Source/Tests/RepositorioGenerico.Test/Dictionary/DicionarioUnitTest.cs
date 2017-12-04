@@ -190,7 +190,7 @@ namespace RepositorioGenerico.Dictionary.Test
 				IdPai = 775
 			};
 
-			dicionario.ConsultarValoresDaChave(objeto, new[] { "CodigoPai" })
+			dicionario.ConsultarValoresDaChave(objeto, new[] { "IdPai" })
 				.Should().BeEquivalentTo(775);
 		}
 
@@ -206,7 +206,7 @@ namespace RepositorioGenerico.Dictionary.Test
 				MapeadoComCodigoPai = 775
 			};
 
-			dicionario.ConsultarValoresDaChave(objeto, new[] { "CodigoPai" })
+			dicionario.ConsultarValoresDaChave(objeto, new[] { "MapeadoComCodigoPai" })
 				.Should().BeEquivalentTo(775);
 		}
 

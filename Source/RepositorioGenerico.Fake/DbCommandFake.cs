@@ -2,6 +2,7 @@
 using System.Data;
 using System.Globalization;
 using RepositorioGenerico.Exceptions;
+using System.Collections.Generic;
 
 namespace RepositorioGenerico.Fake
 {
@@ -85,11 +86,68 @@ namespace RepositorioGenerico.Fake
 
 		private IDataReader CriarQuery()
 		{
+			if (EhConsultaRelacionada())
+				return CriarQueryRelacionado();
+			return CriarQueryDireto();
+		}
+
+		private bool EhConsultaRelacionada()
+		{
+			return (CommandText.StartsWith("asc|"))
+				|| (CommandText.StartsWith("desc|"));
+		}
+
+		private IDataReader CriarQueryRelacionado()
+		{
+			int top;
+			var view = ConsultarDataViewDaConsultaAtual(out top);
+			var relacionamento = new DadosRelacionamento(CommandText);
+			var relacao = CriarOuConsultarRelacaoEntreAsTabelas(relacionamento, view.Table.PrimaryKey);
+			using (var novaTabela = _bancoDeDadosVirtual.Tables[relacionamento.Tabela].Clone())
+			{
+				foreach (DataRowView registro in view)
+				{
+					var novaView = registro.CreateChildView(relacao);
+					foreach (DataRowView novoRegistro in novaView)
+						novaTabela.ImportRow(novoRegistro.Row);
+				}
+				return new DataReaderFake(novaTabela.DefaultView);
+			}
+		}
+
+		private DataRelation CriarOuConsultarRelacaoEntreAsTabelas(DadosRelacionamento relacionamento, DataColumn[] chavesPrimarias)
+		{
+			var nome = relacionamento.Tabela + "_" + relacionamento.CamposEstrangeiros.Replace(",", "_").Replace(" ", string.Empty);
+			if (_bancoDeDadosVirtual.Relations.Contains(nome))
+				return _bancoDeDadosVirtual.Relations[nome];
+			var relacao = new DataRelation(nome, chavesPrimarias, ConsultarCamposChaveRelacionadosComTabelaFilha(relacionamento));
+			_bancoDeDadosVirtual.Relations.Add(relacao);
+			return relacao;
+		}
+
+		private DataColumn[] ConsultarCamposChaveRelacionadosComTabelaFilha(DadosRelacionamento relacionamento)
+		{
+			var tabela = _bancoDeDadosVirtual.Tables[relacionamento.Tabela];
+			var campos = new List<DataColumn>();
+			foreach (var campo in relacionamento.CamposEstrangeiros.Split(','))
+				campos.Add(tabela.Columns[campo]);
+			return campos.ToArray();
+		}
+
+		private IDataReader CriarQueryDireto()
+		{
+			int top;
+			var view = ConsultarDataViewDaConsultaAtual(out top);
+			return new DataReaderFake(view, top);
+		}
+
+		private DataView ConsultarDataViewDaConsultaAtual(out int top)
+		{
 			var view = ConsultarTabelaComDadosVirtuais().DefaultView;
 			var sql = CommandText.ToLower();
 			var indiceTop = sql.IndexOf("select top ", StringComparison.Ordinal);
 			var fimTop = sql.IndexOf(" ", 11, StringComparison.Ordinal);
-			var top = ((indiceTop == 0) && (fimTop > 0))
+			top = ((indiceTop == 0) && (fimTop > 0))
 				? Convert.ToInt32(sql.Substring(11, fimTop - 11))
 				: 0;
 			var indiceWhere = sql.IndexOf("where", StringComparison.Ordinal);
@@ -103,7 +161,7 @@ namespace RepositorioGenerico.Fake
 				view.Sort = CommandText.Substring(indiceOrderby + 8);
 			}
 			view.RowFilter = condicao;
-			return new DataReaderFake(view, top);
+			return view;
 		}
 
 		private DataTable ConsultarTabelaComDadosVirtuais()

@@ -89,5 +89,28 @@ namespace Business.Test.Clientes
 				.Should().BeNull();
 		}
 
+		[TestMethod]
+		public void SeConsultarClienteExistenteCarregandoOsFilhosPorCodigoDeveEncontrar()
+		{
+			var factory = new ClienteFactory();
+			var consultador = factory.CriarConsultador();
+
+			var cliente = consultador.ConsultarClienteComFilhosEContatos(1);
+
+			cliente
+				.Should().NotBeNull();
+
+			cliente.Nome
+				.Should().Be("João Abc da Silva");
+
+			cliente.Filhos
+				.Should()
+				.HaveCount(2);
+
+			cliente.Contatos
+				.Should()
+				.HaveCount(1);
+		}
+
 	}
 }
