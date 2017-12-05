@@ -28,6 +28,7 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 			foreach (var tabela in _configuracao.Tabelas)
 				try
 				{
+					_configuracao.AtualizarStatusGeracaoTabela(tabela);
 					GerarArquivo(tabela);
 				}
 				catch (Exception ex)

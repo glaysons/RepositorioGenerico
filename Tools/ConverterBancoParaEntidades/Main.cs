@@ -9,7 +9,7 @@ namespace ConverterBancoParaEntidades
 	public partial class Main : Form, IConfiguracao
 	{
 
-		private IConsultador _ultimoConsutador = null;
+		private IConsultador _ultimoConsultador = null;
 
 		public string Conexao
 		{
@@ -72,6 +72,12 @@ namespace ConverterBancoParaEntidades
 			Application.DoEvents();
 		}
 
+		public void AtualizarStatusGeracaoTabela(string nome)
+		{
+			lStatusTabela.Text = nome;
+			Application.DoEvents();
+		}
+
 		private void Salvar()
 		{
 			Properties.Settings.Default.Save();
@@ -85,14 +91,16 @@ namespace ConverterBancoParaEntidades
 		private void Main_Load(object sender, EventArgs e)
 		{
 			this.Text = Program.TITULOPROGRAMA;
+			lStatusTabela.Text = string.Empty;
+			comboLinguagem.SelectedIndex = 0;
 		}
 
 		private void butConsultarTabelas_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				_ultimoConsutador = Consultadores.Factory.CriarConsultador(this);
-				var itens = _ultimoConsutador.ConsultarTabelas();
+				_ultimoConsultador = Consultadores.Factory.CriarConsultador(this);
+				var itens = _ultimoConsultador.ConsultarTabelas();
 				checkTabelas.Items.Clear();
 				checkTabelas.Items.AddRange(itens);
 			}
@@ -132,7 +140,7 @@ namespace ConverterBancoParaEntidades
 		{
 			try
 			{
-				var gerador = Geradores.Factory.CriarGerador(this, _ultimoConsutador);
+				var gerador = Geradores.Factory.CriarGerador(this, _ultimoConsultador);
 				if (Utils.UsuarioConfirma("Deseja gerar os arquivos das tabelas selecionadas?"))
 				{
 					txtLog.Clear();
@@ -143,6 +151,10 @@ namespace ConverterBancoParaEntidades
 			catch (Exception ex)
 			{
 				Utils.MensagemErro("Não foi possível gerar os arquivos das tabelas devido ao seguinte erro: ", ex.Message);
+			}
+			finally
+			{
+				AtualizarStatusGeracaoTabela(string.Empty);
 			}
 		}
 

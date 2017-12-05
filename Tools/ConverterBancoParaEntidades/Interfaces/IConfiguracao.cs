@@ -23,5 +23,7 @@ namespace ConverterBancoParaEntidades.Interfaces
 
 		void AdicionarLog(params string[] mensagem);
 
+		void AtualizarStatusGeracaoTabela(string nomeTabela);
+
 	}
 }

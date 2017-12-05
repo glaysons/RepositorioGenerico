@@ -46,11 +46,11 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 
 		private static void GerarAtributosBasicos(StreamWriter arquivo, Campo campo)
 		{
-			arquivo.Write("\t\t[Coluna(Nome = \"");
+			arquivo.Write("\t\t[Coluna(\"");
 			arquivo.Write(campo.NomeCampo);
 			arquivo.Write("\", NomeDoTipo = \"");
 			arquivo.Write(campo.NomeTipo);
-			arquivo.Write("\"");
+			arquivo.Write("\")");
 			if (campo.TamanhoMaximo > 0)
 			{
 				arquivo.Write(", TamanhoMaximo(");

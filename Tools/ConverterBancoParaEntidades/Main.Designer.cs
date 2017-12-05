@@ -53,6 +53,7 @@
 			this.txtHerancaPadrao = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.txtLog = new System.Windows.Forms.TextBox();
+			this.lStatusTabela = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -334,12 +335,23 @@
 			this.txtLog.TabIndex = 19;
 			this.txtLog.WordWrap = false;
 			// 
+			// lStatusTabela
+			// 
+			this.lStatusTabela.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lStatusTabela.AutoSize = true;
+			this.lStatusTabela.Location = new System.Drawing.Point(246, 595);
+			this.lStatusTabela.Name = "lStatusTabela";
+			this.lStatusTabela.Size = new System.Drawing.Size(70, 21);
+			this.lStatusTabela.TabIndex = 20;
+			this.lStatusTabela.Text = "[status]";
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.White;
 			this.ClientSize = new System.Drawing.Size(798, 639);
+			this.Controls.Add(this.lStatusTabela);
 			this.Controls.Add(this.txtLog);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.txtHerancaPadrao);
@@ -403,6 +415,7 @@
 		private System.Windows.Forms.TextBox txtHerancaPadrao;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.TextBox txtLog;
+		private System.Windows.Forms.Label lStatusTabela;
 	}
 }
 
