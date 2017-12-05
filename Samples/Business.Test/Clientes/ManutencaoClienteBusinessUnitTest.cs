@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Entities;
 using FluentAssertions;
 using RepositorioGenerico.Entities;
+using System.Collections.Generic;
 
 namespace Business.Test.Clientes
 {
@@ -134,6 +135,81 @@ namespace Business.Test.Clientes
 
 			factory.Repositorio.Quantidade
 				.Should().Be(0);
+		}
+
+		[TestMethod]
+		public void SeIncluirUmClientePreenchidoDeveInserirTodosOsRegistros()
+		{
+			var factory = new ClienteFactory();
+			var manutencao = factory.CriarManutencao();
+
+			var cliente = new Cliente()
+			{
+				Id = 2,
+				Nome = "Zé Abc de Oliveira",
+				Idade = 55,
+				Endereco = "Rua Vista Velha",
+				Bairro = "Prainha das Vistas",
+				IdCidade = 2,
+				RetemImpostos = true,
+				Vip = true,
+
+				Filhos = new List<Filho>()
+				{
+					new Filho()
+					{
+						Id = 3,
+						IdCliente = 2,
+						Nome = "Zézinho Abc de Oliveira",
+						MoraComOsPais = false,
+						Idade = 22,
+						DataDeNascimento = new System.DateTime(1995, 3, 5),
+						Contatos = new List<ContatoDoFilho>()
+						{
+							new ContatoDoFilho()
+							{
+								Id = 4,
+								IdFilho = 3,
+								Nome = "Amigo do Zézinho"
+							}
+						}
+					}
+				},
+
+				Contatos = new List<ContatoDoCliente>()
+				{
+					new ContatoDoCliente()
+					{
+						Id = 2,
+						IdCliente = 2,
+						IdTipoContato = 2,
+						Nome = "Bcd Ltda.",
+						Telefone = "6543-9877"
+					},
+					new ContatoDoCliente()
+					{
+						Id = 3,
+						IdCliente = 2,
+						IdTipoContato = 1,
+						Nome = "Parente Próximo",
+						Telefone = "9876-5432"
+					}
+				}
+			};
+
+			manutencao.Cadastrar(cliente);
+
+			factory.Contexto.Repositorio<Cliente>().Quantidade
+				.Should().Be(1, "deve existir apenas um cliente no contexto!");
+
+			factory.Contexto.Repositorio<Filho>().Quantidade
+				.Should().Be(1, "deve existir apenas um filho no contexto!");
+
+			factory.Contexto.Repositorio<ContatoDoFilho>().Quantidade
+				.Should().Be(1, "deve existir apenas um contato do filho no contexto!");
+
+			factory.Contexto.Repositorio<ContatoDoCliente>().Quantidade
+				.Should().Be(2, "deve existir apenas dois contato do cliente no contexto!");
 		}
 
 	}
