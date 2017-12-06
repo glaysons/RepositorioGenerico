@@ -25,16 +25,21 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 
 		public void Gerar()
 		{
-			foreach (var tabela in _configuracao.Tabelas)
+			var t = _configuracao.Tabelas.Length;
+			for (int n = 0; n < t; n++)
+			{
+				var tabela = _configuracao.Tabelas[n];
 				try
 				{
-					_configuracao.AtualizarStatusGeracaoTabela(tabela);
+					_configuracao.AtualizarStatusGeracaoTabela(string.Concat("[", (n / (double)t * 100.0).ToString("F2"), "%] ", tabela));
 					GerarArquivo(tabela);
 				}
 				catch (Exception ex)
 				{
 					_configuracao.AdicionarLog("Não foi possível gerar a tabela [", tabela, "] devido ao seguinte erro: ", ex.Message);
 				}
+			}
+			_configuracao.AtualizarStatusGeracaoTabela(string.Concat("[", 100.0.ToString("F2"), "%]"));
 		}
 
 		private void GerarArquivo(string tabela)

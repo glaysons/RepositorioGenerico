@@ -331,7 +331,7 @@
 			this.txtLog.Name = "txtLog";
 			this.txtLog.ReadOnly = true;
 			this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtLog.Size = new System.Drawing.Size(536, 122);
+			this.txtLog.Size = new System.Drawing.Size(536, 97);
 			this.txtLog.TabIndex = 19;
 			this.txtLog.WordWrap = false;
 			// 
@@ -339,9 +339,10 @@
 			// 
 			this.lStatusTabela.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lStatusTabela.AutoSize = true;
-			this.lStatusTabela.Location = new System.Drawing.Point(246, 595);
+			this.lStatusTabela.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lStatusTabela.Location = new System.Drawing.Point(246, 559);
 			this.lStatusTabela.Name = "lStatusTabela";
-			this.lStatusTabela.Size = new System.Drawing.Size(70, 21);
+			this.lStatusTabela.Size = new System.Drawing.Size(55, 17);
 			this.lStatusTabela.TabIndex = 20;
 			this.lStatusTabela.Text = "[status]";
 			// 
