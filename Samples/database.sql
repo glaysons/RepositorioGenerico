@@ -165,7 +165,7 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-ALTER TABLE [dbo].[Clientes]  WITH CHECK ADD  CONSTRAINT [FK_Clientes_Cidades] FOREIGN KEY([CodCliente])
+ALTER TABLE [dbo].[Clientes]  WITH CHECK ADD  CONSTRAINT [FK_Clientes_Cidades] FOREIGN KEY([CodCidade])
 REFERENCES [dbo].[Cidades] ([CodCidade])
 GO
 

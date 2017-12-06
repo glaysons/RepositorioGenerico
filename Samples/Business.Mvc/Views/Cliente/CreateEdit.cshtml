@@ -1,0 +1,206 @@
+﻿@model Entities.Cliente
+
+@{
+	var titulo = (ViewBag.Novo ? "Create" : "Edit");
+	ViewBag.Title = titulo;
+	var cidades = ViewBag.Cidades;
+	var tiposContatos = ViewBag.TiposContatos;
+}
+
+@section header{
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+}
+
+<h2>@titulo</h2>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>Cliente</h4>
+		<hr />
+		@ViewBag.MensagemErro
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.Id)
+		<div class="form-group">
+			@Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Idade, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Idade, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Idade, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Endereco, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Endereco, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Credito, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Credito, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Credito, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.IdCidade, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.DropDownList("IdCidade", new SelectList(cidades, "Id", "Nome"), new { @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.IdCidade, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.RetemImpostos, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				<div class="checkbox">
+					@Html.EditorFor(model => model.RetemImpostos)
+					@Html.ValidationMessageFor(model => model.RetemImpostos, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Vip, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				<div class="checkbox">
+					@Html.EditorFor(model => model.Vip)
+					@Html.ValidationMessageFor(model => model.Vip, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="@titulo" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+
+	<h2>Contatos</h2>
+
+	<p>
+		<a ng-init="Contatos = []" ng-click="Contato = null" data-toggle="modal" data-target="#contatosCliente">Create New</a>
+	</p>
+	<table class="table">
+		<tr>
+			<th>
+				Tipo do Contato
+			</th>
+			<th>
+				Contato
+			</th>
+			<th>
+				Telefone
+			</th>
+			<th>
+				E-mail
+			</th>
+			<th>
+
+			</th>
+		</tr>
+
+		<tr ng-repeat="contato in Contatos">
+			<td>
+				<input type="hidden" name="Contatos[{{$index}}].Id" value="{{contato.Id}}" />
+				{{ contato.IdTipoContato }}<input type="hidden" name="Contatos[{{$index}}].IdTipoContato" value="{{contato.IdTipoContato}}" />
+			</td>
+			<td>
+				{{ contato.Nome }}<input type="hidden" name="Contatos[{{$index}}].Nome" value="{{contato.Nome}}" />
+			</td>
+			<td>
+				{{ contato.Telefone }}<input type="hidden" name="Contatos[{{$index}}].Telefone" value="{{contato.Telefone}}" />
+			</td>
+			<td>
+				{{ contato.Email }}<input type="hidden" name="Contatos[{{$index}}].Email" value="{{contato.Email}}" />
+			</td>
+			<td>
+				<a ng-click="Contato = contato" data-toggle="modal" data-target="#contatosCliente">Edit</a> |
+				<a ng-click="Contatos.splice($index, 1)">Delete</a>
+			</td>
+		</tr>
+
+	</table>
+
+	<div id="contatosCliente" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Contatos do Cliente</h4>
+				</div>
+				<div class="modal-body form-horizontal">
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Tipo</label>
+						<div class="col-md-10">
+							@Html.DropDownList("ContatoTipo", new SelectList(tiposContatos, "Id", "Nome"), new { @class = "form-control", @ng_model="Contato.IdTipoContato"})
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Nome</label>
+						<div class="col-md-10">
+							<input class="form-control text-box single-line" ng-model="Contato.Nome" type="text" value="" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Telefone</label>
+						<div class="col-md-10">
+							<input class="form-control text-box single-line" ng-model="Contato.Telefone" type="text" value="" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-2">E-mail</label>
+						<div class="col-md-10">
+							<input class="form-control text-box single-line" ng-model="Contato.Email" type="text" value="" />
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Contatos.push(Contato)">Save</button>
+					<button type="button" class="btn" data-dismiss="modal" ng-click="Contato = null">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}
