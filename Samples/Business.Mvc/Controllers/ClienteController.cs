@@ -68,5 +68,27 @@ namespace Business.Mvc.Controllers
 			return Redirect("~/Cliente");
 		}
 
+		public ActionResult Edit(int id)
+		{
+			return ExibirPaginaParaCriarOuEditar(_consulta.ConsultarClienteComFilhosEContatos(id));
+		}
+
+		[HttpPost]
+		public ActionResult Edit(Cliente cliente)
+		{
+			ViewBag.MensagemErro = "";
+			try
+			{
+				_manutencao.Atualizar(cliente);
+				_contexto.Salvar();
+				return RedirecionarParaPaginaInicialDaCidade();
+			}
+			catch (Exception ex)
+			{
+				ViewBag.MensagemErro = ex.Message;
+				return ExibirPaginaParaCriarOuEditar(cliente);
+			}
+		}
+
 	}
 }

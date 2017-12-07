@@ -1,5 +1,6 @@
 ﻿using Business.TiposDosContatos;
 using Entities;
+using RepositorioGenerico.Entities;
 using RepositorioGenerico.Pattern.Contextos;
 using System;
 using System.Web.Mvc;
@@ -29,10 +30,10 @@ namespace Business.Mvc.Controllers
 			return ExibirPaginaParaCriarOuEditar();
 		}
 
-		private ActionResult ExibirPaginaParaCriarOuEditar(TipoContato TipoContato = null)
+		private ActionResult ExibirPaginaParaCriarOuEditar(TipoContato tipoContato = null)
 		{
-			ViewBag.Novo = (TipoContato == null);
-			return View("CreateEdit", TipoContato);
+			ViewBag.Novo = ((tipoContato == null) || (tipoContato.EstadoEntidade == EstadosEntidade.Novo));
+			return View("CreateEdit", tipoContato);
 		}
 
 		[HttpPost]

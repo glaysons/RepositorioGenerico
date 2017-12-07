@@ -1,5 +1,6 @@
 ﻿using Business.Cidades;
 using Entities;
+using RepositorioGenerico.Entities;
 using RepositorioGenerico.Pattern.Contextos;
 using System;
 using System.Web.Mvc;
@@ -31,7 +32,7 @@ namespace Business.Mvc.Controllers
 
 		private ActionResult ExibirPaginaParaCriarOuEditar(Cidade cidade = null)
 		{
-			ViewBag.Novo = (cidade == null);
+			ViewBag.Novo = ((cidade == null) || (cidade.EstadoEntidade == EstadosEntidade.Novo));
 			return View("CreateEdit", cidade);
 		}
 
