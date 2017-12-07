@@ -56,13 +56,13 @@ namespace RepositorioGenerico.SqlClient.Contextos
 				foreach (var item in filhosAtuais)
 				{
 					var filho = (IEntidade)item;
-					if ((filho.EstadoEntidade == EstadosEntidade.Novo) || (!campo.Ligacao.PossuiChaveAscendente(chaveDoModel, filho)))
+					if (campo.Ligacao.PossuiChaveAscendente(chaveDoModel, filho))
+						repositorio.Atualizar(filho);
+					else
 					{
 						campo.Ligacao.AplicarChaveAscendente(chaveDoModel, filho);
 						repositorio.Inserir(filho);
 					}
-					else // if (filho.EstadoEntidade == EstadosEntidade.Modificado)
-						repositorio.Atualizar(filho);
 				}
 			}
 		}
