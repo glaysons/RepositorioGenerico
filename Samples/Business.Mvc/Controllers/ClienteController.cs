@@ -2,6 +2,7 @@
 using Business.Clientes;
 using Business.TiposDosContatos;
 using Entities;
+using RepositorioGenerico.Entities;
 using RepositorioGenerico.Pattern.Contextos;
 using System;
 using System.Web.Mvc;
@@ -39,7 +40,7 @@ namespace Business.Mvc.Controllers
 
 		private ActionResult ExibirPaginaParaCriarOuEditar(Cliente cliente = null)
 		{
-			ViewBag.Novo = (cliente == null);
+			ViewBag.Novo = ((cliente == null) || (cliente.EstadoEntidade == EstadosEntidade.Novo));
 			ViewBag.Cidades = _consultaCidade.ConsultarTodasAsCidades();
 			ViewBag.TiposContatos = _consultaTipoContato.ConsultarTodosOsTiposDosContatos();
 			return View("CreateEdit", cliente);

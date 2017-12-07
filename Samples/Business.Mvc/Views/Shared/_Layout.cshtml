@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app>
+<html ng-app="@ViewBag.angularApp">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
 	@Scripts.Render("~/bundles/modernizr")
 @RenderSection("header", required: false)
 </head>
-<body>
+<body @Html.Raw(ViewBag.angularController == null ? string.Empty : string.Concat("ng-controller=\"", ViewBag.angularController, "\""))>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
