@@ -1,0 +1,75 @@
+﻿@model Entities.Filho
+
+@{
+	ViewBag.Title = "Cliente";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cliente</h2>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>Filho</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="form-group">
+			@Html.LabelFor(model => model.IdCliente, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.IdCliente, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.IdCliente, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.MoraComOsPais, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				<div class="checkbox">
+					@Html.EditorFor(model => model.MoraComOsPais)
+					@Html.ValidationMessageFor(model => model.MoraComOsPais, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Idade, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Idade, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Idade, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.DataDeNascimento, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.DataDeNascimento, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.DataDeNascimento, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Create" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

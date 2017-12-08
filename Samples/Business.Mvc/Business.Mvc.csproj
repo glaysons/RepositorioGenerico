@@ -290,6 +290,7 @@
     <Content Include="Views\TipoContato\Delete.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Cliente\CreateEdit.cshtml" />
+    <Content Include="Views\Cliente\Cliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

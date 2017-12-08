@@ -47,12 +47,13 @@ namespace RepositorioGenerico.SqlClient.Contextos
 					continue;
 				var repositorio = _contexto.Repositorio(campo.Ligacao.Dicionario.Tipo);
 				var filhosAntigos = ConsultarFilhosAtuais(model, campo);
-				foreach (var filho in filhosAntigos)
-				{
-					var chaveAntiga = campo.Ligacao.Dicionario.ConsultarValoresDaChave(filho);
-					if (ChaveAtualFoiExcluida(campo.Ligacao, filhosAtuais, chaveAntiga))
-						repositorio.Excluir(filho);
-				}
+				if (filhosAntigos != null)
+					foreach (var filho in filhosAntigos)
+					{
+						var chaveAntiga = campo.Ligacao.Dicionario.ConsultarValoresDaChave(filho);
+						if (ChaveAtualFoiExcluida(campo.Ligacao, filhosAtuais, chaveAntiga))
+							repositorio.Excluir(filho);
+					}
 				foreach (var item in filhosAtuais)
 				{
 					var filho = (IEntidade)item;
@@ -71,7 +72,7 @@ namespace RepositorioGenerico.SqlClient.Contextos
 		{
 			var expressao = ExpressionHelper.CriarExpressaoDeConsultaDaPropriedade<TObjeto>(campo.Propriedade);
 			var buscador = (Buscador<TObjeto>) _contexto.Repositorio<TObjeto>().Buscar;
-			return buscador.ConsultarPropriedade(model, expressao).Cast<object>().ToList();
+			return buscador.ConsultarPropriedade(model, expressao)?.Cast<object>().ToList();
 		}
 
 		private bool ChaveAtualFoiExcluida(Relacionamento ligacao, ICollection itens, object[] chaveDoModel)

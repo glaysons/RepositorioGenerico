@@ -73,6 +73,28 @@
 					$scope.Contato.Tipo = vm.consultarTipoContato($scope.Contato.IdTipoContato);
 				};
 
+				$scope.criarFilho = function () {
+					$scope.novoFilho = true;
+					$scope.Filho = null;
+				};
+
+				$scope.adicionarFilho = function () {
+					$scope.Cliente.Filhos.push($scope.Filho);
+				};
+
+				$scope.alterarFilho = function (indice) {
+					$scope.novoFilho = false;
+					$scope.Filho = $scope.Cliente.Filhos[indice];
+				};
+
+				$scope.excluirFilho = function (indice) {
+					$scope.Cliente.Filhos.splice(indice, 1);
+				};
+
+				$scope.atualizarFilho = function () {
+				
+				};
+
 			}]);
 	</script>
 }
@@ -165,11 +187,110 @@
 		</div>
 	</div>
 
-	<h2>Contatos</h2>
+	<h2>Filhos do Cliente</h2>
+
+	<p>
+		<a ng-click="criarFilho()" data-toggle="modal" data-target="#filhosCliente">Create New</a>
+	</p>
+
+	<table class="table">
+		<tr>
+			<th>
+				Nome
+			</th>
+			<th>
+				Mora com os Pais?
+			</th>
+			<th>
+				Idade
+			</th>
+			<th>
+				Data de Nascimento
+			</th>
+			<th>
+
+			</th>
+		</tr>
+
+		<tr ng-repeat="filho in Cliente.Filhos">
+			<td>
+				<input type="hidden" name="Filhos[{{$index}}].Id" value="{{filho.Id}}" />
+				<input type="hidden" name="Filhos[{{$index}}].IdCliente" value="{{filho.IdCliente}}" />
+				{{ filho.Nome }}<input type="hidden" name="Filhos[{{$index}}].Nome" value="{{filho.Nome}}" />
+			</td>
+			<td>
+				{{ filho.MoraComOsPais ? "Sim" : "Não" }}<input type="hidden" name="Filhos[{{$index}}].MoraComOsPais" value="{{filho.MoraComOsPais}}" />
+			</td>
+			<td>
+				{{ filho.Idade }}<input type="hidden" name="Filhos[{{$index}}].Idade" value="{{filho.Idade}}" />
+			</td>
+			<td>
+				{{ filho.DataDeNascimento }}<input type="hidden" name="Filhos[{{$index}}].DataDeNascimento" value="{{filho.DataDeNascimento}}" />
+			</td>
+			<td>
+				<a ng-click="alterarFilho($index)" data-toggle="modal" data-target="#filhosCliente">Edit</a> |
+				<a ng-click="excluirFilho($index)">Delete</a>
+			</td>
+		</tr>
+
+	</table>
+
+	<div id="filhosCliente" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Filhos do Cliente</h4>
+				</div>
+				<div class="modal-body form-horizontal">
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Nome</label>
+						<div class="col-md-10">
+							<input class="form-control text-box single-line" ng-model="Filho.Nome" type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Mora com os pais?</label>
+						<div class="col-md-10">
+							<input ng-model="Filho.MoraComOsPais" type="checkbox" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Idade</label>
+						<div class="col-md-10">
+							<input class="form-control text-box single-line" ng-model="Filho.Idade" type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Data de Nascimento</label>
+						<div class="col-md-10">
+							<input class="form-control text-box single-line" ng-model="Filho.DataDeNascimento" type="text" />
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" ng-show="novoFilho" class="btn btn-default" data-dismiss="modal" ng-click="adicionarFilho()">Save</button>
+					<button type="button" ng-hide="novoFilho" class="btn btn-default" data-dismiss="modal" ng-click="atualizarFilho()">Save</button>
+					<button type="button" class="btn" data-dismiss="modal" ng-click="Filho = null">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<h2>Contatos do Cliente</h2>
 
 	<p>
 		<a ng-click="criarContato()" data-toggle="modal" data-target="#contatosCliente">Create New</a>
 	</p>
+
 	<table class="table">
 		<tr>
 			<th>
