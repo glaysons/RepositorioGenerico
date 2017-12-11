@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.2.0")]
-[assembly: AssemblyVersion("1.0.2.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+// [assembly: AssemblyVersion("1.0.3.0")]
+[assembly: AssemblyVersion("1.0.3.0")]
+[assembly: AssemblyFileVersion("1.0.3.0")]
 [assembly: InternalsVisibleTo("RepositorioGenerico.SqlClient.Test, PublicKey=0024000004800000940000000602000000240000525341310004000001000100eb7fc34e65b9cc231fa023a68f1f2d4c757b4296ef69646132e630655c25d8bd2caf612a94327c35064deaafb545a1cb51194deb8901635049c3a0a85c85022c39550b27246efe2d30bf3fdb496fc95e5333d4378c53f72089fc0dcfd780d8991c41ea18cc65c7e187c91882e103829b869139878070f32373b9c69b34e399cf, PublicKeyToken=b205877ad21d4617")]
