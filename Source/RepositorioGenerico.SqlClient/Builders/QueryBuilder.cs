@@ -88,12 +88,14 @@ namespace RepositorioGenerico.SqlClient.Builders
 
 		public void AdicionarResultadoAgregado(Agregadores agregador, string campo)
 		{
+			string conteudo;
 			if (agregador == Agregadores.Count)
-				Selects.Add(" " + agregador + ((campo == null)
+				conteudo = (campo == null)
 					? "(*)"
-					: "(distinct [" + campo + "])as[" + campo + "]"));
+					: string.Concat("(distinct [", campo, "])as[", campo, "]");
 			else
-				Selects.Add(" " + agregador + "([" + campo + "])as[" + campo + "]");
+				conteudo = string.Concat("([", campo, "])as[", campo, "]");
+			Selects.Add(string.Concat(" ", agregador, conteudo));
 		}
 
 		public void DefinirTabela(string nome)
@@ -108,28 +110,28 @@ namespace RepositorioGenerico.SqlClient.Builders
 
 		public void AdicionarCondicaoAgrupamento(string condicao)
 		{
-			Havings.Add("(" + condicao + ")");
+			Havings.Add(string.Concat("(", condicao, ")"));
 		}
 
 		public void AdicionarCondicaoPersonalizada(string condicao)
 		{
-			Wheres.Add("(" + condicao + ")");
+			Wheres.Add(string.Concat("(", condicao, ")"));
 		}
 
 		public string AdicionarCondicao(string campo, int operador, object valor)
 		{
 			var parametro = "_p" + _proximoParametro.ToString();
 			if ((valor == null) || (valor == DBNull.Value))
-				Wheres.Add("([" + campo + "]IS NULL)");
+				Wheres.Add(string.Concat("([", campo, "]IS NULL)"));
 			else
-				Wheres.Add("([" + campo + "]" + ConsultarSinalDoOperador(operador) + "@" + parametro + ")");
+				Wheres.Add(string.Concat("([", campo, "]", ConsultarSinalDoOperador(operador), "@", parametro, ")"));
 			_proximoParametro++;
 			return parametro;
 		}
 
 		public void AdicionarCondicaoApenasCampoNaoNulo(string campo)
 		{
-			Wheres.Add("([" + campo + "]IS NOT NULL)");
+			Wheres.Add(string.Concat("([", campo, "]IS NOT NULL)"));
 		}
 
 		public string ConsultarOperador(Operadores operador)
@@ -179,24 +181,24 @@ namespace RepositorioGenerico.SqlClient.Builders
 		public string[] AdicionarCondicaoEntre(string campo, object inicio, object fim)
 		{
 			var parametros = new[] { string.Empty, string.Empty };
-			var parametroInicio = "_p" + _proximoParametro.ToString() + "a";
-			var parametroFim = "_p" + _proximoParametro.ToString() + "b";
+			var parametroInicio = string.Concat("_p", _proximoParametro.ToString(), "a");
+			var parametroFim = string.Concat("_p", _proximoParametro.ToString(), "b");
 
 			if ((inicio != null) && (fim != null))
 			{
 				parametros[0] = parametroInicio;
 				parametros[1] = parametroFim;
-				Wheres.Add("([" + campo + "]between @" + parametroInicio + " and @" + parametroFim + ")");
+				Wheres.Add(string.Concat("([", campo, "]between @", parametroInicio, " and @", parametroFim, ")"));
 			}
 			else if (inicio != null)
 			{
 				parametros[0] = parametroInicio;
-				Wheres.Add("([" + campo + "]>=@" + parametroInicio + ")");
+				Wheres.Add(string.Concat("([", campo, "]>=@", parametroInicio, ")"));
 			}
 			else
 			{
 				parametros[1] = parametroFim;
-				Wheres.Add("([" + campo + "]<=@" + parametroFim + ")");
+				Wheres.Add(string.Concat("([", campo, "]<=@", parametroFim, ")"));
 			}
 
 			_proximoParametro++;
@@ -215,7 +217,7 @@ namespace RepositorioGenerico.SqlClient.Builders
 
 		public void AdicionarOrdemDescendente(string ordem)
 		{
-			OrderBys.Add(ordem + " DESC");
+			OrderBys.Add(string.Concat(ordem, " DESC"));
 		}
 
 		public string GerarScript(Dicionario dicionario)
@@ -229,7 +231,7 @@ namespace RepositorioGenerico.SqlClient.Builders
 
 			var top = (_limite == null) 
 				? string.Empty 
-				: " top " + _limite.ToString() +  " ";
+				: string.Concat(" top ", _limite.ToString(),  " ");
 
 			AdicionarSql(sql, top, _selects, ",");
 			sql.Append("from[");
@@ -260,17 +262,17 @@ namespace RepositorioGenerico.SqlClient.Builders
 		private void ConstruirSelectPadrao(Dicionario dicionario)
 		{
 			if (dicionario == null)
-				Selects.Add("[" + _tabela + "].*");
+				Selects.Add(string.Concat("[", _tabela, "].*"));
 			else
 				foreach (var item in dicionario.Itens)
-					Selects.Add("[" + item.Nome + "]" + ConsultarAliasDoCampo(item));
+					Selects.Add(string.Concat("[", item.Nome, "]", ConsultarAliasDoCampo(item)));
 		}
 
 		private string ConsultarAliasDoCampo(ItemDicionario item)
 		{
 			if (string.IsNullOrEmpty(item.Alias))
 				return string.Empty;
-			return "as[" + item.Alias + "]";
+			return string.Concat("as[", item.Alias, "]");
 		}
 
 		private void AdicionarSql(StringBuilder sql, string antes, IList<string> lista, string separador)
