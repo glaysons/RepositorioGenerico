@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace RepositorioGenerico.Fake
 {
-	public class DbCommandFake : IDbCommand
+	internal class DbCommandFake : IDbCommand
 	{
 		private const string PARAMETROSPROCEDURES = "RepositorioGenerico.Fake.Contextos.Procedure";
 

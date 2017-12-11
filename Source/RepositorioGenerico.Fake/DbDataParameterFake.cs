@@ -3,7 +3,7 @@ using System.Data.Common;
 
 namespace RepositorioGenerico.Fake
 {
-	public class DbDataParameterFake : DbParameter
+	internal class DbDataParameterFake : DbParameter
 	{
 
 		public override void ResetDbType()

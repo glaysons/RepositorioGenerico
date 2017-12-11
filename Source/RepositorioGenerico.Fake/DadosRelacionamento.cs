@@ -3,7 +3,7 @@ using System;
 
 namespace RepositorioGenerico.Fake
 {
-	public class DadosRelacionamento
+	internal class DadosRelacionamento
 	{
 
 		public TiposRelacionamento Tipo { get; private set; }

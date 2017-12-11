@@ -13,8 +13,6 @@
 		<copyright>Copyright © Glayson Sergio 2017</copyright>
 		<tags>IRepository ORM generic repository repositorio generico more 1000 tables</tags>
 		<dependencies>
-			<dependency id="Castle.Core" version="4.2.1" />
-			<dependency id="Moq" version="4.7.145" />
 			<dependency id="RepositorioGenerico.Pattern" version="$version$" />
 			<dependency id="RepositorioGenerico" version="$version$" />
 		</dependencies>

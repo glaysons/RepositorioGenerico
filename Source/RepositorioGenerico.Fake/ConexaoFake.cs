@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using Moq;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Pattern;
 
@@ -43,11 +42,7 @@ namespace RepositorioGenerico.Fake
 
 		public IDbConnection CriarConexaoSemTransacao()
 		{
-			var mockConexao = new Mock<IDbConnection>();
-			var transacao = new Mock<IDbTransaction>();
-			mockConexao.Setup(c => c.BeginTransaction()).Returns(transacao.Object);
-			mockConexao.Setup(c => c.State).Returns(ConnectionState.Open);
-			var conexao = mockConexao.Object;
+			var conexao = new DbConnectionFake();
 			conexao.Open();
 			return conexao;
 		}

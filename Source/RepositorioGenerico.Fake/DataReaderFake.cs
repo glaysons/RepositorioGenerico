@@ -5,7 +5,7 @@ using System.Data.Common;
 
 namespace RepositorioGenerico.Fake
 {
-	public class DataReaderFake : DbDataReader
+	internal class DataReaderFake : DbDataReader
 	{
 
 		private readonly DataView _dados;

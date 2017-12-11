@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using Moq;
 using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Dictionary.Itens;
 using RepositorioGenerico.Entities;

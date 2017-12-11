@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RepositorioGenerico.Fake
 {
-	public class DataParametersCollectionFake : Collection<IDataParameter>, IDataParameterCollection
+	internal class DataParametersCollectionFake : Collection<IDataParameter>, IDataParameterCollection
 	{
 
 		public bool Contains(string parameterName)
