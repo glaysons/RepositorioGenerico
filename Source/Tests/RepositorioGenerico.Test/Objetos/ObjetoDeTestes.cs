@@ -9,7 +9,7 @@ namespace RepositorioGenerico.Test.Objetos
 	[ValidadorDeClasse]
 	[ValidadorDeClasse2]
 	[Tabela("ObjetoVirtual")]
-	public class ObjetoDeTestes : Entidade
+	public class ObjetoDeTestes : Entidade, IChaveObjetoDeTestes
 	{
 
 		[Chave, Obrigatorio, AutoIncremento(Incremento.Identity)]

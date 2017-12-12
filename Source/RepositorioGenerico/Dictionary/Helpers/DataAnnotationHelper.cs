@@ -60,9 +60,17 @@ namespace RepositorioGenerico.Dictionary.Helpers
 
 		public static bool Mapeado(PropertyInfo propriedade)
 		{
-			if (propriedade.GetGetMethod().IsVirtual)
+			var getMethod = propriedade.GetGetMethod();
+			if (getMethod.IsVirtual && !getMethod.IsFinal)
 				return false;
-			return (AttributeHelper.Consultar<NaoMapeadoAttribute>(propriedade) == null);
+			if (AttributeHelper.Consultar<NaoMapeadoAttribute>(propriedade) != null)
+				return false;
+			var tipo = propriedade.PropertyType;
+			if ((tipo.IsGenericType) && (tipo.GetGenericTypeDefinition() == typeof(ICollection<>)))
+				return false;
+			if (typeof(Entities.Entidade).IsAssignableFrom(tipo))
+				return false;
+			return true;
 		}
 
 		public static object ConsultarValorPadrao(PropertyInfo propriedade)

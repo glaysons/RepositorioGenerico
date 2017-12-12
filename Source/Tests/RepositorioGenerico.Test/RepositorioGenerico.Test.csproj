@@ -93,6 +93,7 @@
     <Compile Include="Framework\ItemHistoricoTransacionalUnitTest.cs" />
     <Compile Include="Objetos\EnumDeStrings.cs" />
     <Compile Include="Objetos\EnumDeTestes.cs" />
+    <Compile Include="Objetos\IChaveObjetoDeTestes.cs" />
     <Compile Include="Objetos\NetoDoObjetoDeTestes.cs" />
     <Compile Include="Objetos\FilhoMistoDoObjetoDeTestes.cs" />
     <Compile Include="Objetos\FilhoMapeadoDoObjetoMapeadoDeTestes.cs" />

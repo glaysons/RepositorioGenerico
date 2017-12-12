@@ -9,6 +9,7 @@ using RepositorioGenerico.Entities.Anotacoes;
 using RepositorioGenerico.Pattern;
 using RepositorioGenerico.SqlClient.Builders;
 using RepositorioGenerico.SqlClient.Scripts;
+using RepositorioGenerico.Exceptions;
 
 namespace RepositorioGenerico.SqlClient
 {
@@ -120,6 +121,8 @@ namespace RepositorioGenerico.SqlClient
 			if (!valor.HasValue)
 			{
 				var comando = AutoIncremento;
+				if (string.IsNullOrEmpty(comando.CommandText))
+					throw new NaoFoiPossivelLocalizarScriptParaCalculoDoAutoIncrementoException(_dicionario.Nome);
 				CommandBuilder.SincronizarParametrosDosCamposChaveQueNaoSaoAutoIncremento(_dicionario, comando, registro);
 				conexao.DefinirConexao(comando);
 				valor = Convert.ToInt32(comando.ExecuteScalar());
