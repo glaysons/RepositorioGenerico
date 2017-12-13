@@ -66,10 +66,10 @@ namespace RepositorioGenerico.SqlClient.Test.Scripts
 		{
 			var dicionario = new Dicionario(typeof(ObjetoApenasComCamposChave));
 
-			Action gerarScript = () => Builder.CriarScriptUpdate(dicionario);
+			var script = Builder.CriarScriptUpdate(dicionario);
 
-			gerarScript
-				.ShouldThrow<TabelaPossuiApenasCamposChavesException>();
+			script
+				.Should().BeEmpty();
 		}
 
 		[TestMethod]
