@@ -50,7 +50,7 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 						chaveMultipla = true;
 					arquivo.Write(campo.NomeCampo);
 				}
-			arquivo.WriteLine("\"]");
+			arquivo.WriteLine("\")]");
 		}
 
 		private void GerarPropriedade(StreamWriter arquivo, IList<Campo> campos, IList<Relacionamento> relacionamentos)

@@ -62,7 +62,16 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 		private void EscreverUsings(StreamWriter a)
 		{
 			foreach (var _using in _configuracao.Usings)
-				a.WriteLine(string.Concat("using ", _using, ";"));
+			{
+				if (string.IsNullOrWhiteSpace(_using))
+					continue;
+				if (!_using.StartsWith("using "))
+					a.Write("using ");
+				a.Write(_using);
+				if (!_using.EndsWith(";"))
+					a.Write(";");
+				a.WriteLine();
+			}
 			a.WriteLine();
 		}
 

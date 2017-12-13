@@ -42,7 +42,7 @@ namespace ConverterBancoParaEntidades.Geradores.CSharp
 			arquivo.Write("\t\t[PropriedadeDeLigacaoEstrangeira(\"");
 			arquivo.Write(relacionamento.TabelaChavePrimaria);
 			arquivo.Write(relacionamento.Nome);
-			arquivo.WriteLine("\"]");
+			arquivo.WriteLine("\")]");
 		}
 
 		private void GerarPropriedade(StreamWriter arquivo, Relacionamento relacionamento)
