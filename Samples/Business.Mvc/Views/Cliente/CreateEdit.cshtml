@@ -139,7 +139,7 @@
 				<input type="hidden" name="Filhos[{{$index}}].Id" value="{{filho.Id}}" />
 				<input type="hidden" name="Filhos[{{$index}}].IdCliente" value="{{filho.IdCliente}}" />
 				{{ filho.Nome }}<input type="hidden" name="Filhos[{{$index}}].Nome" value="{{filho.Nome}}" />
-				<div ng-repeat="contato in Filho.Contatos" style="display:none;">
+				<div ng-repeat="contato in filho.Contatos" style="display:none;">
 					<input type="hidden" name="Filhos[{{$parent.$index}}].Contatos[{{$index}}].Id" value="{{contato.Id}}" />
 					<input type="hidden" name="Filhos[{{$parent.$index}}].Contatos[{{$index}}].IdFilho" value="{{contato.IdFilho}}" />
 					<input type="hidden" name="Filhos[{{$parent.$index}}].Contatos[{{$index}}].IdTipoContato" value="{{contato.IdTipoContato}}" />

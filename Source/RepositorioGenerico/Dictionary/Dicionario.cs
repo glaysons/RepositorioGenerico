@@ -78,6 +78,14 @@ namespace RepositorioGenerico.Dictionary
 			}
 		}
 
+		public bool MuitosParaMuitos
+		{
+			get
+			{
+				return (QuantidadeCampos == QuantidadeCamposNaChave);
+			}
+		}
+
 		public ValidadorDicionario Validador
 		{
 			get { return _validador ?? (_validador = new ValidadorDicionario(this, Validacoes)); }
@@ -189,7 +197,7 @@ namespace RepositorioGenerico.Dictionary
 			}
 
 			if (_quantidade == 0)
-				throw new TabelaNaoPossuiInformacoesDeCamposDaTabelaException();
+				throw new TabelaNaoPossuiInformacoesDeCamposDaTabelaException(this.Nome);
 
 			_autoIncremento = OpcoesAutoIncremento.Nenhum;
 

@@ -155,9 +155,14 @@ namespace RepositorioGenerico.SqlClient.Contextos
 		{
 			if (_validarAoSalvar)
 				Validar(model);
-			model.EstadoEntidade = EstadosEntidade.Modificado;
-			_persistencia.Dados.Add(model);
-			_contexto.Transacoes.AdicionarTransacao(_persistencia, model);
+			if (_persistencia.Dicionario.MuitosParaMuitos)
+				model.EstadoEntidade = EstadosEntidade.NaoModificado;
+			else
+			{
+				model.EstadoEntidade = EstadosEntidade.Modificado;
+				_persistencia.Dados.Add(model);
+				_contexto.Transacoes.AdicionarTransacao(_persistencia, model);
+			}
 			if ((SalvarFilhos) && (FilhosRepositorio != null))
 			{
 				var chave = _persistencia.Dicionario.ConsultarValoresDaChave(model);

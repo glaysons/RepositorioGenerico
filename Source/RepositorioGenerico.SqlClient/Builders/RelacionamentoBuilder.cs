@@ -33,13 +33,17 @@ namespace RepositorioGenerico.SqlClient.Builders
 			var sql = new StringBuilder();
 			sql.Append(string.Concat("with[d]as(", condicao, "),[t]as("));
 			sql.Append("select");
+			var n = 0;
 			foreach (var item in relacionamento.Dicionario.Itens)
 			{
 				var alias = (string.IsNullOrEmpty(item.Alias))
 					? string.Empty
 					: string.Concat("as[", item.Alias, "]");
 				sql.Append(string.Concat("[", item.Nome, "]", alias, ","));
+				n++;
 			}
+			if (n == 0)
+				throw new TabelaNaoPossuiInformacoesDeCamposDaTabelaException(relacionamento.Dicionario.Nome);
 			sql.Length -= 1;
 			sql.Append(string.Concat("from[", relacionamento.Dicionario.Nome, "][t])select"));
 			foreach (var item in relacionamento.Dicionario.Itens)

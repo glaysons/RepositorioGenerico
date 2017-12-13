@@ -42,7 +42,7 @@ namespace RepositorioGenerico.SqlClient.Contextos
 		{
 			foreach (var campo in _camposFilho)
 			{
-				var filhosAtuais = (ICollection)campo.Propriedade.GetValue(model, null);
+				var filhosAtuais = (IEnumerable)campo.Propriedade.GetValue(model, null);
 				if (filhosAtuais == null)
 					continue;
 				var repositorio = _contexto.Repositorio(campo.Ligacao.Dicionario.Tipo);
@@ -51,19 +51,19 @@ namespace RepositorioGenerico.SqlClient.Contextos
 					foreach (var filho in filhosAntigos)
 					{
 						var chaveAntiga = campo.Ligacao.Dicionario.ConsultarValoresDaChave(filho);
-						if (ChaveAtualFoiExcluida(campo.Ligacao, filhosAtuais, chaveAntiga))
+						if (!ColecaoPossuiChave(campo.Ligacao, filhosAtuais, chaveAntiga))
 							repositorio.Excluir(filho);
 					}
-				foreach (var item in filhosAtuais)
+				foreach (var filho in filhosAtuais)
 				{
-					var filho = (IEntidade)item;
-					if (campo.Ligacao.PossuiChaveAscendente(chaveDoModel, filho))
-						repositorio.Atualizar(filho);
-					else
+					var chaveAtual = campo.Ligacao.Dicionario.ConsultarValoresDaChave(filho);
+					if ((filhosAntigos == null) || (!ColecaoPossuiChave(campo.Ligacao, filhosAntigos, chaveAtual)))
 					{
 						campo.Ligacao.AplicarChaveAscendente(chaveDoModel, filho);
 						repositorio.Inserir(filho);
 					}
+					else
+						repositorio.Atualizar(filho);
 				}
 			}
 		}
@@ -75,15 +75,15 @@ namespace RepositorioGenerico.SqlClient.Contextos
 			return buscador.ConsultarPropriedade(model, expressao)?.Cast<object>().ToList();
 		}
 
-		private bool ChaveAtualFoiExcluida(Relacionamento ligacao, ICollection itens, object[] chaveDoModel)
+		private bool ColecaoPossuiChave(Relacionamento ligacao, IEnumerable itens, object[] chaveModel)
 		{
 			foreach (var item in itens)
 			{
-				var chave = ligacao.Dicionario.ConsultarValoresDaChave(item);
-				if (chaveDoModel.SequenceEqual(chave))
-					return false;
+				var chaveItem = ligacao.Dicionario.ConsultarValoresDaChave(item);
+				if (chaveModel.SequenceEqual(chaveItem))
+					return true;
 			}
-			return true;
+			return false;
 		}
 
 		public void ExcluirFilhos(TObjeto model)

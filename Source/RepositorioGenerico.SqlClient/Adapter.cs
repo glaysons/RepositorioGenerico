@@ -88,12 +88,13 @@ namespace RepositorioGenerico.SqlClient
 		{
 			SqlCommand comando = null;
 
-			if ((registro.EstadoEntidade == EstadosEntidade.Novo) || (registro.EstadoEntidade == EstadosEntidade.Modificado))
+			var novo = (registro.EstadoEntidade == EstadosEntidade.Novo);
+			if ((novo) || (registro.EstadoEntidade == EstadosEntidade.Modificado))
 			{
-				comando = (registro.EstadoEntidade == EstadosEntidade.Novo)
+				comando = (novo)
 					? Insert
 					: Update;
-				if (_dicionario.AutoIncremento == OpcoesAutoIncremento.Calculado)
+				if ((novo) && (_dicionario.AutoIncremento == OpcoesAutoIncremento.Calculado))
 					CalcularAutoIncremento(conexao, registro);
 				CommandBuilder.SincronizarParametrosDeTodosOsCampos(_dicionario, comando, registro);
 			}
@@ -103,7 +104,7 @@ namespace RepositorioGenerico.SqlClient
 				CommandBuilder.SincronizarParametrosDosCamposChave(_dicionario, comando, registro);
 			}
 
-			if ((registro.EstadoEntidade == EstadosEntidade.Novo) && (_dicionario.AutoIncremento == OpcoesAutoIncremento.Identity))
+			if ((novo) && (_dicionario.AutoIncremento == OpcoesAutoIncremento.Identity))
 			{
 				var autoIncremento = ExecutarComandoInsertComIdentity(conexao, comando);
 				AtribuirValorAutoIncremento(Incremento.Identity, item => item.Propriedade.SetValue(registro, autoIncremento, null));
@@ -180,12 +181,13 @@ namespace RepositorioGenerico.SqlClient
 		{
 			SqlCommand comando = null;
 
-			if ((registro.RowState == DataRowState.Added) || (registro.RowState == DataRowState.Modified))
+			var novo = (registro.RowState == DataRowState.Added);
+			if ((novo) || (registro.RowState == DataRowState.Modified))
 			{
-				comando = (registro.RowState == DataRowState.Added)
+				comando = (novo)
 					? Insert
 					: Update;
-				if (_dicionario.AutoIncremento == OpcoesAutoIncremento.Calculado)
+				if ((novo) && (_dicionario.AutoIncremento == OpcoesAutoIncremento.Calculado))
 					CalcularAutoIncremento(conexao, registro);
 				CommandBuilder.SincronizarParametrosDeTodosOsCampos(_dicionario, comando, registro);
 			}
@@ -196,7 +198,7 @@ namespace RepositorioGenerico.SqlClient
 				CommandBuilder.SincronizarParametrosDosCamposChave(_dicionario, comando, registro);
 			}
 
-			if ((registro.RowState == DataRowState.Added) && (_dicionario.AutoIncremento == OpcoesAutoIncremento.Identity))
+			if ((novo) && (_dicionario.AutoIncremento == OpcoesAutoIncremento.Identity))
 			{
 				var autoIncremento = ExecutarComandoInsertComIdentity(conexao, comando);
 				AtribuirValorAutoIncremento(Incremento.Identity, item => registro[item.Nome] = autoIncremento);
