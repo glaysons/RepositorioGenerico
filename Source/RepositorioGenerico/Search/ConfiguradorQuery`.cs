@@ -52,13 +52,17 @@ namespace RepositorioGenerico.Search
 
 		public IConfiguracaoQuery<TObjeto> CarregarPropriedade<TEstadoObjeto>(Expression<Func<TObjeto, TEstadoObjeto>> propriedadeAscendente) where TEstadoObjeto : class, IEntidade
 		{
-			ListaPropriedadesAcescentes.Add(ExpressionHelper.PropriedadeDaExpressao(propriedadeAscendente));
+			var propriedade = ExpressionHelper.PropriedadeDaExpressao(propriedadeAscendente);
+			if (!ListaPropriedadesAcescentes.Contains(propriedade))
+				ListaPropriedadesAcescentes.Add(propriedade);
 			return this;
 		}
 
 		public IConfiguracaoQuery<TObjeto> CarregarPropriedade<TEstadoObjeto>(Expression<Func<TObjeto, ICollection<TEstadoObjeto>>> propriedadeDescendente) where TEstadoObjeto : class, IEntidade
 		{
-			ListaPropriedadesDescendentes.Add(ExpressionHelper.PropriedadeDaExpressao(propriedadeDescendente));
+			var propriedade = ExpressionHelper.PropriedadeDaExpressao(propriedadeDescendente);
+			if (!ListaPropriedadesDescendentes.Contains(propriedade))
+				ListaPropriedadesDescendentes.Add(ExpressionHelper.PropriedadeDaExpressao(propriedadeDescendente));
 			return this;
 		}
 

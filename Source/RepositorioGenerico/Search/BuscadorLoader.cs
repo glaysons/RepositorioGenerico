@@ -43,9 +43,9 @@ namespace RepositorioGenerico.Search
 
 		private void CarregarPropriedadeVinculada(TiposRelacionamento tipo, IConfiguracao<TObjeto> configuracao, IList<PropertyInfo> propriedades, IList<IList<object>> vinculos)
 		{
-			var config = (ConfiguradorQuery<TObjeto>)configuracao;
 			if (propriedades == null)
 				return;
+			var config = (ConfiguradorQuery<TObjeto>)configuracao;
 			foreach (var propriedade in propriedades)
 				vinculos.Add(CarregarRelacionamentoVinculado(tipo, config, propriedade));
 		}
@@ -136,16 +136,14 @@ namespace RepositorioGenerico.Search
 			var valor = _dicionario.ConsultarValoresDaChave(registro);
 			var tipoFilho = typeof(List<>).MakeGenericType(propriedade.PropertyType.GetGenericArguments()[0]);
 			var filhos = (IList)Activator.CreateInstance(tipoFilho);
-			for (var n = dadosVinculados.Count - 1; n >= 0; n--)
+			for (var n = 0; n < dadosVinculados.Count; n++)
 			{
 				var ascendente = dadosVinculados[n];
 				var chave = item.Ligacao.Dicionario.ConsultarValoresDaChave(ascendente, item.Ligacao.ChaveEstrangeira);
 				if (valor.SequenceEqual(chave))
-				{
 					filhos.Add(ascendente);
-					dadosVinculados.RemoveAt(n);
-				}
 			}
+			dadosVinculados.Clear();
 			if (filhos.Count > 0)
 				return filhos;
 			return null;

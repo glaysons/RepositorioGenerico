@@ -29,22 +29,25 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 			var relacionamentoBuilder = new RelacionamentoBuilder();
 			relacionamentoBuilder.CriarScriptConsultaRelacionamentoAscendente(relacionamentoAscendente, scriptQueConsultaFilhoQueTeraPaiCarregado)
 				.Should()
-				.Be("with[d]as(" +
-						"select[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai] " +
-						"from[ObjetoVirtualFilho]" +
-						"where([CodigoFilho]=@_p0) " +
-					")," + 
-					"[t]as(" +
-						"select[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo]," + 
-							"[Decimal],[DecimalNulo],[Logico],[DataHora],[DataHoraNulo]" +
-						"from[ObjetoVirtual][t])" +
-				    "select[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo]," +
-						"[Decimal],[DecimalNulo],[Logico],[DataHora],[DataHoraNulo]" +
-				    "from[t]" +
-				    "where(exists(" +
-						"select top 1 1 " +
-						"from[d]" +
-						"where(t.[Codigo]=d.[IdPai])))");
+				.Be("select" +
+						"[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo],[Decimal]," + 
+						"[DecimalNulo],[Logico],[DataHora],[DataHoraNulo]" + 
+					"from(" + 
+						"select" + 
+							"[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo],[Decimal],[DecimalNulo]," + 
+							"[Logico],[DataHora],[DataHoraNulo]" + 
+						"from[ObjetoVirtual]" + 
+					")[t]" + 
+					"where(exists(" + 
+						"select top 1 1 " + 
+						"from(" + 
+							"select" + 
+								"[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai] " + 
+							"from[ObjetoVirtualFilho]" + 
+							"where([CodigoFilho]=@_p0) " + 
+						")[d]" + 
+						"where(t.[Codigo]=d.[IdPai])))" +
+					"order by t.[Codigo]");
 		}
 
 		[TestMethod]
@@ -65,20 +68,24 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 
 			relacionamentoBuilder.CriarScriptConsultaRelacionamentoDescendente(relacionamento, scriptConsultaDoPai, dicionarioPai.ConsultarCamposChave())
 				.Should()
-				.Be("with[d]as(" +
-						"select[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo],[Decimal]," +
-							"[DecimalNulo],[Logico],[DataHora],[DataHoraNulo] " +
-						"from[ObjetoVirtual]" +
-						"where([Codigo]=@_p0) " +
-					"),[t]as(" +
-						"select[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai]" +
-						"from[ObjetoVirtualFilho][t])" +
-					"select[Id],[Nome],[IdPai]" +
-				    "from[t]" +
-				    "where(exists(" +
+				.Be("select" +
+						"[Id],[Nome],[IdPai]" +
+					"from(" +
+						"select" +
+							"[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai]" +
+						"from[ObjetoVirtualFilho]" +
+					")[t]" +
+					"where(exists(" +
 						"select top 1 1 " +
-						"from[d]" +
-						"where(t.[IdPai]=d.[Codigo])))");
+						"from(" +
+							"select" +
+								"[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo],[Decimal]," +
+								"[DecimalNulo],[Logico],[DataHora],[DataHoraNulo] " +
+							"from[ObjetoVirtual]" +
+							"where([Codigo]=@_p0) " +
+						")[d]" +
+						"where(t.[IdPai]=d.[Codigo])))" +
+					"order by t.[Id]");
 		}
 
 	}

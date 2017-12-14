@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using RepositorioGenerico.Dictionary.Itens;
 using RepositorioGenerico.Dictionary.Relacionamentos;
@@ -18,39 +19,71 @@ namespace RepositorioGenerico.SqlClient.Builders
 			foreach (var chave in relacionamento.Dicionario.ConsultarCamposChave())
 			{
 				if (n < relacionamento.ChaveEstrangeira.Length)
-					sql.Append(string.Concat("(t.[", chave.AliasOuNome, "]=d.[", relacionamento.ChaveEstrangeira[n], "])and"));
+				{
+					sql.Append("(t.[");
+					sql.Append(chave.AliasOuNome);
+					sql.Append("]=d.[");
+					sql.Append(relacionamento.ChaveEstrangeira[n]);
+					sql.Append("])and");
+				}
 				n++;
 			}
 			if (n == 0 || n != relacionamento.ChaveEstrangeira.Length)
 				throw new AQuantidadeDeCamposChaveNaLigacaoDoCampoEInvalidaException();
 			sql.Length -= 3;
-			sql.Append("))");
+			AdicionarOrderBy(relacionamento, sql);
 			return sql.ToString();
 		}
 
 		private StringBuilder CriarScriptConsultaRelacionamentoBasico(Relacionamento relacionamento, string condicao)
 		{
 			var sql = new StringBuilder();
-			sql.Append(string.Concat("with[d]as(", condicao, "),[t]as("));
 			sql.Append("select");
+			foreach (var item in relacionamento.Dicionario.Itens)
+			{
+				sql.Append("[");
+				sql.Append(item.AliasOuNome);
+				sql.Append("],");
+			}
+			sql.Length -= 1;
+			sql.Append("from(select");
 			var n = 0;
 			foreach (var item in relacionamento.Dicionario.Itens)
 			{
-				var alias = (string.IsNullOrEmpty(item.Alias))
-					? string.Empty
-					: string.Concat("as[", item.Alias, "]");
-				sql.Append(string.Concat("[", item.Nome, "]", alias, ","));
+				sql.Append("[");
+				sql.Append(item.Nome);
+				sql.Append("]");
+				if (!string.IsNullOrEmpty(item.Alias))
+				{
+					sql.Append("as[");
+					sql.Append(item.Alias);
+					sql.Append("]");
+				}
+				sql.Append(",");
 				n++;
 			}
 			if (n == 0)
 				throw new TabelaNaoPossuiInformacoesDeCamposDaTabelaException(relacionamento.Dicionario.Nome);
 			sql.Length -= 1;
-			sql.Append(string.Concat("from[", relacionamento.Dicionario.Nome, "][t])select"));
-			foreach (var item in relacionamento.Dicionario.Itens)
-				sql.Append(string.Concat("[", item.AliasOuNome, "],"));
-			sql.Length -= 1;
-			sql.Append("from[t]where(exists(select top 1 1 from[d]where");
+			sql.Append("from[");
+			sql.Append(relacionamento.Dicionario.Nome);
+			sql.Append("]");
+			sql.Append(")[t]where(exists(select top 1 1 from(");
+			sql.Append(condicao);
+			sql.Append(")[d]where");
 			return sql;
+		}
+
+		private void AdicionarOrderBy(Relacionamento relacionamento, StringBuilder sql)
+		{
+			sql.Append("))order by ");
+			foreach (var chave in relacionamento.Dicionario.ConsultarCamposChave())
+			{
+				sql.Append("t.[");
+				sql.Append(chave.AliasOuNome);
+				sql.Append("],");
+			}
+			sql.Length -= 1;
 		}
 
 		public string CriarScriptConsultaRelacionamentoDescendente(Relacionamento relacionamento, string condicao, IEnumerable<ItemDicionario> camposChave)
@@ -60,13 +93,19 @@ namespace RepositorioGenerico.SqlClient.Builders
 			foreach (var campo in camposChave)
 			{
 				if (n < relacionamento.ChaveEstrangeira.Length)
-					sql.Append(string.Concat("(t.[", relacionamento.ChaveEstrangeira[n], "]=d.[", campo.AliasOuNome, "])and"));
+				{
+					sql.Append("(t.[");
+					sql.Append(relacionamento.ChaveEstrangeira[n]);
+					sql.Append("]=d.[");
+					sql.Append(campo.AliasOuNome);
+					sql.Append("])and");
+				}
 				n++;
 			}
 			if (n == 0 || n != relacionamento.ChaveEstrangeira.Length)
 				throw new AQuantidadeDeCamposChaveNaLigacaoDoCampoEInvalidaException();
 			sql.Length -= 3;
-			sql.Append("))");
+			AdicionarOrderBy(relacionamento, sql);
 			return sql.ToString();
 		}
 

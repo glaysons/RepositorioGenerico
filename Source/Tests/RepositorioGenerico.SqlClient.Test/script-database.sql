@@ -87,3 +87,50 @@ GO
 insert into [dbo].[ObjetoVirtual] ([Nome], [Duplo], [Decimal], [Logico], [DataHora])
 values ('Teste B', 234.56, 345.67, 1, '20171001 17:45')
 
+GO
+
+insert into [dbo].[ObjetoVirtualFilho] ([NomeFilho], [CodigoPai])
+values ('Filho 1A', 1)
+
+GO
+
+insert into [dbo].[NetoDoObjetoDeTestes] ([NomeNeto], [CodigoFilho])
+values ('1o Neto Filho 1A', 1)
+
+GO
+
+insert into [dbo].[NetoDoObjetoDeTestes] ([NomeNeto], [CodigoFilho])
+values ('2o Neto Filho 1A', 1)
+
+GO
+
+insert into [dbo].[ObjetoVirtualFilho] ([NomeFilho], [CodigoPai])
+values ('Filho 2A', 1)
+
+GO
+
+insert into [dbo].[NetoDoObjetoDeTestes] ([NomeNeto], [CodigoFilho])
+values ('1o Neto Filho 2A', 2)
+
+GO
+
+insert into [dbo].[ObjetoVirtualFilho] ([NomeFilho], [CodigoPai])
+values ('Filho 3A', 1)
+
+GO
+
+insert into [dbo].[ObjetoVirtualFilho] ([NomeFilho], [CodigoPai])
+values ('Filho 1B', 2)
+
+GO
+insert into [dbo].[ObjetoVirtualFilho] ([NomeFilho], [CodigoPai])
+values ('Filho 2B', 2)
+
+GO
+
+insert into [dbo].[NetoDoObjetoDeTestes] ([NomeNeto], [CodigoFilho])
+values ('1o Neto Filho 2B', 5)
+
+GO
+
+

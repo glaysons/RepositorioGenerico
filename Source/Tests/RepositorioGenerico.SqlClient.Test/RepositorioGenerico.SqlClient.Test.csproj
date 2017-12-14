@@ -72,7 +72,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -83,6 +85,7 @@
     <Compile Include="ConnectionStringHelper.cs" />
     <Compile Include="Contextos\ContextoUnitTest.cs" />
     <Compile Include="Contextos\PersistenciaUnitTest.cs" />
+    <Compile Include="Contextos\RepositorioUnitTest.cs" />
     <Compile Include="GerenciadorEventosConexao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\CacheUnitTest.cs" />

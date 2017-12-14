@@ -21,8 +21,7 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 
 		private static Contexto CriarContexto()
 		{
-			var contexto = new Contexto(ConnectionStringHelper.Consultar());
-			return contexto;
+			return new Contexto(ConnectionStringHelper.Consultar());
 		}
 
 		[TestMethod]
