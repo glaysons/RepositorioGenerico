@@ -71,6 +71,7 @@
     <Compile Include="Exceptions\ChavePrimariaInvalidaException.cs" />
     <Compile Include="Exceptions\DicionarioNaoSuportaMultiplosCamposAutoIncrementoException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelConsultarRelacionamentoVinculadoException.cs" />
+    <Compile Include="Exceptions\NaoFoiPossivelConverterConsultaParaTipoException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelCriarMapaRelacionadoException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelDeterminarONomeDaTabelaFakeException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelEncontrarALigacaoEntreOsCamposException.cs" />

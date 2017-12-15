@@ -21,7 +21,7 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 			config
 				.AdicionarCondicao(o => o.Codigo).Igual(1)
 				.CarregarPropriedade(o => o.Filhos);
-				//.CarregarPropriedade(o => o.Filhos.Select(f => f.Netos));
+			//config.CarregarSubPropriedade(o => o.Filhos.Select(f => f.Netos.Select(n => n.Filho)));
 
 			var objeto = repositorio.Buscar.Um(config);
 
@@ -87,5 +87,73 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 			//	.And
 			//	.HaveCount(0);
 		}
+
+		[TestMethod]
+		public void SeConsultarEstruturaDeFilhosDevePreencherPai()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var repositorio = contexto.Repositorio<FilhoDoObjetoDeTestes>();
+
+			var config = repositorio.Buscar.CriarQuery();
+
+			config
+				.AdicionarCondicao(o => o.IdPai).Entre(1, 2)
+				.CarregarPropriedade(o => o.Pai);
+
+			var filhos = repositorio.Buscar.Varios(config).ToList();
+
+			filhos
+				.Should()
+				.NotBeNull()
+				.And
+				.HaveCount(5);
+
+			ValidarFilho(filhos[0], "Filho 1A", "Teste A");
+			ValidarFilho(filhos[1], "Filho 2A", "Teste A");
+			ValidarFilho(filhos[2], "Filho 3A", "Teste A");
+
+			ValidarFilho(filhos[3], "Filho 1B", "Teste B");
+			ValidarFilho(filhos[4], "Filho 2B", "Teste B");
+		}
+
+		private static void ValidarFilho(FilhoDoObjetoDeTestes filho, string nome, string nomePai)
+		{
+			filho.Nome
+				.Should()
+				.Be(nome);
+
+			filho.Pai
+				.Should()
+				.NotBeNull();
+
+			filho.Pai.Nome
+				.Should()
+				.Be(nomePai);
+		}
+
+		[TestMethod]
+		public void SeConsultarUmObjetoSemDicionarioDeveSerPossivelCarregarDados()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var buscar = contexto.Buscar<ObjetoSemDicionario>();
+			var config = buscar.CriarQuery()
+				.DefinirTabela("ObjetoVirtual")
+				.AdicionarCondicao(c => c.Codigo).Igual(1);
+
+			var objeto = buscar.Um(config);
+
+			objeto
+				.Should()
+				.NotBeNull();
+
+			objeto.Nome
+				.Should()
+				.Be("Teste A");
+
+			objeto.Duplo
+				.Should()
+				.Be(123.45);
+		}
+
 	}
 }

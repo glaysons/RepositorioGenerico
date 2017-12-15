@@ -16,7 +16,9 @@ namespace RepositorioGenerico.Dictionary
 
 		private static Dicionario CriarDicionarioGenerico(Type tipo)
 		{
-			return new Dicionario(tipo);
+			if (typeof(Entities.Entidade).IsAssignableFrom(tipo))
+				return new Dicionario(tipo);
+			return null;
 		}
 
 	}

@@ -105,6 +105,7 @@
     <Compile Include="Objetos\ObjetoComChaveDuplaComputada.cs" />
     <Compile Include="Objetos\ObjetoComDoisCamposComputados.cs" />
     <Compile Include="Objetos\ObjetoComDoisCamposAutoIncremento.cs" />
+    <Compile Include="Objetos\ObjetoSemDicionario.cs" />
     <Compile Include="Objetos\ObjetoMistoDeTestes.cs" />
     <Compile Include="Objetos\ObjetoMapeadoComChaveDuplaMap.cs" />
     <Compile Include="Objetos\ObjetoMapeadoComChaveDupla.cs" />

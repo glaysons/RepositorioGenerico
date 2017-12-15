@@ -9,11 +9,13 @@ namespace RepositorioGenerico.Pattern.Buscadores
 	{
 		IConfiguracaoQuery<TObjeto> CarregarPropriedade<TEstadoObjeto>(Expression<Func<TObjeto, TEstadoObjeto>> propriedade) where TEstadoObjeto : class, IEntidade;
 		IConfiguracaoQuery<TObjeto> CarregarPropriedade<TEstadoObjeto>(Expression<Func<TObjeto, ICollection<TEstadoObjeto>>> propriedade) where TEstadoObjeto : class, IEntidade;
+		IConfiguracaoQuery<TObjeto> CarregarSubPropriedade<TEstadoObjeto>(Expression<Func<TObjeto, IEnumerable<TEstadoObjeto>>> propriedade);
 		IConfiguracaoQuery<TObjeto> AdicionarResultado(Expression<Func<TObjeto, object>> campo);
 		IConfiguracaoQuery<TObjeto> AdicionarResultadoAgregado(Agregadores agregador);
 		IConfiguracaoQuery<TObjeto> AdicionarResultadoAgregado(Agregadores agregador, Expression<Func<TObjeto, object>> campo);
 		IConfiguracaoQuery<TObjeto> AdicionarResultadoPersonalizado(string resultado);
 		IConfiguracaoQuery<TObjeto> DefinirTabela();
+		IConfiguracaoQuery<TObjeto> DefinirTabela(string tabela);
 		IConfiguracaoQuery<TObjeto> DefinirLimite(int maximo);
 		IConfiguracaoQuery<TObjeto> AdicionarRelacionamento(string relacionamento);
 		IConfiguracaoCondicao<TObjeto> AdicionarCondicao(Expression<Func<TObjeto, object>> campo);

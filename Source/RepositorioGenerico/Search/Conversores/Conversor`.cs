@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using RepositorioGenerico.Entities;
+using RepositorioGenerico.Exceptions;
 
 namespace RepositorioGenerico.Search.Conversores
 {
@@ -24,7 +25,17 @@ namespace RepositorioGenerico.Search.Conversores
 		{
 			while (_reader.Read())
 			{
-				var registro = _binder(_reader as DbDataReader);
+				TObjeto registro;
+
+				try
+				{
+					registro = _binder(_reader as DbDataReader);
+				}
+				catch (InvalidCastException)
+				{
+					throw new NaoFoiPossivelConverterConsultaParaTipoException(typeof(TObjeto).Name);
+				}
+
 				AtualizarEstadoDoObjeto(registro as IEntidade);
 				yield return registro;
 			}

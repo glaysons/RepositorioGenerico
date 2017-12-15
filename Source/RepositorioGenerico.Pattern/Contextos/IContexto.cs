@@ -8,7 +8,7 @@ namespace RepositorioGenerico.Pattern.Contextos
 
 		IRepositorio<TObjeto> Repositorio<TObjeto>() where TObjeto : IEntidade;
 
-		IBuscador<TObjeto> Buscar<TObjeto>() where TObjeto : IEntidade;
+		IBuscador<TObjeto> Buscar<TObjeto>();
 
 		void Salvar();
 

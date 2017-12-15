@@ -12,7 +12,7 @@ using RepositorioGenerico.Search.Conversores;
 
 namespace RepositorioGenerico.Search
 {
-	public class Buscador<TObjeto> : IBuscador<TObjeto> where TObjeto : IEntidade
+	public class Buscador<TObjeto> : IBuscador<TObjeto>
 	{
 
 		private readonly IComando _comando;

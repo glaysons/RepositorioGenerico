@@ -26,9 +26,11 @@ namespace RepositorioGenerico.Pattern.Buscadores
 
 		bool Existe(IConfiguracao<TObjeto> configuracao);
 
-		TOutroObjeto ConsultarPropriedade<TOutroObjeto>(TObjeto objeto, Expression<Func<TObjeto, TOutroObjeto>> propriedade) where TOutroObjeto : class, IEntidade;
+		TOutroObjeto ConsultarPropriedade<TOutroObjeto>(TObjeto objeto, Expression<Func<TObjeto, TOutroObjeto>> propriedade)
+			where TOutroObjeto : class, IEntidade;
 
-		ICollection<TEstadoObjeto> ConsultarPropriedade<TEstadoObjeto>(TObjeto objeto, Expression<Func<TObjeto, ICollection<TEstadoObjeto>>> propriedade) where TEstadoObjeto : class, IEntidade;
+		ICollection<TEstadoObjeto> ConsultarPropriedade<TEstadoObjeto>(TObjeto objeto, Expression<Func<TObjeto, ICollection<TEstadoObjeto>>> propriedade) 
+			where TEstadoObjeto : class, IEntidade;
 
 	}
 }

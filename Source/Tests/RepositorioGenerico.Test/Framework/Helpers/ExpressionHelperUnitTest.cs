@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Framework.Helpers;
 using RepositorioGenerico.Test.Objetos;
+using System.Linq;
 
 namespace RepositorioGenerico.Test.Framework.Helpers
 {
@@ -74,6 +75,30 @@ namespace RepositorioGenerico.Test.Framework.Helpers
 			outraPropriedade
 				.Should()
 				.BeSameAs(propriedade);
+		}
+
+		[TestMethod]
+		public void SeConsultarOCaminhoDaExpressaoDeveRetornarUmaStringComAsPropriedadesSeparadasPorPonto()
+		{
+			ExpressionHelper.CamihoDaExpressao<ObjetoDeTestes>(o => o.Codigo)
+				.Should()
+				.Be("Codigo");
+
+			ExpressionHelper.CamihoDaExpressao<ObjetoDeTestes>(o => o.Filhos)
+				.Should()
+				.Be("Filhos");
+
+			ExpressionHelper.CamihoDaExpressao<ObjetoDeTestes>(o => o.Filhos.Select(f => f.Netos))
+				.Should()
+				.Be("Filhos.Netos");
+
+			ExpressionHelper.CamihoDaExpressao<ObjetoDeTestes>(o => o.Filhos.Select(f => f.Netos.Select(n => n.Filho)))
+				.Should()
+				.Be("Filhos.Netos.Filho");
+
+			ExpressionHelper.CamihoDaExpressao<ObjetoDeTestes>(o => o.Filhos.Select(f => f.Netos.Select(n => n.Filho.Pai)))
+				.Should()
+				.Be("Filhos.Netos.Filho.Pai");
 		}
 
 	}

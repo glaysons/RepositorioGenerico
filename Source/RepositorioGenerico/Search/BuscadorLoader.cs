@@ -16,7 +16,7 @@ using RepositorioGenerico.Search.Conversores;
 
 namespace RepositorioGenerico.Search
 {
-	public class BuscadorLoader<TObjeto> where TObjeto : IEntidade
+	public class BuscadorLoader<TObjeto>
 	{
 
 		private readonly IComando _comando;
@@ -33,7 +33,7 @@ namespace RepositorioGenerico.Search
 		public IList<IList<object>> CarregarPropriedadesVinculadas(IConfiguracao<TObjeto> configuracao) 
 		{
 			var config = configuracao as ConfiguradorQuery<TObjeto>;
-			if ((config == null) || (!config.PossuiPropriedadesCarregadas))
+			if ((config == null) || (_dicionario == null) || (!config.PossuiPropriedadesCarregadas))
 				return null;
 			var vinculos = new List<IList<object>>();
 			CarregarPropriedadeVinculada(TiposRelacionamento.Ascendente, configuracao, config.PropriedadesAcescentes, vinculos);

@@ -66,6 +66,11 @@ namespace RepositorioGenerico.Search
 			return this;
 		}
 
+		public IConfiguracaoQuery<TObjeto> CarregarSubPropriedade<TEstadoObjeto>(Expression<Func<TObjeto, IEnumerable<TEstadoObjeto>>> propriedade)
+		{
+			throw new NotImplementedException();
+		}
+
 		public IConfiguracaoQuery<TObjeto> AdicionarResultado(Expression<Func<TObjeto, object>> campo)
 		{
 			_queryBuilder.AdicionarResultado(ConsultarNomeDaExpressao(campo));
@@ -92,7 +97,14 @@ namespace RepositorioGenerico.Search
 
 		public IConfiguracaoQuery<TObjeto> DefinirTabela()
 		{
-			_queryBuilder.DefinirTabela(_dicionario.Nome);
+			if (_dicionario != null)
+				_queryBuilder.DefinirTabela(_dicionario.Nome);
+			return this;
+		}
+
+		public IConfiguracaoQuery<TObjeto> DefinirTabela(string tabela)
+		{
+			_queryBuilder.DefinirTabela(tabela);
 			return this;
 		}
 

@@ -28,6 +28,8 @@ namespace RepositorioGenerico.Search
 			if (campo == null)
 				return null;
 			var propriedade = ExpressionHelper.PropriedadeDaExpressao(campo);
+			if (_dicionario == null)
+				return propriedade.Name;
 			var info = _dicionario.ConsultarPorPropriedade(propriedade.Name);
 			return (info == null)
 				? propriedade.Name

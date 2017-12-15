@@ -46,7 +46,7 @@ namespace RepositorioGenerico.SqlClient.Contextos
 			return _buscadorGenerico ?? (_buscadorGenerico = new Buscador(Comando, QueryBuilder));
 		}
 
-		public IBuscador<TObjeto> Buscar<TObjeto>() where TObjeto : IEntidade
+		public IBuscador<TObjeto> Buscar<TObjeto>()
 		{
 			var buscador = (_buscador as IBuscador<TObjeto>);
 			if (buscador != null) return buscador;
