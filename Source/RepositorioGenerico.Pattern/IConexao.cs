@@ -12,7 +12,7 @@ namespace RepositorioGenerico.Pattern
 
 		IDbCommand CriarComando();
 
-		void DefinirConexao(IDbCommand comando);
+		void DefinirConexaoTransacionada(IDbCommand comando);
 
 	}
 

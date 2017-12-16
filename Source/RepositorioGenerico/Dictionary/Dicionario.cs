@@ -25,6 +25,7 @@ namespace RepositorioGenerico.Dictionary
 		private ValidadorDicionario _validador;
 		private IList<IValidadorEntidadeAttribute> _validacoes;
 		private Dictionary<string, ItemDicionario> _itens;
+		private IList<ItemDicionario> _listaItens;
 		private Dictionary<string, ItemDicionario> _itensNaoMapeados;
 		private Dictionary<string, ItemDicionario> _chaves;
 		private Dictionary<string, ItemDicionario> _propriedades;
@@ -56,7 +57,7 @@ namespace RepositorioGenerico.Dictionary
 			get
 			{
 				CarregarDefinicoesDoModel();
-				return _itens.Select(item => item.Value);
+				return _listaItens;
 			}
 		}
 
@@ -153,6 +154,7 @@ namespace RepositorioGenerico.Dictionary
 			if (_itens != null)
 				return;
 			_itens = new Dictionary<string, ItemDicionario>();
+			_listaItens = new List<ItemDicionario>();
 			_itensNaoMapeados = new Dictionary<string, ItemDicionario>();
 			_propriedades = new Dictionary<string, ItemDicionario>();
 			_propriedadesNaoMapeadas = new Dictionary<string, ItemDicionario>();
@@ -180,6 +182,7 @@ namespace RepositorioGenerico.Dictionary
 				{
 					_quantidade++;
 					_itens.Add(item.Nome, item);
+					_listaItens.Add(item);
 					_propriedades[item.Propriedade.Name] = item;
 				}
 				else

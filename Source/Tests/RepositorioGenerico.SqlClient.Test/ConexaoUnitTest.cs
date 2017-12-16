@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Exceptions;
+using RepositorioGenerico.Test.Objetos;
 
 namespace RepositorioGenerico.SqlClient.Test
 {
@@ -402,7 +403,7 @@ namespace RepositorioGenerico.SqlClient.Test
 		}
 
 		[TestMethod]
-		public void SeDefinirUmaConexaoNumCommandExistenteAMesmaDeveSerPreenchidaCorretamente()
+		public void SeDefinirUmaConexaoTransacionadaNumCommandExistenteAMesmaDeveSerPreenchidaCorretamente()
 		{
 			var conexao = CriarConexao();
 
@@ -410,7 +411,7 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			var comando = new SqlCommand();
 
-			conexao.DefinirConexao(comando);
+			conexao.DefinirConexaoTransacionada(comando);
 
 			comando.Connection
 				.Should()
@@ -420,18 +421,63 @@ namespace RepositorioGenerico.SqlClient.Test
 		}
 
 		[TestMethod]
-		public void SeDefinirUmaConexaoNumCommandSemTransacaoIniciadaDeveGerarErroEspecifico()
+		public void SeDefinirUmaConexaoTransacionadaNumCommandSemTransacaoIniciadaDeveGerarErroEspecifico()
 		{
 			var conexao = CriarConexao();
 
 			var comando = new SqlCommand();
 
-			Action definirConexao = () => conexao.DefinirConexao(comando);
+			Action definirConexao = () => conexao.DefinirConexaoTransacionada(comando);
 
 			definirConexao
 				.ShouldThrow<TransacaoNaoIniciadaException>();
 		}
 
+		[TestMethod]
+		public void SeModificarUmRegistroUtilizandoTransacaoExistenteATransacaoDevePermitirCancelar()
+		{
+			var cs = ConnectionStringHelper.Consultar();
+			using (var conexaoBanco = new SqlConnection(cs))
+			{
+				conexaoBanco.Open();
+				var transacaoBanco = conexaoBanco.BeginTransaction();
+
+				var comando = conexaoBanco.CreateCommand();
+				comando.Transaction = transacaoBanco;
+
+				ValidarConteudoDoNomeDoRegistroIgual(comando, "Teste A");
+
+				try
+				{
+					using (var contexto = new RepositorioGenerico.SqlClient.Contextos.Contexto(cs, transacaoBanco))
+					{
+						var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+						var registro = repositorio.Consultar(1);
+						registro.Nome = "Nome do Objeto Modificado Em Banco";
+						repositorio.Atualizar(registro);
+						contexto.Salvar();
+					}
+
+					ValidarConteudoDoNomeDoRegistroIgual(comando, "Nome do Objeto Modificado Em Banco");
+
+				}
+				finally
+				{
+					transacaoBanco.Rollback();
+				}
+
+				ValidarConteudoDoNomeDoRegistroIgual(comando, "Teste A");
+			}
+		}
+
+		private static void ValidarConteudoDoNomeDoRegistroIgual(IDbCommand comando, string texto)
+		{
+			comando.CommandText = "select Nome from ObjetoVirtual where (Codigo = 1)";
+			var nome = comando.ExecuteScalar().ToString();
+			nome
+				.Should()
+				.Be(texto);
+		}
 	}
 
 }

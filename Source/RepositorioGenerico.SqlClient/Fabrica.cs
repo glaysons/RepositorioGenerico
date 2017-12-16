@@ -1,6 +1,5 @@
 ﻿using RepositorioGenerico.Pattern.Contextos;
 using RepositorioGenerico.SqlClient.Contextos;
-using System;
 using System.Data.SqlClient;
 
 namespace RepositorioGenerico.SqlClient
@@ -13,21 +12,19 @@ namespace RepositorioGenerico.SqlClient
 			return new Contexto(stringConexao);
 		}
 
-		public static IContexto CriarContexto(string stringConexao, SqlConnection conexao)
-		{
-			throw new NotImplementedException();
-			//return new Contexto(stringConexao, conexao);
-		}
-
 		public static IContexto CriarContexto(string stringConexao, SqlTransaction transacao)
 		{
-			throw new NotImplementedException();
-			//return new Contexto(stringConexao, transacao);
+			return new Contexto(stringConexao, transacao);
 		}
 
 		public static Pattern.Contextos.Tables.IContexto CriarContextoLegado(string stringConexao)
 		{
 			return new Contextos.Tables.Contexto(stringConexao);
+		}
+
+		public static Pattern.Contextos.Tables.IContexto CriarContextoLegado(string stringConexao, SqlTransaction transacao)
+		{
+			return new Contextos.Tables.Contexto(stringConexao, transacao);
 		}
 
 	}

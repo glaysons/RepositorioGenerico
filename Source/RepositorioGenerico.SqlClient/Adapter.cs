@@ -125,7 +125,7 @@ namespace RepositorioGenerico.SqlClient
 				if (string.IsNullOrEmpty(comando.CommandText))
 					throw new NaoFoiPossivelLocalizarScriptParaCalculoDoAutoIncrementoException(_dicionario.Nome);
 				CommandBuilder.SincronizarParametrosDosCamposChaveQueNaoSaoAutoIncremento(_dicionario, comando, registro);
-				conexao.DefinirConexao(comando);
+				conexao.DefinirConexaoTransacionada(comando);
 				valor = Convert.ToInt32(comando.ExecuteScalar());
 			}
 
@@ -137,7 +137,7 @@ namespace RepositorioGenerico.SqlClient
 
 		private int ExecutarComandoInsertComIdentity(IConexao conexao, IDbCommand comando)
 		{
-			conexao.DefinirConexao(comando);
+			conexao.DefinirConexaoTransacionada(comando);
 			return Convert.ToInt32(comando.ExecuteScalar());
 		}
 
@@ -155,7 +155,7 @@ namespace RepositorioGenerico.SqlClient
 		{
 			if (comando == null)
 				return;
-			conexao.DefinirConexao(comando);
+			conexao.DefinirConexaoTransacionada(comando);
 			var afetados = comando.ExecuteNonQuery();
 			if (afetados == 0)
 				throw new DBConcurrencyException();
@@ -214,7 +214,7 @@ namespace RepositorioGenerico.SqlClient
 			if (!valor.HasValue)
 			{
 				CommandBuilder.SincronizarParametrosDosCamposChaveQueNaoSaoAutoIncremento(_dicionario, AutoIncremento, registro);
-				conexao.DefinirConexao(AutoIncremento);
+				conexao.DefinirConexaoTransacionada(AutoIncremento);
 				valor = Convert.ToInt32(AutoIncremento.ExecuteScalar());
 			}
 

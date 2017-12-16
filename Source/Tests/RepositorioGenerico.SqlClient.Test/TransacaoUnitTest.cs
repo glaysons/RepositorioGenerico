@@ -171,20 +171,6 @@ namespace RepositorioGenerico.SqlClient.Test
 		}
 
 		[TestMethod]
-		public void SeExcluirObjetoTransacaoDisposeDeveSerChamado()
-		{
-			var mockConexao = CriarMockDaConexao();
-
-			using (var transacao = new Transacao(mockConexao.Object))
-			{
-				transacao.EmTransacao
-					.Should().BeFalse();
-			}
-
-			mockConexao.Verify(c => c.Dispose());
-		}
-
-		[TestMethod]
 		public void SeExcluirObjetoTransacaoComUmaTransacaoEmAndamentoAMesmaDeveSerCancelada()
 		{
 			var mockTransacao = CriarMockDaTransacao();

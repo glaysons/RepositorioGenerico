@@ -47,7 +47,7 @@ namespace RepositorioGenerico.Fake
 			return conexao;
 		}
 
-		public void DefinirConexao(IDbCommand comando)
+		public void DefinirConexaoTransacionada(IDbCommand comando)
 		{
 			if (!EmTransacao)
 				throw new TransacaoNaoIniciadaException();

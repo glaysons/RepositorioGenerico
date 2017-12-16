@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.SqlClient.Contextos;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace RepositorioGenerico.SqlClient.Test
 {
@@ -22,6 +24,32 @@ namespace RepositorioGenerico.SqlClient.Test
 		}
 
 		[TestMethod]
+		public void SeCriarUmContextoEspecificoComTransacaoExistenteAoFinalizarATransacaoDevePermanecerAtivo()
+		{
+			var cs = ConnectionStringHelper.Consultar();
+			using (var conexao = new SqlConnection(cs))
+			{
+				conexao.Open();
+
+				using (var transacao = conexao.BeginTransaction())
+				{
+
+					var contexto = Fabrica.CriarContexto(cs, transacao);
+					contexto
+						.Should()
+						.NotBeNull()
+						.And
+						.BeOfType<Contexto>();
+
+				}
+
+				conexao.State
+					.Should()
+					.Be(ConnectionState.Open);
+			}
+		}
+
+		[TestMethod]
 		public void SeCriarUmContextoLegadoDeveGerarUmaInstanciaValida()
 		{
 
@@ -32,6 +60,32 @@ namespace RepositorioGenerico.SqlClient.Test
 				.And
 				.BeOfType<SqlClient.Contextos.Tables.Contexto>();
 
+		}
+
+		[TestMethod]
+		public void SeCriarUmContextoLegadoComTransacaoExistenteAoFinalizarATransacaoDevePermanecerAtivo()
+		{
+			var cs = ConnectionStringHelper.Consultar();
+			using (var conexao = new SqlConnection(cs))
+			{
+				conexao.Open();
+
+				using (var transacao = conexao.BeginTransaction())
+				{
+
+					var contexto = Fabrica.CriarContextoLegado(cs, transacao);
+					contexto
+						.Should()
+						.NotBeNull()
+						.And
+						.BeOfType<SqlClient.Contextos.Tables.Contexto>();
+
+				}
+
+				conexao.State
+					.Should()
+					.Be(ConnectionState.Open);
+			}
 		}
 
 	}

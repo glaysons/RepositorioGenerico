@@ -4,6 +4,7 @@ using RepositorioGenerico.Framework;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Search;
 using RepositorioGenerico.SqlClient.Builders;
+using System.Data;
 
 namespace RepositorioGenerico.SqlClient.Contextos
 {
@@ -36,6 +37,12 @@ namespace RepositorioGenerico.SqlClient.Contextos
 
 		protected ContextoBase(string stringConexao)
 			: base(stringConexao)
+		{
+
+		}
+
+		protected ContextoBase(string stringConexao, IDbTransaction transacao)
+			: base(stringConexao, transacao)
 		{
 
 		}

@@ -2,6 +2,7 @@
 using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Entities;
 using RepositorioGenerico.Pattern.Contextos.Tables;
+using System.Data;
 
 namespace RepositorioGenerico.SqlClient.Contextos.Tables
 {
@@ -18,6 +19,12 @@ namespace RepositorioGenerico.SqlClient.Contextos.Tables
 
 		public Contexto(string stringConexao)
 			: base(stringConexao)
+		{
+
+		}
+
+		public Contexto(string stringConexao, IDbTransaction transacao)
+			: base(stringConexao, transacao)
 		{
 
 		}

@@ -11,6 +11,7 @@ namespace RepositorioGenerico.SqlClient
 
 		private readonly string _stringConexao;
 		private Transacao _transacao;
+		private bool _transacaoExterna;
 
 		public EventoConexaoDelegate AntesIniciarTransacao { get; set; }
 
@@ -32,6 +33,13 @@ namespace RepositorioGenerico.SqlClient
 		public Conexao(string stringConexao)
 		{
 			_stringConexao = stringConexao;
+			_transacaoExterna = false;
+		}
+
+		public Conexao(string stringConexao, IDbTransaction transacao) : this(stringConexao)
+		{
+			_transacao = new Transacao(transacao);
+			_transacaoExterna = true;
 		}
 
 		public IDbConnection CriarConexaoSemTransacao()
@@ -41,7 +49,7 @@ namespace RepositorioGenerico.SqlClient
 			return conexao;
 		}
 
-		public void DefinirConexao(IDbCommand comando)
+		public void DefinirConexaoTransacionada(IDbCommand comando)
 		{
 			if (!EmTransacao)
 				throw new TransacaoNaoIniciadaException();
@@ -104,7 +112,7 @@ namespace RepositorioGenerico.SqlClient
 
 		public void Dispose()
 		{
-			if (EmTransacao)
+			if (!_transacaoExterna && EmTransacao)
 				CancelarTransacao();
 		}
 

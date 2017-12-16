@@ -35,6 +35,7 @@ namespace RepositorioGenerico.SqlClient
 
 		public Transacao(IDbTransaction transacao)
 		{
+			_conexao = transacao.Connection;
 			_transacao = transacao;
 			_transacaoExterna = true;
 		}

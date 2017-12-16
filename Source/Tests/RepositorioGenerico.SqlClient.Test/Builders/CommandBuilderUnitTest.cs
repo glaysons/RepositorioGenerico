@@ -203,7 +203,8 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 
 			CommandBuilder.SincronizarParametrosDeTodosOsCampos(dicionario, comando, objeto);
 
-			comando.Parameters["@p3"].Value
+			var campo = dicionario.ConsultarPorPropriedade("Opcao");
+			comando.Parameters["@p" + campo.Id.ToString()].Value
 				.Should()
 				.Be(3);
 		}
@@ -225,7 +226,8 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 
 			CommandBuilder.SincronizarParametrosDeTodosOsCampos(dicionario, comando, objeto);
 
-			comando.Parameters["@p4"].Value
+			var campoNome = dicionario.ConsultarPorPropriedade("Letra");
+			comando.Parameters["@p" + campoNome.Id.ToString()].Value
 				.Should()
 				.Be("C");
 		}
@@ -247,7 +249,8 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 
 			CommandBuilder.SincronizarParametrosDeTodosOsCampos(dicionario, comando, objeto);
 
-			comando.Parameters["@p4"].Value
+			var campo = dicionario.ConsultarPorPropriedade("Letra");
+			comando.Parameters["@p" + campo.Id.ToString()].Value
 				.Should()
 				.Be("SemOpcao");
 		}
@@ -264,11 +267,11 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 
 			CommandBuilder.SincronizarParametrosDeTodosOsCampos(dicionario, comando, objeto);
 
-			comando.Parameters["@p0"].Value.Should().Be(DBNull.Value);
 			comando.Parameters["@p1"].Value.Should().Be(DBNull.Value);
 			comando.Parameters["@p2"].Value.Should().Be(DBNull.Value);
 			comando.Parameters["@p3"].Value.Should().Be(DBNull.Value);
 			comando.Parameters["@p4"].Value.Should().Be(DBNull.Value);
+			comando.Parameters["@p0"].Value.Should().Be(DBNull.Value);
 		}
 
 		[TestMethod]
