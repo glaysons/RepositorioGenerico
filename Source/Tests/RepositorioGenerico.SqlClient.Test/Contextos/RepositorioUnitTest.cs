@@ -132,7 +132,7 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 		}
 
 		[TestMethod]
-		public void SeConsultarUmObjetoSemDicionarioDeveSerPossivelCarregarDados()
+		public void SeConsultarViaQueryUmObjetoSemDicionarioDeveSerPossivelCarregarDados()
 		{
 			var contexto = new Contexto(ConnectionStringHelper.Consultar());
 			var buscar = contexto.Buscar<ObjetoSemDicionario>();
@@ -153,6 +153,90 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 			objeto.Duplo
 				.Should()
 				.Be(123.45);
+		}
+
+		[TestMethod]
+		public void SeConsultarViaProcedureUmObjetoSemDicionarioDeveSerPossivelCarregarDados()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var buscar = contexto.Buscar<ObjetoSemDicionario>();
+			var config = buscar.CriarProcedure("spConsultarObjetoDeTestes");
+			config.DefinirParametro("id").Valor(1);
+
+			var objeto = buscar.Um(config);
+
+			objeto
+				.Should()
+				.NotBeNull();
+
+			objeto.Nome
+				.Should()
+				.Be("Teste A");
+
+			objeto.Duplo
+				.Should()
+				.Be(123.45);
+		}
+
+		[TestMethod]
+		public void SeConsultarViaQueryUmObjetoInexistenteDeveRetornarNulo()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var buscar = contexto.Buscar<ObjetoDeTestes>();
+			var config = buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Codigo).Igual(-999);
+
+			var objeto = buscar.Um(config);
+
+			objeto
+				.Should()
+				.BeNull();
+		}
+
+		[TestMethod]
+		public void SeConsultarObjetoSemDicionarioViaQueryUmObjetoInexistenteDeveRetornarNulo()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var buscar = contexto.Buscar<ObjetoSemDicionario>();
+			var config = buscar.CriarQuery()
+				.DefinirTabela("ObjetoVirtual")
+				.AdicionarCondicao(c => c.Codigo).Igual(-999);
+
+			var objeto = buscar.Um(config);
+
+			objeto
+				.Should()
+				.BeNull();
+		}
+
+		[TestMethod]
+		public void SeConsultarViaProcedureUmObjetoInexistenteDeveRetornarNulo()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var buscar = contexto.Buscar<ObjetoDeTestes>();
+			var config = buscar.CriarProcedure("spConsultarObjetoDeTestes");
+			config.DefinirParametro("id").Valor(-999);
+
+			var objeto = buscar.Um(config);
+
+			objeto
+				.Should()
+				.BeNull();
+		}
+
+		[TestMethod]
+		public void SeConsultarObjetoSemDicionarioViaProcedureUmObjetoInexistenteDeveRetornarNulo()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var buscar = contexto.Buscar<ObjetoSemDicionario>();
+			var config = buscar.CriarProcedure("spConsultarObjetoDeTestes");
+			config.DefinirParametro("id").Valor(-999);
+
+			var objeto = buscar.Um(config);
+
+			objeto
+				.Should()
+				.BeNull();
 		}
 
 	}

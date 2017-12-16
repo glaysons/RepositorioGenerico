@@ -10,6 +10,7 @@ namespace RepositorioGenerico.SqlClient
 
 		private readonly IDbConnection _conexao;
 		private IDbTransaction _transacao;
+		private bool _transacaoExterna;
 
 		public IDbConnection ConexaoAtual
 		{
@@ -29,17 +30,26 @@ namespace RepositorioGenerico.SqlClient
 		public Transacao(IDbConnection conexao)
 		{
 			_conexao = conexao;
+			_transacaoExterna = false;
+		}
+
+		public Transacao(IDbTransaction transacao)
+		{
+			_transacao = transacao;
+			_transacaoExterna = true;
 		}
 
 		public void IniciarTransacao()
 		{
-			if (EmTransacao)
+			if (_transacaoExterna || EmTransacao)
 				throw new TransacaoJaIniciadaException();
 			_transacao = _conexao.BeginTransaction();
 		}
 
 		public void ConfirmarTransacao()
 		{
+			if (_transacaoExterna)
+				throw new NaoEhPossivelConfirmarOuCancelarTransacaoExternaException();
 			if (!EmTransacao)
 				throw new TransacaoNaoIniciadaException();
 			_transacao.Commit();
@@ -55,6 +65,8 @@ namespace RepositorioGenerico.SqlClient
 
 		public void CancelarTransacao()
 		{
+			if (_transacaoExterna)
+				throw new NaoEhPossivelConfirmarOuCancelarTransacaoExternaException();
 			if (!EmTransacao)
 				throw new TransacaoNaoIniciadaException();
 			_transacao.Rollback();
@@ -64,9 +76,8 @@ namespace RepositorioGenerico.SqlClient
 
 		public void Dispose()
 		{
-			if (EmTransacao)
+			if (!_transacaoExterna && EmTransacao)
 				CancelarTransacao();
-			_conexao.Dispose();
 		}
 
 	}

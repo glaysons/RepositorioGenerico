@@ -134,3 +134,9 @@ values ('1o Neto Filho 2B', 5)
 GO
 
 
+create procedure spConsultarObjetoDeTestes
+	@id int
+as
+	select	*
+	from	[ObjetoVirtual]
+	where	(Codigo = @id)

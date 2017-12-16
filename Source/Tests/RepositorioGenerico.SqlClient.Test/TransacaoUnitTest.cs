@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RepositorioGenerico.Exceptions;
+using System.Data.SqlClient;
 
 namespace RepositorioGenerico.SqlClient.Test
 {
@@ -196,6 +197,66 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			mockTransacao.Verify(t => t.Rollback());
 			mockTransacao.Verify(t => t.Dispose());
+		}
+
+		[TestMethod]
+		public void SeCriarUmaTransacaoUtilizandoUmaTransacaoExistenteNaoPodeIniciarNovaTransacao()
+		{
+			using (var conexao = new SqlConnection(ConnectionStringHelper.Consultar()))
+			{
+				conexao.Open();
+
+				var transacaoBanco = conexao.BeginTransaction();
+
+				using (var transacao = new Transacao(transacaoBanco))
+				{
+					Action acao = () => transacao.IniciarTransacao();
+					acao
+						.ShouldThrow<TransacaoJaIniciadaException>();
+				}
+
+				transacaoBanco.Rollback();
+			}
+		}
+
+		[TestMethod]
+		public void SeCriarUmaTransacaoUtilizandoUmaTransacaoExistenteNaoPodeConfirmarTransacao()
+		{
+			using (var conexao = new SqlConnection(ConnectionStringHelper.Consultar()))
+			{
+				conexao.Open();
+
+				var transacaoBanco = conexao.BeginTransaction();
+
+				using (var transacao = new Transacao(transacaoBanco))
+				{
+					Action acao = () => transacao.ConfirmarTransacao();
+					acao
+						.ShouldThrow<NaoEhPossivelConfirmarOuCancelarTransacaoExternaException>();
+				}
+
+				transacaoBanco.Rollback();
+			}
+		}
+
+		[TestMethod]
+		public void SeCriarUmaTransacaoUtilizandoUmaTransacaoExistenteNaoPodeCancelarTransacao()
+		{
+			using (var conexao = new SqlConnection(ConnectionStringHelper.Consultar()))
+			{
+				conexao.Open();
+
+				var transacaoBanco = conexao.BeginTransaction();
+
+				using (var transacao = new Transacao(transacaoBanco))
+				{
+					Action acao = () => transacao.CancelarTransacao();
+					acao
+						.ShouldThrow<NaoEhPossivelConfirmarOuCancelarTransacaoExternaException>();
+				}
+
+				transacaoBanco.Rollback();
+			}
 		}
 
 	}

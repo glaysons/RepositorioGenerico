@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using RepositorioGenerico.Dictionary;
-using RepositorioGenerico.Entities;
 using RepositorioGenerico.Framework;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Search;

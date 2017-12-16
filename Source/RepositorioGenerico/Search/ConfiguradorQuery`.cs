@@ -97,7 +97,9 @@ namespace RepositorioGenerico.Search
 
 		public IConfiguracaoQuery<TObjeto> DefinirTabela()
 		{
-			if (_dicionario != null)
+			if (_dicionario == null)
+				_queryBuilder.DefinirTabela(typeof(TObjeto).Name);
+			else
 				_queryBuilder.DefinirTabela(_dicionario.Nome);
 			return this;
 		}

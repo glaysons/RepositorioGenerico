@@ -70,6 +70,7 @@
     <Compile Include="Exceptions\CampoPossuiTamanhoMaximoDePeenchimentoException.cs" />
     <Compile Include="Exceptions\ChavePrimariaInvalidaException.cs" />
     <Compile Include="Exceptions\DicionarioNaoSuportaMultiplosCamposAutoIncrementoException.cs" />
+    <Compile Include="Exceptions\NaoEhPossivelConfirmarOuCancelarTransacaoExternaException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelConsultarRelacionamentoVinculadoException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelConverterConsultaParaTipoException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelCriarMapaRelacionadoException.cs" />
