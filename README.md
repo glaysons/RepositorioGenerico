@@ -11,9 +11,8 @@ Este ORM foi padronizado totalmente em português e já é utilizado em ambiente
  - Integrado com injetor de dependências **Autofac**
  - Mapeamento da estrutura dos objetos é feito sobre demanda
  - Utilização de anotações para definição dos padrões
- - Permite criar validadores personalizados como anotações
  - Possibilidade de utilização das anotações no padrão **DataAnnotations** em inglês
- - Possibilidade de desenvolvimento de validadores na forma de anotações
+ - Possibilidade de desenvolvimento de validadores de classe ou propriedade na forma de anotações
  - Preparado para utilização com tabelas com múltiplos campos na chave
  - Permite utilização de contextos simples ou transacionais
  - Sincronização de relacionamentos *filhos* é feita automaticamente
@@ -133,6 +132,13 @@ Se o nome das tabelas for diferente do nome dos objetos, basta configurar o nome
   IContexto contexto = RepositorioGenerico.SqlClient.Fabrica.CriarContexto(cs);
 ```
 
+### Criar um Contexto Sobre uma Transacao Existente ###
+
+```
+  var cs = ConfigurationManager.ConnectionStrings["Conexao"].ConnectionString;
+  IContexto contexto = RepositorioGenerico.SqlClient.Fabrica.CriarContexto(cs, **objetoSqlTransactionExistente**);
+```
+
 ### Adicionar Registros ###
 
 ```
@@ -141,7 +147,12 @@ Se o nome das tabelas for diferente do nome dos objetos, basta configurar o nome
     Nome = "Teste(" + Guid.NewGuid().ToString() + ")",
     DataHora = DateTime.Now,
     Decimal = 123.45M,
-    Duplo = 234.56
+    Duplo = 234.56,
+    Filhos = new List<FilhoDoObjetoDeTestes>() {
+      new FilhoDoObjetoDeTestes() { NomeFilho = "Nome do Filho 1" },
+      new FilhoDoObjetoDeTestes() { NomeFilho = "Nome do Filho 2" },
+      new FilhoDoObjetoDeTestes() { NomeFilho = "Nome do Filho 3" }
+    }
   };
 
   IRepositorio<ObjetoDeTestes> repositorio = contexto.Repositorio<ObjetoDeTestes>();
