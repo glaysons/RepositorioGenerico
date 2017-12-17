@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace RepositorioGenerico.Fake.Contextos
 {
-	public class ContextoFake : ContextoFakeBase, IContextoFake, IContextoTransacional
+	public class ContextoFake : ContextoFakeBase, IContextoFake
 	{
 
 		public IRepositorio<TObjeto> Repositorio<TObjeto>() where TObjeto : IEntidade

@@ -1,43 +1,35 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Pattern;
 
 namespace RepositorioGenerico.Fake
 {
-	public class ConexaoFake : IConexao, ITransacao, IDisposable, IEventoConexao
+	public class ConexaoFake : IConexao
 	{
 
 		private TransacaoFake _transacaoFake;
-
-		protected DataSet BancoDeDadosVirtual { get; private set; }
-
-		public EventoConexaoDelegate AntesIniciarTransacao { get; set; }
-
-		public EventoConexaoDelegate DepoisIniciarTransacao { get; set; }
-
-		public EventoConexaoDelegate AntesConfirmarTransacao { get; set; }
-
-		public EventoConexaoDelegate DepoisConfirmarTransacao { get; set; }
-
-		public EventoConexaoDelegate AntesCancelarTransacao { get; set; }
-
-		public EventoConexaoDelegate DepoisCancelarTransacao { get; set; }
+		private bool _transacaoExterna;
 
 		public bool EmTransacao
 		{
 			get { return (_transacaoFake != null); }
 		}
 
+		protected DataSet BancoDeDadosVirtual { get; private set; }
+
+		public EventoDelegate AntesIniciarTransacao { get; set; }
+
+		public EventoDelegate DepoisIniciarTransacao { get; set; }
+
 		public ConexaoFake()
 		{
 			BancoDeDadosVirtual = new DataSet();
 		}
 
-		public IDbConnection CriarConexaoTransacionada()
+		public ConexaoFake(IDbTransaction transacao) : this()
 		{
-			IniciarTransacao();
-			return _transacaoFake.ConexaoAtual;
+			_transacaoFake = new TransacaoFake(transacao);
+			_transacaoExterna = true;
 		}
 
 		public IDbConnection CriarConexaoSemTransacao()
@@ -45,6 +37,37 @@ namespace RepositorioGenerico.Fake
 			var conexao = new DbConnectionFake();
 			conexao.Open();
 			return conexao;
+		}
+
+		public ITransacao IniciarTransacao()
+		{
+			if (_transacaoExterna || EmTransacao)
+				throw new TransacaoJaIniciadaException();
+			try
+			{
+				ExecutarEventoTransacao(AntesIniciarTransacao);
+				_transacaoFake = new TransacaoFake(CriarConexaoSemTransacao());
+				_transacaoFake.DepoisLimparTransacao += DepoisLimparTransacao;
+				return _transacaoFake;
+			}
+			finally
+			{
+				ExecutarEventoTransacao(DepoisIniciarTransacao);
+			}
+		}
+
+		private void ExecutarEventoTransacao(EventoDelegate eventoConexao)
+		{
+			if (eventoConexao == null)
+				return;
+			eventoConexao(this);
+		}
+
+		private void DepoisLimparTransacao(object sender)
+		{
+			_transacaoFake.DepoisLimparTransacao -= DepoisLimparTransacao;
+			_transacaoFake.Dispose();
+			_transacaoFake = null;
 		}
 
 		public void DefinirConexaoTransacionada(IDbCommand comando)
@@ -55,59 +78,16 @@ namespace RepositorioGenerico.Fake
 			comando.Transaction = _transacaoFake.TransacaoAtual;
 		}
 
-		public void IniciarTransacao()
-		{
-			if (EmTransacao)
-				throw new TransacaoJaIniciadaException();
-			ExecutarEventoTransacao(AntesIniciarTransacao);
-			_transacaoFake = new TransacaoFake(CriarConexaoSemTransacao());
-			_transacaoFake.IniciarTransacao();
-			ExecutarEventoTransacao(DepoisIniciarTransacao);
-		}
-
-		private void ExecutarEventoTransacao(EventoConexaoDelegate eventoConexao)
-		{
-			if (eventoConexao == null)
-				return;
-			eventoConexao();
-		}
-
 		public IDbCommand CriarComando()
 		{
 			return new DbCommandFake(BancoDeDadosVirtual);
 		}
 
-		public void ConfirmarTransacao()
-		{
-			if (!EmTransacao)
-				throw new TransacaoNaoIniciadaException();
-			ExecutarEventoTransacao(AntesConfirmarTransacao);
-			_transacaoFake.ConfirmarTransacao();
-			ExecutarEventoTransacao(DepoisConfirmarTransacao);
-			LimparTransacao();
-		}
-
-		private void LimparTransacao()
-		{
-			_transacaoFake.Dispose();
-			_transacaoFake = null;
-		}
-
-		public void CancelarTransacao()
-		{
-			if (!EmTransacao)
-				throw new TransacaoNaoIniciadaException();
-			ExecutarEventoTransacao(AntesCancelarTransacao);
-			_transacaoFake.CancelarTransacao();
-			ExecutarEventoTransacao(DepoisCancelarTransacao);
-			LimparTransacao();
-		}
-
 		public void Dispose()
 		{
+			if (!_transacaoExterna && EmTransacao)
+				_transacaoFake.Dispose();
 			BancoDeDadosVirtual.Dispose();
-			if (EmTransacao)
-				CancelarTransacao();
 		}
 
 	}

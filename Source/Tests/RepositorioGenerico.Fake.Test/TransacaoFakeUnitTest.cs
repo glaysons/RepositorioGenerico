@@ -14,27 +14,89 @@ namespace RepositorioGenerico.Fake.Test
 		[TestMethod]
 		public void SeCriarUmaTransacaoAPropriedadeConexaoAtualDeveSerATransacaoDoConstrutor()
 		{
-
 			var conexao = Mock.Of<IDbConnection>();
-			var transacao = new TransacaoFake(conexao);
-			transacao.ConexaoAtual
-				.Should().Be(conexao);
+			using (var transacao = new TransacaoFake(conexao))
+				transacao.ConexaoAtual
+					.Should().Be(conexao);
 		}
 
 		[TestMethod]
-		public void AoCriarUmaTransacaoAPropriedadeEmTransacaoDeveSerFalso()
+		public void AoIniciarUmaTransacaoNaoDeveGerarErro()
 		{
-			var transacao = CriarTransacao();
-			transacao.EmTransacao
-				.Should().BeFalse();
-			transacao.TransacaoAtual
-				.Should().BeNull();
+			using (var conexao = new ConexaoFake())
+			{
+				Action act = () => conexao.IniciarTransacao();
+				act.ShouldNotThrow();
+			}
 		}
 
-		private static TransacaoFake CriarTransacao()
+		[TestMethod]
+		public void AoIniciarUmaTransacaoAPropriedadeTransacaoAtualDeveEstarPreenchida()
 		{
-			var mockConexao = CriarMockDaConexao();
-			return new TransacaoFake(mockConexao.Object);
+			using (var conexao = new ConexaoFake())
+			using (var transacao = conexao.IniciarTransacao() as TransacaoFake)
+			{
+				transacao.TransacaoAtual
+					.Should()
+					.NotBeNull();
+			}
+		}
+
+		[TestMethod]
+		public void AoIniciarUmaTransacaoDuasVezesDeveGerarErroDeTransacaoJaIniciada()
+		{
+			using (var conexao = new ConexaoFake())
+			using (var transacao = conexao.IniciarTransacao() as TransacaoFake)
+			{
+				Action act = () => conexao.IniciarTransacao();
+				act.ShouldThrow<TransacaoJaIniciadaException>();
+			}
+		}
+
+		[TestMethod]
+		public void AoConfirmarUmaTransacaoSemTransacaoDeveGerarErroDeTransacaoNaoIniciada()
+		{
+			using (var conexao = new ConexaoFake())
+			using (var transacao = conexao.IniciarTransacao() as TransacaoFake)
+			{
+				transacao.ConfirmarTransacao();
+				Action act = () => transacao.ConfirmarTransacao();
+				act.ShouldThrow<TransacaoNaoIniciadaException>();
+			}
+		}
+
+		[TestMethod]
+		public void AoConfirmarUmaTransacaoNaoDeveGerarErro()
+		{
+			using (var conexao = new ConexaoFake())
+			using (var transacao = conexao.IniciarTransacao() as TransacaoFake)
+			{
+				Action act = () => transacao.ConfirmarTransacao();
+				act.ShouldNotThrow();
+			}
+		}
+
+		[TestMethod]
+		public void AoConfirmarUmaTransacaoATransacaoDeveSerLimpa()
+		{
+			var mockTransacao = CriarMockDaTransacao();
+			var mockConexao = CriarMockDaConexao(mockTransacao);
+			using (var transacao = new TransacaoFake(mockConexao.Object))
+			{
+				transacao.ConfirmarTransacao();
+				transacao.TransacaoAtual
+					.Should().BeNull();
+				mockTransacao.Verify(t => t.Dispose());
+			}
+		}
+
+		private static Mock<IDbTransaction> CriarMockDaTransacao()
+		{
+			var transacao = new Mock<IDbTransaction>();
+			transacao.Setup(t => t.Commit()).Verifiable();
+			transacao.Setup(t => t.Rollback()).Verifiable();
+			transacao.Setup(t => t.Dispose()).Verifiable();
+			return transacao;
 		}
 
 		private static Mock<IDbConnection> CriarMockDaConexao(Mock<IDbTransaction> transacao = null)
@@ -48,97 +110,27 @@ namespace RepositorioGenerico.Fake.Test
 			return conexao;
 		}
 
-		private static Mock<IDbTransaction> CriarMockDaTransacao()
-		{
-			var transacao = new Mock<IDbTransaction>();
-			transacao.Setup(t => t.Commit()).Verifiable();
-			transacao.Setup(t => t.Rollback()).Verifiable();
-			transacao.Setup(t => t.Dispose()).Verifiable();
-			return transacao;
-		}
-
-		[TestMethod]
-		public void AoIniciarUmaTransacaoNaoDeveGerarErro()
-		{
-			var transacao = CriarTransacao();
-			Action act = () => transacao.IniciarTransacao();
-			act.ShouldNotThrow();
-		}
-
-		[TestMethod]
-		public void AoIniciarUmaTransacaoAPropriedadeTransacaoAtualDeveEstarPreenchida()
-		{
-			var transacao = CriarTransacao();
-			transacao.EmTransacao
-				.Should().BeFalse();
-			transacao.IniciarTransacao();
-			transacao.EmTransacao
-				.Should().BeTrue();
-			transacao.TransacaoAtual
-				.Should().NotBeNull();
-		}
-
-		[TestMethod]
-		public void AoIniciarUmaTransacaoDuasVezesDeveGerarErroDeTransacaoJaIniciada()
-		{
-			var transacao = CriarTransacao();
-			transacao.IniciarTransacao();
-			Action act = () => transacao.IniciarTransacao();
-			act.ShouldThrow<TransacaoJaIniciadaException>();
-		}
-
-		[TestMethod]
-		public void AoConfirmarUmaTransacaoSemTransacaoDeveGerarErroDeTransacaoNaoIniciada()
-		{
-			var transacao = CriarTransacao();
-			Action act = () => transacao.ConfirmarTransacao();
-			act.ShouldThrow<TransacaoNaoIniciadaException>();
-		}
-
-		[TestMethod]
-		public void AoConfirmarUmaTransacaoNaoDeveGerarErro()
-		{
-			var transacao = CriarTransacao();
-			transacao.IniciarTransacao();
-			Action act = () => transacao.ConfirmarTransacao();
-			act.ShouldNotThrow();
-		}
-
-		[TestMethod]
-		public void AoConfirmarUmaTransacaoATransacaoDeveSerLimpa()
-		{
-			var mockTransacao = CriarMockDaTransacao();
-			var mockConexao = CriarMockDaConexao(mockTransacao);
-			var transacao = new TransacaoFake(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.ConfirmarTransacao();
-			transacao.TransacaoAtual
-				.Should().BeNull();
-			transacao.EmTransacao
-				.Should().BeFalse();
-
-			mockTransacao.Verify(t => t.Dispose());
-		}
-
 		[TestMethod]
 		public void AoConfirmarUmaTransacaoAConexaoDeveEstarFechada()
 		{
 			var mockConexao = CriarMockDaConexao();
-			var transacao = new TransacaoFake(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.ConfirmarTransacao();
-
-			mockConexao.Verify(c => c.Close());
+			using (var transacao = new TransacaoFake(mockConexao.Object))
+			{
+				transacao.ConfirmarTransacao();
+				mockConexao.Verify(c => c.Close());
+			}
 		}
 
 		[TestMethod]
 		public void AoCancelarUmaTransacaoSemTransacaoDeveGerarErroDeTransacaoNaoIniciada()
 		{
-			var transacao = CriarTransacao();
-			Action act = () => transacao.CancelarTransacao();
-			act.ShouldThrow<TransacaoNaoIniciadaException>();
+			using (var conexao = new ConexaoFake())
+			using (var transacao = conexao.IniciarTransacao() as TransacaoFake)
+			{
+				transacao.CancelarTransacao();
+				Action act = () => transacao.CancelarTransacao();
+				act.ShouldThrow<TransacaoNaoIniciadaException>();
+			}
 		}
 
 		[TestMethod]
@@ -146,42 +138,24 @@ namespace RepositorioGenerico.Fake.Test
 		{
 			var mockTransacao = CriarMockDaTransacao();
 			var mockConexao = CriarMockDaConexao(mockTransacao);
-			var transacao = new TransacaoFake(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.CancelarTransacao();
-			transacao.TransacaoAtual
-				.Should().BeNull();
-			transacao.EmTransacao
-				.Should().BeFalse();
-
-			mockTransacao.Verify(t => t.Dispose());
-		}
-
-		[TestMethod]
-		public void AoCancelarUmaTransacaoAConexaoDeveEstarFechada()
-		{
-			var mockConexao = CriarMockDaConexao();
-			var transacao = new TransacaoFake(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.CancelarTransacao();
-
-			mockConexao.Verify(c => c.Close());
-		}
-
-		[TestMethod]
-		public void SeExcluirObjetoTransacaoFakeDisposeDeveSerChamado()
-		{
-			var mockConexao = CriarMockDaConexao();
-
 			using (var transacao = new TransacaoFake(mockConexao.Object))
 			{
-				transacao.EmTransacao
-					.Should().BeFalse();
+				transacao.CancelarTransacao();
+				transacao.TransacaoAtual
+					.Should().BeNull();
+				mockTransacao.Verify(t => t.Dispose());
 			}
+		}
 
-			mockConexao.Verify(c => c.Dispose());
+		[TestMethod]
+		public void AoCancelarUmaTransacaoAConexaoDeveSerFechada()
+		{
+			var mockConexao = CriarMockDaConexao();
+			using (var transacao = new TransacaoFake(mockConexao.Object))
+			{
+				transacao.CancelarTransacao();
+				mockConexao.Verify(c => c.Close());
+			}
 		}
 
 		[TestMethod]
@@ -192,7 +166,6 @@ namespace RepositorioGenerico.Fake.Test
 
 			using (var transacao = new TransacaoFake(mockConexao.Object))
 			{
-				transacao.IniciarTransacao();
 			}
 
 			mockTransacao.Verify(t => t.Rollback());

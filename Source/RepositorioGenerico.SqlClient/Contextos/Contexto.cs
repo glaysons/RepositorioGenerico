@@ -6,7 +6,7 @@ using System.Data;
 
 namespace RepositorioGenerico.SqlClient.Contextos
 {
-	public class Contexto : ContextoBase, IContextoTransacional
+	public class Contexto : ContextoBase, IContexto, IContextoTransacional
 	{
 
 		public IRepositorio<TObjeto> Repositorio<TObjeto>() where TObjeto : IEntidade

@@ -1,14 +1,13 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace RepositorioGenerico.Pattern
 {
 
-	public interface IConexao
+	public interface IConexao : ITransacional, IDisposable
 	{
 
 		IDbConnection CriarConexaoSemTransacao();
-
-		IDbConnection CriarConexaoTransacionada();
 
 		IDbCommand CriarComando();
 

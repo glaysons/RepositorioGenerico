@@ -28,17 +28,17 @@ namespace RepositorioGenerico.SqlClient.Test
 				Duplo = 234.56
 			};
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, novoRegistro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var transacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, novoRegistro);
+					transacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					transacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid);
 
@@ -94,17 +94,17 @@ namespace RepositorioGenerico.SqlClient.Test
 				Duplo = 234.56
 			};
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, novoRegistro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var transacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, novoRegistro);
+					transacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					transacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid);
 
@@ -114,17 +114,17 @@ namespace RepositorioGenerico.SqlClient.Test
 			registroExistente.Nome = "Novo(" + guid.ToString() + ")";
 			registroExistente.EstadoEntidade = EstadosEntidade.Modificado;
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, registroExistente);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var novaTransacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, registroExistente);
+					novaTransacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					novaTransacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid);
 
@@ -148,33 +148,33 @@ namespace RepositorioGenerico.SqlClient.Test
 				Duplo = 234.56
 			};
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, registro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var transacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, registro);
+					transacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					transacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid);
 
 			registro.EstadoEntidade = EstadosEntidade.Excluido;
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, registro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var novaTransacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, registro);
+					novaTransacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					novaTransacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid, deveExistirQuantidade: 0);
 
@@ -200,22 +200,21 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			tabela.Rows.Add(novoRegistro);
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, novoRegistro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var transacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, novoRegistro);
+					transacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					transacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid);
 
 			ValidarExclusaoDoRegistroTemporario(conexao, guid);
-
 		}
 
 		private DataTable CriarTabelaDoObjetoDeTestes()
@@ -243,17 +242,17 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			tabela.Rows.Add(novoRegistro);
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, novoRegistro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var transacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, novoRegistro);
+					transacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					transacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid);
 
@@ -264,17 +263,17 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			registroExistente["Nome"] = "Novo(" + guid.ToString() + ")";
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, registroExistente);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var novaTransacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, registroExistente);
+					novaTransacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					novaTransacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid);
 
@@ -302,17 +301,17 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			tabela.Rows.Add(registro);
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, registro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var transacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, registro);
+					transacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					transacao.CancelarTransacao();
+					throw;
+				}
 
 			tabela.AcceptChanges();
 
@@ -320,17 +319,17 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			registro.Delete();
 
-			conexao.IniciarTransacao();
-			try
-			{
-				adapter.Salvar(conexao, registro);
-				conexao.ConfirmarTransacao();
-			}
-			catch
-			{
-				conexao.CancelarTransacao();
-				throw;
-			}
+			using (var novaTransacao = conexao.IniciarTransacao())
+				try
+				{
+					adapter.Salvar(conexao, registro);
+					novaTransacao.ConfirmarTransacao();
+				}
+				catch
+				{
+					novaTransacao.CancelarTransacao();
+					throw;
+				}
 
 			ValidarExistenciaRegistroTemporario(conexao, guid, deveExistirQuantidade: 0);
 

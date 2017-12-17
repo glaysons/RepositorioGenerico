@@ -5,6 +5,7 @@ using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Search;
 using RepositorioGenerico.SqlClient.Builders;
 using System.Data;
+using RepositorioGenerico.Pattern;
 
 namespace RepositorioGenerico.SqlClient.Contextos
 {
@@ -67,20 +68,22 @@ namespace RepositorioGenerico.SqlClient.Contextos
 			if (_transacoes == null)
 				return;
 
+			ITransacao transacao = null;
 			var gerenciarTransacao = !EmTransacao;
+
 			if (gerenciarTransacao)
-				IniciarTransacao();
+				transacao = IniciarTransacao();
 
 			try
 			{
 				Transacoes.Salvar();
 				if (gerenciarTransacao)
-					ConfirmarTransacao();
+					transacao.ConfirmarTransacao();
 			}
 			catch
 			{
 				if (gerenciarTransacao)
-					CancelarTransacao();
+					transacao.CancelarTransacao();
 				throw;
 			}
 		}

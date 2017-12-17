@@ -14,8 +14,7 @@ namespace RepositorioGenerico.SqlClient.Test
 		[TestMethod]
 		public void SeCriarUmaConexaoSemTransacaoDeveGerarUmaConexaoAbertaSemTransacaoVinculada()
 		{
-			var conexao = CriarConexao();
-
+			using (var conexao = CriarConexao())
 			using (var connection = conexao.CriarConexaoSemTransacao())
 			{
 
@@ -44,26 +43,21 @@ namespace RepositorioGenerico.SqlClient.Test
 		[TestMethod]
 		public void SeCriarUmaConexaoTransacionadaDeveGerarUmaConexaoAbertaComTransacao()
 		{
-			var conexao = CriarConexao();
-
-			using (var connection = conexao.CriarConexaoTransacionada())
+			using (var conexao = CriarConexao())
+			using (var transacao = conexao.IniciarTransacao() as Transacao)
 			{
 
-				connection
+				transacao
 					.Should()
 					.NotBeNull()
 					.And
-					.BeOfType<SqlConnection>();
-
-				connection.State
-					.Should()
-					.Be(ConnectionState.Open);
+					.BeOfType<Transacao>();
 
 				conexao.EmTransacao
 					.Should()
 					.BeTrue();
 
-				conexao.CancelarTransacao();
+				transacao.CancelarTransacao();
 
 				conexao.EmTransacao
 					.Should()
@@ -75,362 +69,355 @@ namespace RepositorioGenerico.SqlClient.Test
 		[TestMethod]
 		public void SeIniciarECancelarTransacaoDeveGerenciarStatusTransacaoCorretamente()
 		{
-			var conexao = CriarConexao();
+			using (var conexao = CriarConexao())
+			{
+				conexao.EmTransacao
+					.Should()
+					.BeFalse();
 
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
+				using (var transacao = conexao.IniciarTransacao() as Transacao)
+				{
+					conexao.EmTransacao
+						.Should()
+						.BeTrue();
 
-			conexao.IniciarTransacao();
+					Action repetirIniciar = () => conexao.IniciarTransacao();
+					repetirIniciar
+						.ShouldThrow<TransacaoJaIniciadaException>();
 
-			conexao.EmTransacao
-				.Should()
-				.BeTrue();
+					transacao.CancelarTransacao();
 
-			Action repetirIniciar = () => conexao.IniciarTransacao();
-			repetirIniciar
-				.ShouldThrow<TransacaoJaIniciadaException>();
+					conexao.EmTransacao
+						.Should()
+						.BeFalse();
 
-			conexao.CancelarTransacao();
-
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
-
-			Action repetirCancelar = () => conexao.CancelarTransacao();
-			repetirCancelar
-				.ShouldThrow<TransacaoNaoIniciadaException>();
+					Action repetirCancelar = () => transacao.CancelarTransacao();
+					repetirCancelar
+						.ShouldThrow<TransacaoNaoIniciadaException>();
+				}
+			}
 
 		}
 
 		[TestMethod]
 		public void SeIniciarEConfirmarTransacaoDeveGerenciarStatusTransacaoCorretamente()
 		{
-			var conexao = CriarConexao();
+			using (var conexao = CriarConexao())
+			{
+				conexao.EmTransacao
+					.Should()
+					.BeFalse();
 
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
+				using (var transacao = conexao.IniciarTransacao() as Transacao)
+				{
 
-			conexao.IniciarTransacao();
+					conexao.EmTransacao
+						.Should()
+						.BeTrue();
 
-			conexao.EmTransacao
-				.Should()
-				.BeTrue();
+					transacao.ConfirmarTransacao();
 
-			conexao.ConfirmarTransacao();
+					conexao.EmTransacao
+						.Should()
+						.BeFalse();
 
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
+					Action repetirConfirmar = () => transacao.ConfirmarTransacao();
 
-			Action repetirConfirmar = () => conexao.ConfirmarTransacao();
-			repetirConfirmar
-				.ShouldThrow<TransacaoNaoIniciadaException>();
+					repetirConfirmar
+						.ShouldThrow<TransacaoNaoIniciadaException>();
+				}
+
+			}
+
 
 		}
 
 		[TestMethod]
 		public void SeCriarComandoDeveGerarUmaInstanciaDeSqlCommand()
 		{
-			var conexao = CriarConexao();
-
-			conexao.CriarComando()
-				.Should()
-				.NotBeNull()
-				.And
-				.BeOfType<SqlCommand>();
+			using (var conexao = CriarConexao())
+				conexao.CriarComando()
+					.Should()
+					.NotBeNull()
+					.And
+					.BeOfType<SqlCommand>();
 
 		}
 
 		[TestMethod]
 		public void SeExecutarDisposeEmUmaConexaoEmTransacaoAMesmaDeveraSerCancelada()
 		{
-			var conexao = CriarConexao();
+			using (var conexao = CriarConexao())
+			{
+				conexao.EmTransacao
+					.Should()
+					.BeFalse();
 
-			var executouEventoCancelamento = false;
-			conexao.DepoisCancelarTransacao = () => executouEventoCancelamento = true;
+				using (var transacao = conexao.IniciarTransacao() as Transacao)
+				{
+					var executouEventoCancelamento = false;
+					transacao.DepoisCancelarTransacao = (sender) => executouEventoCancelamento = true;
 
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
+					conexao.EmTransacao
+						.Should()
+						.BeTrue();
 
-			conexao.IniciarTransacao();
+					conexao.Dispose();
 
-			conexao.EmTransacao
-				.Should()
-				.BeTrue();
+					conexao.EmTransacao
+						.Should()
+						.BeFalse();
 
-			conexao.Dispose();
-
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
-
-			executouEventoCancelamento
-				.Should()
-				.BeTrue();
+					executouEventoCancelamento
+						.Should()
+						.BeTrue();
+				}
+			}
 		}
 
 		[TestMethod]
 		public void SeIniciarUmaTransacaoOsEventosDeInicioDevemSerVerificados()
 		{
-			var conexao = CriarConexao();
-			var eventos = new GerenciadorEventosConexao(conexao);
+			using (var conexao = CriarConexao())
+			{
+				var eventosConexao = new GerenciadorEventosConexao(conexao);
 
-			var connection = conexao.CriarConexaoSemTransacao();
+				using (var conexaoBanco = conexao.CriarConexaoSemTransacao())
+					eventosConexao.Validar(
+						executarEventoAntesIniciar: false,
+						executarEventoDepoisIniciar: false);
 
-			eventos.Validar(
-				executarEventoAntesIniciar: false,
-				executarEventoDepoisIniciar: false,
-				executarEventoAntesConfirmar: false,
-				executarEventoAoConfirmar: false,
-				executarEventoAntesCancelar: false,
-				executarEventoAoCancelar: false);
+				using (var transacao = conexao.IniciarTransacao() as Transacao)
+				{
+					eventosConexao.Validar(
+						executarEventoAntesIniciar: true,
+						executarEventoDepoisIniciar: true);
 
-			eventos.ReiniciarValidacao();
-			connection.Dispose();
+					eventosConexao.Validar(
+						sequenciaEventoAntesIniciar: 1,
+						sequenciaEventoDepoisIniciar: 2);
 
-			connection = conexao.CriarConexaoTransacionada();
+					transacao.CancelarTransacao();
+				}
 
-			eventos.Validar(
-				executarEventoAntesIniciar: true,
-				executarEventoDepoisIniciar: true,
-				executarEventoAntesConfirmar: false,
-				executarEventoAoConfirmar: false,
-				executarEventoAntesCancelar: false,
-				executarEventoAoCancelar: false);
+				using (var transacao = conexao.IniciarTransacao() as Transacao)
+				{
+					var eventosTransacao = new GerenciadorEventosTransacao(transacao as Transacao);
 
-			eventos.Validar(
-				sequenciaEventoAntesIniciar: 1,
-				sequenciaEventoDepoisIniciar: 2,
-				sequenciaEventoAntesConfirmar: 0,
-				sequenciaEventoAoConfirmar: 0,
-				sequenciaEventoAntesCancelar: 0,
-				sequenciaEventoAoCancelar: 0);
+					eventosTransacao.Validar(
+						executarEventoAntesConfirmar: false,
+						executarEventoAoConfirmar: false,
+						executarEventoAntesCancelar: false,
+						executarEventoAoCancelar: false);
 
-			conexao.CancelarTransacao();
-			connection.Dispose();
-			eventos.ReiniciarValidacao();
-
-			conexao.IniciarTransacao();
-
-			eventos.Validar(
-				executarEventoAntesIniciar: true,
-				executarEventoDepoisIniciar: true,
-				executarEventoAntesConfirmar: false,
-				executarEventoAoConfirmar: false,
-				executarEventoAntesCancelar: false,
-				executarEventoAoCancelar: false);
-
-			eventos.Validar(
-				sequenciaEventoAntesIniciar: 1,
-				sequenciaEventoDepoisIniciar: 2,
-				sequenciaEventoAntesConfirmar: 0,
-				sequenciaEventoAoConfirmar: 0,
-				sequenciaEventoAntesCancelar: 0,
-				sequenciaEventoAoCancelar: 0);
-
-			conexao.Dispose();
-
+					eventosTransacao.Validar(
+						sequenciaEventoAntesConfirmar: 0,
+						sequenciaEventoAoConfirmar: 0,
+						sequenciaEventoAntesCancelar: 0,
+						sequenciaEventoAoCancelar: 0);
+				}
+			}
 		}
 
 		[TestMethod]
 		public void SeConfirmarUmaTransacaoOsEventosDeConfirmacaoDevemSerVerificados()
 		{
-			var conexao = CriarConexao();
-			var eventos = new GerenciadorEventosConexao(conexao);
+			using (var conexao = CriarConexao())
+			using (var transacao = conexao.IniciarTransacao() as Transacao)
+			{
+				var eventos = new GerenciadorEventosTransacao(transacao as Transacao);
 
-			conexao.IniciarTransacao();
+				transacao.ConfirmarTransacao();
 
-			eventos.ReiniciarValidacao();
+				eventos.Validar(
+					executarEventoAntesConfirmar: true,
+					executarEventoAoConfirmar: true,
+					executarEventoAntesCancelar: false,
+					executarEventoAoCancelar: false);
 
-			conexao.ConfirmarTransacao();
+				eventos.Validar(
+					sequenciaEventoAntesConfirmar: 1,
+					sequenciaEventoAoConfirmar: 2,
+					sequenciaEventoAntesCancelar: 0,
+					sequenciaEventoAoCancelar: 0);
 
-			eventos.Validar(
-				executarEventoAntesIniciar: false,
-				executarEventoDepoisIniciar: false,
-				executarEventoAntesConfirmar: true,
-				executarEventoAoConfirmar: true,
-				executarEventoAntesCancelar: false,
-				executarEventoAoCancelar: false);
-
-			eventos.Validar(
-				sequenciaEventoAntesIniciar: 0,
-				sequenciaEventoDepoisIniciar: 0,
-				sequenciaEventoAntesConfirmar: 1,
-				sequenciaEventoAoConfirmar: 2,
-				sequenciaEventoAntesCancelar: 0,
-				sequenciaEventoAoCancelar: 0);
-
-			conexao.Dispose();
+				conexao.Dispose();
+			}
 		}
 
 		[TestMethod]
 		public void SeCancelarUmaTransacaoOsEventosDeCancelamentoDevemSerVerificados()
 		{
-			var conexao = CriarConexao();
-			var eventos = new GerenciadorEventosConexao(conexao);
+			using (var conexao = CriarConexao())
+			using (var transacao = conexao.IniciarTransacao() as Transacao)
+			{
+				var eventos = new GerenciadorEventosTransacao(transacao as Transacao);
 
-			conexao.IniciarTransacao();
+				transacao.CancelarTransacao();
 
-			eventos.ReiniciarValidacao();
+				eventos.Validar(
+					executarEventoAntesConfirmar: false,
+					executarEventoAoConfirmar: false,
+					executarEventoAntesCancelar: true,
+					executarEventoAoCancelar: true);
 
-			conexao.CancelarTransacao();
-
-			eventos.Validar(
-				executarEventoAntesIniciar: false,
-				executarEventoDepoisIniciar: false,
-				executarEventoAntesConfirmar: false,
-				executarEventoAoConfirmar: false,
-				executarEventoAntesCancelar: true,
-				executarEventoAoCancelar: true);
-
-			eventos.Validar(
-				sequenciaEventoAntesIniciar: 0,
-				sequenciaEventoDepoisIniciar: 0,
-				sequenciaEventoAntesConfirmar: 0,
-				sequenciaEventoAoConfirmar: 0,
-				sequenciaEventoAntesCancelar: 1,
-				sequenciaEventoAoCancelar: 2);
+				eventos.Validar(
+					sequenciaEventoAntesConfirmar: 0,
+					sequenciaEventoAoConfirmar: 0,
+					sequenciaEventoAntesCancelar: 1,
+					sequenciaEventoAoCancelar: 2);
+			}
 
 		}
 
 		[TestMethod]
 		public void SeOcorrerErroAntesDeIniciarUmaTransacaoATransacaoNaoDeveSerIniciada()
 		{
-			var conexao = CriarConexao();
-			conexao.AntesIniciarTransacao = () => { throw new Exception("ErroAntesIniciar"); };
+			using (var conexao = CriarConexao())
+			{
+				conexao.AntesIniciarTransacao = (sender) => { throw new Exception("ErroAntesIniciar"); };
 
-			Action antesIniciarIniciar = () => conexao.IniciarTransacao();
+				Action antesIniciarIniciar = () => conexao.IniciarTransacao();
 
-			antesIniciarIniciar
-				.ShouldThrow<Exception>()
-				.WithMessage("ErroAntesIniciar");
+				antesIniciarIniciar
+					.ShouldThrow<Exception>()
+					.WithMessage("ErroAntesIniciar");
 
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
+				conexao.EmTransacao
+					.Should()
+					.BeFalse();
+			}
 		}
 
 		[TestMethod]
 		public void SeOcorrerErroDepoisIniciarUmaTransacaoATransacaoDeveSerIniciadaNormalmente()
 		{
-			var conexao = CriarConexao();
-			conexao.DepoisIniciarTransacao = () => { throw new Exception("ErroDepoisIniciar"); };
+			using (var conexao = CriarConexao())
+			{
+				conexao.DepoisIniciarTransacao = (sender) => { throw new Exception("ErroDepoisIniciar"); };
 
-			Action depoisIniciar = () => conexao.IniciarTransacao();
+				Action depoisIniciar = () => conexao.IniciarTransacao();
 
-			depoisIniciar
-				.ShouldThrow<Exception>()
-				.WithMessage("ErroDepoisIniciar");
+				depoisIniciar
+					.ShouldThrow<Exception>()
+					.WithMessage("ErroDepoisIniciar");
 
-			conexao.EmTransacao
-				.Should()
-				.BeTrue();
+				conexao.EmTransacao
+					.Should()
+					.BeTrue();
+			}
 		}
 
 		[TestMethod]
 		public void SeOcorrerErroAntesDeConfirmarUmaTransacaoATransacaoDeveContinuarExistindoNormalmente()
 		{
-			var conexao = CriarConexao();
-			conexao.AntesConfirmarTransacao = () => { throw new Exception("ErroAntesConfirmar"); };
+			using (var conexao = CriarConexao())
+			using (var transacao = conexao.IniciarTransacao() as Transacao)
+			{
+				transacao.AntesConfirmarTransacao = (sender) => { throw new Exception("ErroAntesConfirmar"); };
 
-			conexao.IniciarTransacao();
-			Action antesConfirmar = () => conexao.ConfirmarTransacao();
+				Action antesConfirmar = () => transacao.ConfirmarTransacao();
 
-			antesConfirmar
-				.ShouldThrow<Exception>()
-				.WithMessage("ErroAntesConfirmar");
+				antesConfirmar
+					.ShouldThrow<Exception>()
+					.WithMessage("ErroAntesConfirmar");
 
-			conexao.EmTransacao
-				.Should()
-				.BeTrue();
+				conexao.EmTransacao
+					.Should()
+					.BeTrue();
+			}
 		}
 
 		[TestMethod]
 		public void SeOcorrerErroAoConfirmarUmaTransacaoATransacaoDeveConfirmada()
 		{
-			var conexao = CriarConexao();
-			conexao.DepoisConfirmarTransacao = () => { throw new Exception("ErroAoConfirmar"); };
+			using (var conexao = CriarConexao())
+			using (var transacao = conexao.IniciarTransacao() as Transacao)
+			{
+				transacao.DepoisConfirmarTransacao = (sender) => { throw new Exception("ErroAoConfirmar"); };
 
-			conexao.IniciarTransacao();
-			Action aoConfirmar = () => conexao.ConfirmarTransacao();
+				Action aoConfirmar = () => transacao.ConfirmarTransacao();
 
-			aoConfirmar
-				.ShouldThrow<Exception>()
-				.WithMessage("ErroAoConfirmar");
+				aoConfirmar
+					.ShouldThrow<Exception>()
+					.WithMessage("ErroAoConfirmar");
 
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
+				conexao.EmTransacao
+					.Should()
+					.BeFalse();
+			}
 		}
 
 		[TestMethod]
 		public void SeOcorrerErroAntesDeCancelarUmaTransacaoATransacaoDeveContinuarExistindoNormalmente()
 		{
-			var conexao = CriarConexao();
-			conexao.AntesCancelarTransacao = () => { throw new Exception("ErroAntesCancelar"); };
+			using (var conexao = CriarConexao())
+			using (var transacao = conexao.IniciarTransacao() as Transacao)
+			{
+				transacao.AntesCancelarTransacao = (sender) => { throw new Exception("ErroAntesCancelar"); };
 
-			conexao.IniciarTransacao();
-			Action antesCancelar = () => conexao.CancelarTransacao();
+				Action antesCancelar = () => transacao.CancelarTransacao();
 
-			antesCancelar
-				.ShouldThrow<Exception>()
-				.WithMessage("ErroAntesCancelar");
+				antesCancelar
+					.ShouldThrow<Exception>()
+					.WithMessage("ErroAntesCancelar");
 
-			conexao.EmTransacao
-				.Should()
-				.BeTrue();
+				conexao.EmTransacao
+					.Should()
+					.BeTrue();
+
+				transacao.AntesCancelarTransacao = null;
+			}
 		}
 
 		[TestMethod]
 		public void SeOcorrerErroAoCancelarUmaTransacaoATransacaoDeveCancelada()
 		{
-			var conexao = CriarConexao();
-			conexao.DepoisCancelarTransacao = () => { throw new Exception("ErroAoCancelar"); };
+			using (var conexao = CriarConexao())
+			using (var transacao = conexao.IniciarTransacao() as Transacao)
+			{
+				transacao.DepoisCancelarTransacao = (sender) => { throw new Exception("ErroAoCancelar"); };
 
-			conexao.IniciarTransacao();
-			Action aoCancelar = () => conexao.CancelarTransacao();
+				Action aoCancelar = () => transacao.CancelarTransacao();
 
-			aoCancelar
-				.ShouldThrow<Exception>()
-				.WithMessage("ErroAoCancelar");
+				aoCancelar
+					.ShouldThrow<Exception>()
+					.WithMessage("ErroAoCancelar");
 
-			conexao.EmTransacao
-				.Should()
-				.BeFalse();
+				conexao.EmTransacao
+					.Should()
+					.BeFalse();
+			}
 		}
 
 		[TestMethod]
 		public void SeDefinirUmaConexaoTransacionadaNumCommandExistenteAMesmaDeveSerPreenchidaCorretamente()
 		{
-			var conexao = CriarConexao();
+			using (var conexao = CriarConexao())
+			{
+				var transacao = conexao.IniciarTransacao() as Transacao;
 
-			conexao.IniciarTransacao();
+				var comando = new SqlCommand();
 
-			var comando = new SqlCommand();
+				conexao.DefinirConexaoTransacionada(comando);
 
-			conexao.DefinirConexaoTransacionada(comando);
-
-			comando.Connection
-				.Should()
-				.NotBeNull();
-
-			conexao.Dispose();
+				comando.Connection
+					.Should()
+					.NotBeNull();
+			}
 		}
 
 		[TestMethod]
 		public void SeDefinirUmaConexaoTransacionadaNumCommandSemTransacaoIniciadaDeveGerarErroEspecifico()
 		{
-			var conexao = CriarConexao();
+			using (var conexao = CriarConexao())
+			using (var comando = new SqlCommand())
+			{
+				Action definirConexao = () => conexao.DefinirConexaoTransacionada(comando);
 
-			var comando = new SqlCommand();
-
-			Action definirConexao = () => conexao.DefinirConexaoTransacionada(comando);
-
-			definirConexao
-				.ShouldThrow<TransacaoNaoIniciadaException>();
+				definirConexao
+					.ShouldThrow<TransacaoNaoIniciadaException>();
+			}
 		}
 
 		[TestMethod]

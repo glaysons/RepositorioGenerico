@@ -66,11 +66,11 @@
     <Compile Include="Contextos\Tables\IContexto.cs" />
     <Compile Include="Contextos\Tables\IContextoTransacional.cs" />
     <Compile Include="Contextos\Tables\IRepositorio.cs" />
-    <Compile Include="EventoConexaoDelegate.cs" />
+    <Compile Include="EventoDelegate.cs" />
     <Compile Include="IComando.cs" />
     <Compile Include="IConexao.cs" />
-    <Compile Include="IEventoConexao.cs" />
     <Compile Include="ITransacao.cs" />
+    <Compile Include="ITransacional.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

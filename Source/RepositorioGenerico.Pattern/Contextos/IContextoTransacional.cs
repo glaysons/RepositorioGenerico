@@ -1,6 +1,6 @@
 ﻿namespace RepositorioGenerico.Pattern.Contextos
 {
-	public interface IContextoTransacional : IContexto, ITransacao
+	public interface IContextoTransacional: IContexto, ITransacional
 	{
 
 	}

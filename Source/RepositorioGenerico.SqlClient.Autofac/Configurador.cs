@@ -18,9 +18,7 @@ namespace RepositorioGenerico.SqlClient.Autofac
 			builder.RegisterType<Contexto>()
 				.WithParameter("stringConexao", stringConexao)
 				.As<IContexto>()
-				.As<IContextoTransacional>()
 				.As<IConexao>()
-				.As<IEventoConexao>()
 				.InstancePerLifetimeScope();
 
 		}

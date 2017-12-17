@@ -1,15 +1,15 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Pattern;
 
 namespace RepositorioGenerico.Fake
 {
-	public class TransacaoFake : ITransacao, IDisposable
+	public class TransacaoFake : ITransacao
 	{
 
 		private readonly IDbConnection _conexao;
 		private IDbTransaction _transacao;
+		private readonly bool _transacaoExterna;
 
 		public IDbConnection ConexaoAtual
 		{
@@ -21,52 +21,90 @@ namespace RepositorioGenerico.Fake
 			get { return _transacao; }
 		}
 
-		public bool EmTransacao
+		private bool EmTransacao
 		{
 			get { return (_transacao != null); }
 		}
 
+		public EventoDelegate AntesConfirmarTransacao { get; set; }
+
+		public EventoDelegate DepoisConfirmarTransacao { get; set; }
+
+		public EventoDelegate AntesCancelarTransacao { get; set; }
+
+		public EventoDelegate DepoisCancelarTransacao { get; set; }
+
+		internal EventoDelegate DepoisLimparTransacao { get; set; }
+
 		public TransacaoFake(IDbConnection conexao)
 		{
 			_conexao = conexao;
+			_transacao = _conexao.BeginTransaction();
+			_transacaoExterna = false;
 		}
 
-		public void IniciarTransacao()
+		public TransacaoFake(IDbTransaction transacao)
 		{
-			if (EmTransacao)
-				throw new TransacaoJaIniciadaException();
-			_transacao = _conexao.BeginTransaction();
+			_conexao = transacao.Connection;
+			_transacao = transacao;
+			_transacaoExterna = true;
 		}
 
 		public void ConfirmarTransacao()
 		{
+			if (_transacaoExterna)
+				throw new NaoEhPossivelConfirmarOuCancelarTransacaoExternaException();
 			if (!EmTransacao)
 				throw new TransacaoNaoIniciadaException();
+			ExecutarEventoTransacao(AntesConfirmarTransacao);
 			_transacao.Commit();
-			_conexao.Close();
-			LimparTransacao();
+			try
+			{
+				ExecutarEventoTransacao(DepoisConfirmarTransacao);
+			}
+			finally
+			{
+				_conexao.Close();
+				LimparTransacao();
+			}
+		}
+
+		private void ExecutarEventoTransacao(EventoDelegate eventoConexao)
+		{
+			if (eventoConexao != null)
+				eventoConexao(this);
 		}
 
 		private void LimparTransacao()
 		{
 			_transacao.Dispose();
 			_transacao = null;
+			ExecutarEventoTransacao(DepoisLimparTransacao);
 		}
 
 		public void CancelarTransacao()
 		{
+			if (_transacaoExterna)
+				throw new NaoEhPossivelConfirmarOuCancelarTransacaoExternaException();
 			if (!EmTransacao)
 				throw new TransacaoNaoIniciadaException();
+			ExecutarEventoTransacao(AntesCancelarTransacao);
 			_transacao.Rollback();
-			_conexao.Close();
-			LimparTransacao();
+			try
+			{
+				ExecutarEventoTransacao(DepoisCancelarTransacao);
+			}
+			finally
+			{
+				_conexao.Close();
+				LimparTransacao();
+			}
 		}
 
 		public void Dispose()
 		{
-			if (EmTransacao)
+			if (!_transacaoExterna && EmTransacao)
 				CancelarTransacao();
-			_conexao.Dispose();
 		}
 
 	}

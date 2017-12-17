@@ -6,29 +6,21 @@ using RepositorioGenerico.Pattern;
 
 namespace RepositorioGenerico.SqlClient
 {
-	public class Conexao : IConexao, ITransacao, IDisposable, IEventoConexao
+	public class Conexao : IConexao
 	{
 
 		private readonly string _stringConexao;
 		private Transacao _transacao;
 		private bool _transacaoExterna;
 
-		public EventoConexaoDelegate AntesIniciarTransacao { get; set; }
-
-		public EventoConexaoDelegate DepoisIniciarTransacao { get; set; }
-
-		public EventoConexaoDelegate AntesConfirmarTransacao { get; set; }
-
-		public EventoConexaoDelegate DepoisConfirmarTransacao { get; set; }
-
-		public EventoConexaoDelegate AntesCancelarTransacao { get; set; }
-
-		public EventoConexaoDelegate DepoisCancelarTransacao { get; set; }
-
 		public bool EmTransacao
 		{
 			get { return (_transacao != null); }
 		}
+
+		public EventoDelegate AntesIniciarTransacao { get; set; }
+
+		public EventoDelegate DepoisIniciarTransacao { get; set; }
 
 		public Conexao(string stringConexao)
 		{
@@ -49,6 +41,36 @@ namespace RepositorioGenerico.SqlClient
 			return conexao;
 		}
 
+		public ITransacao IniciarTransacao()
+		{
+			if (_transacaoExterna || EmTransacao)
+				throw new TransacaoJaIniciadaException();
+			try
+			{
+				ExecutarEventoTransacao(AntesIniciarTransacao);
+				_transacao = new Transacao(CriarConexaoSemTransacao());
+				_transacao.DepoisLimparTransacao += DepoisLimparTransacao;
+				return _transacao;
+			}
+			finally
+			{
+				ExecutarEventoTransacao(DepoisIniciarTransacao);
+			}
+		}
+
+		private void ExecutarEventoTransacao(EventoDelegate eventoConexao)
+		{
+			if (eventoConexao != null)
+				eventoConexao(this);
+		}
+
+		private void DepoisLimparTransacao(object sender)
+		{
+			_transacao.DepoisLimparTransacao -= DepoisLimparTransacao;
+			_transacao.Dispose();
+			_transacao = null;
+		}
+
 		public void DefinirConexaoTransacionada(IDbCommand comando)
 		{
 			if (!EmTransacao)
@@ -57,63 +79,15 @@ namespace RepositorioGenerico.SqlClient
 			comando.Transaction = _transacao.TransacaoAtual;
 		}
 
-		public IDbConnection CriarConexaoTransacionada()
-		{
-			IniciarTransacao();
-			return _transacao.ConexaoAtual;
-		}
-
-		public void IniciarTransacao()
-		{
-			if (EmTransacao)
-				throw new TransacaoJaIniciadaException();
-			ExecutarEventoTransacao(AntesIniciarTransacao);
-			_transacao = new Transacao(CriarConexaoSemTransacao());
-			_transacao.IniciarTransacao();
-			ExecutarEventoTransacao(DepoisIniciarTransacao);
-		}
-
-		private void ExecutarEventoTransacao(EventoConexaoDelegate eventoConexao)
-		{
-			if (eventoConexao != null)
-				eventoConexao();
-		}
-
 		public IDbCommand CriarComando()
 		{
 			return new SqlCommand();
 		}
 
-		public void ConfirmarTransacao()
-		{
-			if (!EmTransacao)
-				throw new TransacaoNaoIniciadaException();
-			ExecutarEventoTransacao(AntesConfirmarTransacao);
-			_transacao.ConfirmarTransacao();
-			LimparTransacao();
-			ExecutarEventoTransacao(DepoisConfirmarTransacao);
-		}
-
-		private void LimparTransacao()
-		{
-			_transacao.Dispose();
-			_transacao = null;
-		}
-
-		public void CancelarTransacao()
-		{
-			if (!EmTransacao)
-				throw new TransacaoNaoIniciadaException();
-			ExecutarEventoTransacao(AntesCancelarTransacao);
-			_transacao.CancelarTransacao();
-			LimparTransacao();
-			ExecutarEventoTransacao(DepoisCancelarTransacao);
-		}
-
 		public void Dispose()
 		{
 			if (!_transacaoExterna && EmTransacao)
-				CancelarTransacao();
+				_transacao.Dispose();
 		}
 
 	}

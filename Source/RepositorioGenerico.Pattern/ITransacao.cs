@@ -1,12 +1,18 @@
-﻿namespace RepositorioGenerico.Pattern
+﻿using System;
+
+namespace RepositorioGenerico.Pattern
 {
 
-	public interface ITransacao
+	public interface ITransacao : IDisposable
 	{
 
-		bool EmTransacao { get; }
+		EventoDelegate AntesConfirmarTransacao { get; set; }
 
-		void IniciarTransacao();
+		EventoDelegate DepoisConfirmarTransacao { get; set; }
+
+		EventoDelegate AntesCancelarTransacao { get; set; }
+
+		EventoDelegate DepoisCancelarTransacao { get; set; }
 
 		void ConfirmarTransacao();
 

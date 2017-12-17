@@ -16,21 +16,17 @@ namespace RepositorioGenerico.SqlClient.Test
 		[TestMethod]
 		public void SeCriarUmaTransacaoAPropriedadeConexaoAtualDeveSerATransacaoDoConstrutor()
 		{
-
 			var conexao = Mock.Of<IDbConnection>();
-			var transacao = new Transacao(conexao);
-			transacao.ConexaoAtual
-				.Should().Be(conexao);
+			using (var transacao = new Transacao(conexao))
+				transacao.ConexaoAtual
+					.Should().Be(conexao);
 		}
 
 		[TestMethod]
-		public void AoCriarUmaTransacaoAPropriedadeEmTransacaoDeveSerFalso()
+		public void AoIniciarUmaTransacaoNaoDeveGerarErro()
 		{
-			var transacao = CriarTransacao();
-			transacao.EmTransacao
-				.Should().BeFalse();
-			transacao.TransacaoAtual
-				.Should().BeNull();
+			Action act = () => CriarTransacao();
+			act.ShouldNotThrow();
 		}
 
 		private static Transacao CriarTransacao()
@@ -60,48 +56,32 @@ namespace RepositorioGenerico.SqlClient.Test
 		}
 
 		[TestMethod]
-		public void AoIniciarUmaTransacaoNaoDeveGerarErro()
-		{
-			var transacao = CriarTransacao();
-			Action act = () => transacao.IniciarTransacao();
-			act.ShouldNotThrow();
-		}
-
-		[TestMethod]
 		public void AoIniciarUmaTransacaoAPropriedadeTransacaoAtualDeveEstarPreenchida()
 		{
-			var transacao = CriarTransacao();
-			transacao.IniciarTransacao();
-			transacao.EmTransacao
-				.Should().BeTrue();
-			transacao.TransacaoAtual
-				.Should().NotBeNull();
-		}
-
-		[TestMethod]
-		public void AoIniciarUmaTransacaoDuasVezesDeveGerarErroDeTransacaoJaIniciada()
-		{
-			var transacao = CriarTransacao();
-			transacao.IniciarTransacao();
-			Action act = () => transacao.IniciarTransacao();
-			act.ShouldThrow<TransacaoJaIniciadaException>();
+			using (var transacao = CriarTransacao())
+				transacao.TransacaoAtual
+					.Should().NotBeNull();
 		}
 
 		[TestMethod]
 		public void AoConfirmarUmaTransacaoSemTransacaoDeveGerarErroDeTransacaoNaoIniciada()
 		{
-			var transacao = CriarTransacao();
-			Action act = () => transacao.ConfirmarTransacao();
-			act.ShouldThrow<TransacaoNaoIniciadaException>();
+			using (var transacao = CriarTransacao())
+			{
+				transacao.CancelarTransacao();
+				Action act = () => transacao.ConfirmarTransacao();
+				act.ShouldThrow<TransacaoNaoIniciadaException>();
+			}
 		}
 
 		[TestMethod]
 		public void AoConfirmarUmaTransacaoNaoDeveGerarErro()
 		{
-			var transacao = CriarTransacao();
-			transacao.IniciarTransacao();
-			Action act = () => transacao.ConfirmarTransacao();
-			act.ShouldNotThrow();
+			using (var transacao = CriarTransacao())
+			{
+				Action act = () => transacao.ConfirmarTransacao();
+				act.ShouldNotThrow();
+			}
 		}
 
 		[TestMethod]
@@ -109,36 +89,35 @@ namespace RepositorioGenerico.SqlClient.Test
 		{
 			var mockTransacao = CriarMockDaTransacao();
 			var mockConexao = CriarMockDaConexao(mockTransacao);
-			var transacao = new Transacao(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.ConfirmarTransacao();
-			transacao.TransacaoAtual
-				.Should().BeNull();
-			transacao.EmTransacao
-				.Should().BeFalse();
-
-			mockTransacao.Verify(t => t.Dispose());
+			using (var transacao = new Transacao(mockConexao.Object))
+			{
+				transacao.ConfirmarTransacao();
+				transacao.TransacaoAtual
+					.Should().BeNull();
+				mockTransacao.Verify(t => t.Dispose());
+			}
 		}
 
 		[TestMethod]
-		public void AoConfirmarUmaTransacaoAConexaoDeveEstarFechada()
+		public void AoConfirmarUmaTransacaoAConexaoDeveSerFechada()
 		{
 			var mockConexao = CriarMockDaConexao();
-			var transacao = new Transacao(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.ConfirmarTransacao();
-
-			mockConexao.Verify(c => c.Close());
+			using (var transacao = new Transacao(mockConexao.Object))
+			{
+				transacao.ConfirmarTransacao();
+				mockConexao.Verify(c => c.Close());
+			}
 		}
 
 		[TestMethod]
 		public void AoCancelarUmaTransacaoSemTransacaoDeveGerarErroDeTransacaoNaoIniciada()
 		{
-			var transacao = CriarTransacao();
-			Action act = () => transacao.CancelarTransacao();
-			act.ShouldThrow<TransacaoNaoIniciadaException>();
+			using (var transacao = CriarTransacao())
+			{
+				transacao.CancelarTransacao();
+				Action act = () => transacao.CancelarTransacao();
+				act.ShouldThrow<TransacaoNaoIniciadaException>();
+			}
 		}
 
 		[TestMethod]
@@ -146,28 +125,24 @@ namespace RepositorioGenerico.SqlClient.Test
 		{
 			var mockTransacao = CriarMockDaTransacao();
 			var mockConexao = CriarMockDaConexao(mockTransacao);
-			var transacao = new Transacao(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.CancelarTransacao();
-			transacao.TransacaoAtual
-				.Should().BeNull();
-			transacao.EmTransacao
-				.Should().BeFalse();
-
-			mockTransacao.Verify(t => t.Dispose());
+			using (var transacao = new Transacao(mockConexao.Object))
+			{
+				transacao.CancelarTransacao();
+				transacao.TransacaoAtual
+					.Should().BeNull();
+				mockTransacao.Verify(t => t.Dispose());
+			}
 		}
 
 		[TestMethod]
-		public void AoCancelarUmaTransacaoAConexaoDeveEstarFechada()
+		public void AoCancelarUmaTransacaoAConexaoDeveSerFechada()
 		{
 			var mockConexao = CriarMockDaConexao();
-			var transacao = new Transacao(mockConexao.Object);
-
-			transacao.IniciarTransacao();
-			transacao.CancelarTransacao();
-
-			mockConexao.Verify(c => c.Close());
+			using (var transacao = new Transacao(mockConexao.Object))
+			{
+				transacao.CancelarTransacao();
+				mockConexao.Verify(c => c.Close());
+			}
 		}
 
 		[TestMethod]
@@ -178,7 +153,6 @@ namespace RepositorioGenerico.SqlClient.Test
 
 			using (var transacao = new Transacao(mockConexao.Object))
 			{
-				transacao.IniciarTransacao();
 			}
 
 			mockTransacao.Verify(t => t.Rollback());
@@ -188,15 +162,16 @@ namespace RepositorioGenerico.SqlClient.Test
 		[TestMethod]
 		public void SeCriarUmaTransacaoUtilizandoUmaTransacaoExistenteNaoPodeIniciarNovaTransacao()
 		{
-			using (var conexao = new SqlConnection(ConnectionStringHelper.Consultar()))
+			var cs = ConnectionStringHelper.Consultar();
+			using (var conexaoBanco = new SqlConnection(cs))
 			{
-				conexao.Open();
+				conexaoBanco.Open();
 
-				var transacaoBanco = conexao.BeginTransaction();
+				var transacaoBanco = conexaoBanco.BeginTransaction();
 
-				using (var transacao = new Transacao(transacaoBanco))
+				using (var conexao = new Conexao(cs, transacaoBanco))
 				{
-					Action acao = () => transacao.IniciarTransacao();
+					Action acao = () => conexao.IniciarTransacao();
 					acao
 						.ShouldThrow<TransacaoJaIniciadaException>();
 				}

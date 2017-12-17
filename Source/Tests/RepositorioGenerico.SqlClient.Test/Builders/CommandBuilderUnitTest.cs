@@ -267,11 +267,8 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 
 			CommandBuilder.SincronizarParametrosDeTodosOsCampos(dicionario, comando, objeto);
 
-			comando.Parameters["@p1"].Value.Should().Be(DBNull.Value);
-			comando.Parameters["@p2"].Value.Should().Be(DBNull.Value);
-			comando.Parameters["@p3"].Value.Should().Be(DBNull.Value);
-			comando.Parameters["@p4"].Value.Should().Be(DBNull.Value);
-			comando.Parameters["@p0"].Value.Should().Be(DBNull.Value);
+			foreach (var item in dicionario.Itens)
+				comando.Parameters["@p" + item.Id.ToString()].Value.Should().Be(DBNull.Value);
 		}
 
 		[TestMethod]

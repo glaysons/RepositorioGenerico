@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using RepositorioGenerico.Dictionary;
-using RepositorioGenerico.Entities;
 using RepositorioGenerico.Fake.Builders;
 using RepositorioGenerico.Framework;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Search;
+using RepositorioGenerico.Pattern;
 
 namespace RepositorioGenerico.Fake.Contextos
 {
@@ -71,19 +71,22 @@ namespace RepositorioGenerico.Fake.Contextos
 			if (_transacoes == null)
 				return;
 
+			ITransacao transacao = null;
 			var gerenciarTransacao = !EmTransacao;
+
 			if (gerenciarTransacao)
-				IniciarTransacao();
+				transacao = IniciarTransacao();
+
 			try
 			{
 				Transacoes.Salvar();
 				if (gerenciarTransacao)
-					ConfirmarTransacao();
+					transacao.ConfirmarTransacao();
 			}
 			catch
 			{
 				if (gerenciarTransacao)
-					CancelarTransacao();
+					transacao.CancelarTransacao();
 				throw;
 			}
 		}

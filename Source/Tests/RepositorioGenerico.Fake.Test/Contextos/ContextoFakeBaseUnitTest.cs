@@ -62,15 +62,16 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 		[TestMethod]
 		public void SeSalvarContextoComTransacaoIniciadaNaoDeveGerarErro()
 		{
-			var transacao = CriarHistoricoTransacional();
-			var contexto = new ContextoFakeBase(transacao.Object);
+			var historicoTransacao = CriarHistoricoTransacional();
+			using (var contexto = new ContextoFakeBase(historicoTransacao.Object))
+			{
+				var transacao = contexto.IniciarTransacao();
 
-			contexto.IniciarTransacao();
+				Action salvar = () => contexto.Salvar();
 
-			Action salvar = () => contexto.Salvar();
-
-			salvar
-				.ShouldNotThrow();
+				salvar
+					.ShouldNotThrow();
+			}
 		}
 
 	}

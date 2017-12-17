@@ -7,7 +7,7 @@ using RepositorioGenerico.Pattern.Contextos.Tables;
 
 namespace RepositorioGenerico.Fake.Contextos.Tables
 {
-	public class ContextoFake : ContextoFakeBase, IContextoFake, IContextoTransacional
+	public class ContextoFake : ContextoFakeBase, IContextoFake
 	{
 
 		private readonly Dictionary<string, object> _persistencias;
