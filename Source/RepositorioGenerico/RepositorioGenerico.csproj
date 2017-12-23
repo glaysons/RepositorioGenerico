@@ -70,6 +70,7 @@
     <Compile Include="Exceptions\CampoPossuiTamanhoMaximoDePeenchimentoException.cs" />
     <Compile Include="Exceptions\ChavePrimariaInvalidaException.cs" />
     <Compile Include="Exceptions\DicionarioNaoSuportaMultiplosCamposAutoIncrementoException.cs" />
+    <Compile Include="Exceptions\EsteTipoDeConfiguracaoNaoPermitePersonalizacaoDeScript.cs" />
     <Compile Include="Exceptions\NaoEhPossivelConfirmarOuCancelarTransacaoExternaException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelConsultarRelacionamentoVinculadoException.cs" />
     <Compile Include="Exceptions\NaoFoiPossivelConverterConsultaParaTipoException.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Search\Conversores\Builder.cs" />
     <Compile Include="Search\Conversores\Conversor.cs" />
     <Compile Include="Search\Conversores\Conversor`.cs" />
+    <Compile Include="Search\Extensoes\ConfiguradorExtension.cs" />
     <Compile Include="Search\IQueryBuilder.cs" />
     <Compile Include="Search\IRelacionamentoBuilder.cs" />
   </ItemGroup>

@@ -124,6 +124,7 @@
     <Compile Include="Objetos\ValidadorDeClasseAttribute.cs" />
     <Compile Include="Search\ConfiguradorUnitTest.cs" />
     <Compile Include="Search\ConfiguradorUnitTest`.cs" />
+    <Compile Include="Search\Extensoes\ConfiguradorExtensionUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
