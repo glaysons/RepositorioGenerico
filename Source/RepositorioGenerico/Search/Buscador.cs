@@ -1,6 +1,8 @@
 ﻿using System.Data;
 using RepositorioGenerico.Pattern;
 using RepositorioGenerico.Pattern.Buscadores;
+using System.Collections.Generic;
+using RepositorioGenerico.Search.Conversores;
 
 namespace RepositorioGenerico.Search
 {
@@ -40,10 +42,17 @@ namespace RepositorioGenerico.Search
 			return _comando.ConsultarTabela(configuracao);
 		}
 
+		public IEnumerable<TObjeto> Varios<TObjeto>(IConfiguracao configuracao)
+		{
+			var reader = _comando.ConsultarRegistro(configuracao);
+			var conversor = Conversor.ConverterDataReaderParaObjeto<TObjeto>(reader);
+			foreach (var registro in conversor)
+				yield return registro;
+		}
+
 		public DataRow Um(IConfiguracao configuracao)
 		{
-			var configuracaoQuery = configuracao as IConfiguracaoQuery;
-			DefinirTopUm(configuracaoQuery);
+			DefinirTopUm(configuracao as IConfiguracaoQuery);
 			var tabela = _comando.ConsultarTabela(configuracao);
 			return (tabela.Rows.Count == 0)
 				? null
@@ -55,6 +64,14 @@ namespace RepositorioGenerico.Search
 			if (configuracao == null)
 				return;
 			configuracao.DefinirLimite(1);
+		}
+
+		public TObjeto Um<TObjeto>(IConfiguracao configuracao)
+		{
+			DefinirTopUm(configuracao as IConfiguracaoQuery);
+			foreach (var registro in Varios<TObjeto>(configuracao))
+				return registro;
+			return default(TObjeto);
 		}
 
 		public object Scalar(IConfiguracao configuracao)

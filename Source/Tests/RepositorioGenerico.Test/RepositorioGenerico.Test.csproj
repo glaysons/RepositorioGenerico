@@ -79,6 +79,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ConnectionStringHelper.cs" />
     <Compile Include="Dictionary\Builders\DataTableBuilderUnitTest.cs" />
     <Compile Include="Dictionary\DicionarioCacheUnitTest.cs" />
     <Compile Include="Dictionary\DicionarioUnitTest.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Framework\Helpers\ExpressionHelperUnitTest.cs" />
     <Compile Include="Framework\HistoricoTransacionalUnitTest.cs" />
     <Compile Include="Framework\ItemHistoricoTransacionalUnitTest.cs" />
+    <Compile Include="Objetos\ComandoParaTeste.cs" />
     <Compile Include="Objetos\EnumDeStrings.cs" />
     <Compile Include="Objetos\EnumDeTestes.cs" />
     <Compile Include="Objetos\IChaveObjetoDeTestes.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Objetos\ObjetoSemEstruturaDefinida.cs" />
     <Compile Include="Objetos\ObjetoSemHerancaCorreta.cs" />
     <Compile Include="Objetos\ObjetoSemValidacao.cs" />
+    <Compile Include="Objetos\QueryBuilderParaTeste.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objetos\ValidadorDeClasse2Attribute.cs" />
     <Compile Include="Objetos\ValidadorDePropriedade2Attribute.cs" />
@@ -125,6 +128,8 @@
     <Compile Include="Search\ConfiguradorUnitTest.cs" />
     <Compile Include="Search\ConfiguradorUnitTest`.cs" />
     <Compile Include="Search\Extensoes\ConfiguradorExtensionUnitTest.cs" />
+    <Compile Include="Search\BuscadorUnitTest.cs" />
+    <Compile Include="Search\ConfiguradorProcedureUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RepositorioGenerico.Entities\RepositorioGenerico.Entities.csproj">
@@ -144,6 +149,7 @@
     <Folder Include="Pattern\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="RepositorioGenerico.snk" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 
 namespace RepositorioGenerico.Pattern.Buscadores
 {
@@ -14,6 +15,10 @@ namespace RepositorioGenerico.Pattern.Buscadores
 		DataTable Varios(IConfiguracao configuracao);
 
 		DataRow Um(IConfiguracao configuracao);
+
+		IEnumerable<TObjeto> Varios<TObjeto>(IConfiguracao configuracao);
+
+		TObjeto Um<TObjeto>(IConfiguracao configuracao);
 
 		object Scalar(IConfiguracao configuracao);
 

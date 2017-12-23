@@ -75,7 +75,9 @@ namespace RepositorioGenerico.Search
 		{
 			var configuracaoQuery = configuracao as IConfiguracaoQuery<TObjeto>;
 			DefinirTopUm(configuracaoQuery);
-			return Varios(configuracao).FirstOrDefault();
+			foreach (var registro in Varios(configuracao))
+				return registro;
+			return default(TObjeto);
 		}
 
 		protected void DefinirTopUm(IConfiguracaoQuery<TObjeto> configuracao)
