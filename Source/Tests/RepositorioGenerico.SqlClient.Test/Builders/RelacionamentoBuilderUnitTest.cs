@@ -41,7 +41,7 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 					"where(exists(" + 
 						"select top 1 1 " + 
 						"from(" + 
-							"select" + 
+							"select " + 
 								"[CodigoFilho]as[Id],[NomeFilho]as[Nome],[CodigoPai]as[IdPai] " + 
 							"from[ObjetoVirtualFilho]" + 
 							"where([CodigoFilho]=@_p0) " + 
@@ -78,7 +78,7 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 					"where(exists(" +
 						"select top 1 1 " +
 						"from(" +
-							"select" +
+							"select " +
 								"[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo],[Decimal]," +
 								"[DecimalNulo],[Logico],[DataHora],[DataHoraNulo] " +
 							"from[ObjetoVirtual]" +

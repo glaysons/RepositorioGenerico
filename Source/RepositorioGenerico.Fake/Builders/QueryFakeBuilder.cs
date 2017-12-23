@@ -225,11 +225,11 @@ namespace RepositorioGenerico.Fake.Builders
 			if (Selects.Count == 0) 
 				ConstruirSelectPadrao(dicionario);
 
-			sql.Append("select");
+			sql.Append("select ");
 
 			var top = (_limite == null) 
 				? string.Empty 
-				: " top " + _limite.ToString() +  " ";
+				: string.Concat("top ", _limite, " ");
 
 			AdicionarSql(sql, top, Selects, ",");
 			sql.Append("from[");

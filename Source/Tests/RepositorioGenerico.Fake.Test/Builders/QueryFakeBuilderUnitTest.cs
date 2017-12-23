@@ -426,7 +426,7 @@ namespace RepositorioGenerico.Fake.Test.Builders
 
 			builder.GerarScript(null)
 				.Should()
-				.Be("select[Tabela].* from[Tabela]");
+				.Be("select [Tabela].* from[Tabela]");
 
 			builder.DefinirLimite(15);
 
@@ -584,7 +584,7 @@ namespace RepositorioGenerico.Fake.Test.Builders
 
 			builder.GerarScript(dicionario)
 				.Should()
-				.Be("select" +
+				.Be("select " +
 						"[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo],[Decimal]," +
 						"[DecimalNulo],[Logico],[DataHora],[DataHoraNulo] " +
 					"from[ObjetoVirtual]");
