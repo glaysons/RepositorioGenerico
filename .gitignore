@@ -48,3 +48,5 @@
 /Tools/ConverterBancoParaEntidades/bin
 /Source/Tests/RepositorioGenerico.IntegrationTest/bin/Debug
 /Source/Tests/RepositorioGenerico.IntegrationTest/obj/Debug
+/Source/Tests/RepositorioGenerico.IntegrationTest/bin/Release
+/Source/Tests/RepositorioGenerico.IntegrationTest/obj/Release
