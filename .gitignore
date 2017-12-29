@@ -46,3 +46,5 @@
 /Samples/Entities/bin/Release
 /Tools/ConverterBancoParaEntidades/bin/Release
 /Tools/ConverterBancoParaEntidades/bin
+/Source/Tests/RepositorioGenerico.IntegrationTest/bin/Debug
+/Source/Tests/RepositorioGenerico.IntegrationTest/obj/Debug

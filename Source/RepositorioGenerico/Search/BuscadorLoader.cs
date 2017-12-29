@@ -118,13 +118,17 @@ namespace RepositorioGenerico.Search
 			var item = _dicionario.ConsultarPorPropriedade(propriedade.Name);
 			if ((item.Ligacao == null) || (item.Ligacao.Tipo != TiposRelacionamento.Ascendente))
 				return null;
+
 			var valor = _dicionario.ConsultarValoresDaChave(registro, item.Ligacao.ChaveEstrangeira);
-			foreach (var ascendente in dadosVinculados)
-			{
-				var chave = item.Ligacao.Dicionario.ConsultarValoresDaChave(ascendente);
-				if (valor.SequenceEqual(chave))
-					return ascendente;
-			}
+			if (dadosVinculados.Count > 0)
+				for (var n = 0; n < dadosVinculados.Count; n++)
+				{
+					var ascendente = dadosVinculados[n];
+					var chave = item.Ligacao.Dicionario.ConsultarValoresDaChave(ascendente);
+					if (valor.SequenceEqual(chave))
+						return ascendente;
+				}
+
 			return null;
 		}
 
@@ -133,20 +137,27 @@ namespace RepositorioGenerico.Search
 			var item = _dicionario.ConsultarPorPropriedade(propriedade.Name);
 			if ((item.Ligacao == null) || (item.Ligacao.Tipo != TiposRelacionamento.Descendente))
 				return null;
+
 			var valor = _dicionario.ConsultarValoresDaChave(registro);
 			var tipoFilho = typeof(List<>).MakeGenericType(propriedade.PropertyType.GetGenericArguments()[0]);
 			var filhos = (IList)Activator.CreateInstance(tipoFilho);
-			for (var n = 0; n < dadosVinculados.Count; n++)
-			{
-				var ascendente = dadosVinculados[n];
-				var chave = item.Ligacao.Dicionario.ConsultarValoresDaChave(ascendente, item.Ligacao.ChaveEstrangeira);
-				if (valor.SequenceEqual(chave))
-					filhos.Add(ascendente);
-			}
-			dadosVinculados.Clear();
-			if (filhos.Count > 0)
-				return filhos;
-			return null;
+
+			var n = 0;
+			if (dadosVinculados.Count > 0)
+				do
+				{
+					var descendente = dadosVinculados[n];
+					var chave = item.Ligacao.Dicionario.ConsultarValoresDaChave(descendente, item.Ligacao.ChaveEstrangeira);
+					if (valor.SequenceEqual(chave))
+					{
+						filhos.Add(descendente);
+						dadosVinculados.RemoveAt(n);
+					}
+					else
+						n++;
+				} while (n < dadosVinculados.Count);
+
+			return filhos;
 		}
 
 		public TEstadoObjeto ConsultarPropriedade<TEstadoObjeto>(Buscador<TObjeto> buscador, TObjeto objeto,

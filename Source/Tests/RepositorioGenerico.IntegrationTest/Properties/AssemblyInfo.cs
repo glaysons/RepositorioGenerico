@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RepositorioGenerico")]
+[assembly: AssemblyTitle("RepositorioGenerico.IntegrationTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RepositorioGenerico")]
+[assembly: AssemblyProduct("RepositorioGenerico.IntegrationTest")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("8c74e762-3679-45b0-859a-94cb17c6c997")]
+[assembly: Guid("27e079b3-818e-463e-a237-9d5798b56e19")]
 
 // Version information for an assembly consists of the following four values:
 //
