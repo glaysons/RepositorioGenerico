@@ -45,9 +45,16 @@ namespace RepositorioGenerico.Search
 		public IEnumerable<TObjeto> Varios<TObjeto>(IConfiguracao configuracao)
 		{
 			var reader = _comando.ConsultarRegistro(configuracao);
-			var conversor = Conversor.ConverterDataReaderParaObjeto<TObjeto>(reader);
-			foreach (var registro in conversor)
-				yield return registro;
+			try
+			{
+				var conversor = Conversor.ConverterDataReaderParaObjeto<TObjeto>(reader);
+				foreach (var registro in conversor)
+					yield return registro;
+			}
+			finally
+			{
+				reader.Close();
+			}
 		}
 
 		public DataRow Um(IConfiguracao configuracao)

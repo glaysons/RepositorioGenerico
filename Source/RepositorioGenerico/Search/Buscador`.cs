@@ -62,11 +62,18 @@ namespace RepositorioGenerico.Search
 
 		private IEnumerable<TObjeto> ConverterRegistrosEmLista(IConfiguracao<TObjeto> configuracao, BuscadorLoader<TObjeto> loader, IList<IList<object>> dadosVinculados, IDataReader reader)
 		{
-			var conversor = Conversor.ConverterDataReaderParaObjeto<TObjeto>(reader);
-			foreach (var registro in conversor)
+			try
 			{
-				loader.CarregarPropriedadesVinculadasAoModel(configuracao, registro, dadosVinculados);
-				yield return registro;
+				var conversor = Conversor.ConverterDataReaderParaObjeto<TObjeto>(reader);
+				foreach (var registro in conversor)
+				{
+					loader.CarregarPropriedadesVinculadasAoModel(configuracao, registro, dadosVinculados);
+					yield return registro;
+				}
+			}
+			finally
+			{
+				reader.Close();
 			}
 		}
 
@@ -74,9 +81,10 @@ namespace RepositorioGenerico.Search
 		{
 			var configuracaoQuery = configuracao as IConfiguracaoQuery<TObjeto>;
 			DefinirTopUm(configuracaoQuery);
+			TObjeto resultado = default(TObjeto);
 			foreach (var registro in Varios(configuracao))
-				return registro;
-			return default(TObjeto);
+				resultado = registro;
+			return resultado;
 		}
 
 		protected void DefinirTopUm(IConfiguracaoQuery<TObjeto> configuracao)

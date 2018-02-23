@@ -69,7 +69,11 @@ namespace RepositorioGenerico.SqlClient.Builders
 			sql.Append(relacionamento.Dicionario.Nome);
 			sql.Append("]");
 			sql.Append(")[t]where(exists(select top 1 1 from(");
-			sql.Append(condicao);
+			var orderBy = condicao.IndexOf("order by", StringComparison.InvariantCultureIgnoreCase);
+			if (orderBy > 0)
+				sql.Append(condicao.Substring(0, orderBy));
+			else
+				sql.Append(condicao);
 			sql.Append(")[d]where");
 			return sql;
 		}

@@ -119,11 +119,13 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 
 			builder.DefinirTabela(dicionario.Nome);
 
-			builder.GerarScript(dicionario)
+			var script = builder.GerarScript(dicionario);
+
+			script
 				.Should()
 				.Be("select [CodigoNeto],[NomeNeto],[CodigoFilho]," +
 				    "[CampoComOpcoesInteiras]as[Opcao],[CampoComOpcoesString]as[Letra] " +
-					"from[TabelaNetos]");
+					"from[NetoDoObjetoDeTestes]");
 		}
 
 		[TestMethod]

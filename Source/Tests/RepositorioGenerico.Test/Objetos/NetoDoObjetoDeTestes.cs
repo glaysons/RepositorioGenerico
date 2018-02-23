@@ -4,7 +4,7 @@ using RepositorioGenerico.Entities.Anotacoes;
 namespace RepositorioGenerico.Test.Objetos
 {
 
-	[Tabela("TabelaNetos")]
+	[Tabela("NetoDoObjetoDeTestes")]
 	public class NetoDoObjetoDeTestes : Entidade
 	{
 
@@ -23,10 +23,10 @@ namespace RepositorioGenerico.Test.Objetos
 		public int CodigoFilho { get; set; }
 
 		[Coluna(Ordem = 3, Nome = "CampoComOpcoesInteiras", NomeDoTipo = "int")]
-		public EnumDeTestes Opcao { get; set; }
+		public EnumDeTestes? Opcao { get; set; }
 
 		[Coluna(Ordem = 4, Nome = "CampoComOpcoesString", NomeDoTipo = "varchar")]
-		public EnumDeStrings Letra { get; set; }
+		public EnumDeStrings? Letra { get; set; }
 
 		[ChaveEstrangeira("CodigoFilho")]
 		public virtual FilhoDoObjetoDeTestes Filho { get; set; }

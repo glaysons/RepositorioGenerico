@@ -73,6 +73,8 @@ namespace RepositorioGenerico.SqlClient.Builders
 		private static object ConverterEnumEmString(PropertyInfo propriedade, object valor)
 		{
 			var tipoEnum = propriedade.PropertyType;
+			if (tipoEnum.IsGenericType)
+				tipoEnum = tipoEnum.GetGenericArguments()[0];
 			foreach (var opcaoEnum in Enum.GetValues(tipoEnum))
 				if (string.Equals(opcaoEnum.ToString(), valor.ToString()))
 				{

@@ -22,7 +22,9 @@ GO
 CREATE TABLE [dbo].[NetoDoObjetoDeTestes](
 	[CodigoNeto] [int] IDENTITY(1,1) NOT NULL,
 	[NomeNeto] [varchar](50) NOT NULL,
-	[CodigoFilho] [int] NOT NULL
+	[CodigoFilho] [int] NOT NULL,
+	[CampoComOpcoesInteiras] [int] NULL,
+	[CampoComOpcoesString] [varchar](1) NULL
 ) ON [PRIMARY]
 
 GO
