@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using RepositorioGenerico.Entities;
+using System.Data;
 
 namespace RepositorioGenerico.Pattern.Buscadores
 {
@@ -17,6 +18,8 @@ namespace RepositorioGenerico.Pattern.Buscadores
 		IEnumerable<TObjeto> Todos();
 
 		IEnumerable<TObjeto> Varios(IConfiguracao<TObjeto> configuracao);
+
+		IEnumerable<IDataRecord> Registros(IConfiguracao<TObjeto> configuracao);
 
 		TObjeto Um(IConfiguracao<TObjeto> configuracao);
 

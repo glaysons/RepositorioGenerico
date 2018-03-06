@@ -157,7 +157,8 @@ namespace RepositorioGenerico.Fake
 			var indiceOrderby = sql.IndexOf("order by", StringComparison.Ordinal);
 			if ((indiceOrderby > 0) && (indiceOrderby > indiceWhere))
 			{
-				condicao = condicao.Substring(0, indiceOrderby - indiceWhere - 8 + 1 - 5 + 1);
+				if (indiceWhere > 0)
+					condicao = condicao.Substring(0, indiceOrderby - indiceWhere - 8 + 1 - 5 + 1);
 				view.Sort = CommandText.Substring(indiceOrderby + 8);
 			}
 			view.RowFilter = condicao;

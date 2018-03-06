@@ -57,6 +57,20 @@ namespace RepositorioGenerico.Search
 			}
 		}
 
+		public IEnumerable<IDataRecord> Registros(IConfiguracao configuracao)
+		{
+			var reader = _comando.ConsultarRegistro(configuracao);
+			try
+			{
+				while (reader.Read())
+					yield return reader;
+			}
+			finally
+			{
+				reader.Close();
+			}
+		}
+
 		public DataRow Um(IConfiguracao configuracao)
 		{
 			DefinirTopUm(configuracao as IConfiguracaoQuery);

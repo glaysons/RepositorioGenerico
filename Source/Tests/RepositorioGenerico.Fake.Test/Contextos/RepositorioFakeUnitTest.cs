@@ -40,12 +40,12 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 		private static void GerarRegistrosDoObjetoDeTestesNoContexto(IContextoFake contexto)
 		{
-			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 1, Nome = "A"});
-			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 2, Nome = "B"});
-			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 3, Nome = "C"});
-			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 4, Nome = "D"});
-			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 5, Nome = "E"});
-			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 6, Nome = "F"});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 1, Nome = "A", Logico = true});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 2, Nome = "B", Logico = false});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 3, Nome = "C", Logico = false});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 4, Nome = "D", Logico = true});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 5, Nome = "E", Logico = false});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 6, Nome = "F", Logico = false});
 		}
 
 		[TestMethod]
@@ -261,6 +261,35 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 				.Should()
 				.Be(1);
 		}
+
+		//[TestMethod]
+		//public void SeGerarConsultaComEstruturaDiferenteDoObjetoAtualDeveSerPossivelConsultar()
+		//{
+		//	var repositorio = CriarRepositorioComDados();
+		//	var config = repositorio.Buscar.CriarQuery()
+		//		.AdicionarResultado(o => o.Logico)
+		//		.AdicionarResultadoAgregado(Pattern.Buscadores.Agregadores.Count)
+		//		.AdicionarAgrupamento(o => o.Logico)
+		//		.AdicionarOrdem(o => o.Logico);
+
+		//	var valor = false;
+		//	var registros = 0;
+		//	foreach (var registro in repositorio.Buscar.Registros(config))
+		//	{
+		//		registro[0]
+		//			.Should()
+		//			.Be(valor);
+		//		((int)registro[1])
+		//			.Should()
+		//			.BeGreaterThan(0);
+		//		registros += 1;
+		//		valor = !valor;
+		//	}
+
+		//	registros
+		//		.Should()
+		//		.Be(2);
+		//}
 
 	}
 }

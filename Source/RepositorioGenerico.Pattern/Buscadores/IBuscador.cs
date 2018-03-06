@@ -18,6 +18,8 @@ namespace RepositorioGenerico.Pattern.Buscadores
 
 		IEnumerable<TObjeto> Varios<TObjeto>(IConfiguracao configuracao);
 
+		IEnumerable<IDataRecord> Registros(IConfiguracao configuracao);
+
 		TObjeto Um<TObjeto>(IConfiguracao configuracao);
 
 		object Scalar(IConfiguracao configuracao);

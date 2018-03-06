@@ -239,5 +239,35 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 				.BeNull();
 		}
 
+		[TestMethod]
+		public void SeGerarConsultaComEstruturaDiferenteDoObjetoAtualDeveSerPossivelConsultar()
+		{
+			var contexto = new Contexto(ConnectionStringHelper.Consultar());
+			var buscar = contexto.Buscar<ObjetoDeTestes>();
+			var config = buscar.CriarQuery()
+				.AdicionarResultado(o => o.Logico)
+				.AdicionarResultadoAgregado(Pattern.Buscadores.Agregadores.Count)
+				.AdicionarAgrupamento(o => o.Logico)
+				.AdicionarOrdem(o => o.Logico);
+
+			var valor = false;
+			var registros = 0;
+			foreach (var registro in buscar.Registros(config))
+			{
+				registro[0]
+					.Should()
+					.Be(valor);
+				((int)registro[1])
+					.Should()
+					.BeGreaterThan(0);
+				registros += 1;
+				valor = !valor;
+			}
+
+			registros
+				.Should()
+				.Be(2);
+		}
+
 	}
 }

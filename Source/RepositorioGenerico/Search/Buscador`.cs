@@ -77,6 +77,20 @@ namespace RepositorioGenerico.Search
 			}
 		}
 
+		public IEnumerable<IDataRecord> Registros(IConfiguracao<TObjeto> configuracao)
+		{
+			var reader = _comando.ConsultarRegistro(configuracao);
+			try
+			{
+				while (reader.Read())
+					yield return reader;
+			}
+			finally
+			{
+				reader.Close();
+			}
+		}
+
 		public TObjeto Um(IConfiguracao<TObjeto> configuracao)
 		{
 			var configuracaoQuery = configuracao as IConfiguracaoQuery<TObjeto>;
