@@ -10,6 +10,7 @@ namespace RepositorioGenerico.Fake
 
 		private readonly DataView _dados;
 		private readonly int _top;
+		private readonly bool _verificacaoExistencia;
 
 		private bool _podeLer;
 		private int _indiceRegistroAtual;
@@ -20,17 +21,20 @@ namespace RepositorioGenerico.Fake
 
 		}
 
-		public DataReaderFake(DataView dados, int top)
+		public DataReaderFake(DataView dados, int top, bool verificacaoExistencia = false)
 		{
 			_podeLer = false;
 			_indiceRegistroAtual = 0;
 			_registroAtual = null;
 			_dados = dados;
 			_top = top;
+			_verificacaoExistencia = verificacaoExistencia;
 		}
 
 		public override string GetName(int i)
 		{
+			if (_verificacaoExistencia && (i == 0))
+				return "Result";
 			if ((i >= 0) && (i < _dados.Table.Columns.Count))
 				return _dados.Table.Columns[i].ColumnName;
 			throw new IndexOutOfRangeException();
@@ -48,6 +52,8 @@ namespace RepositorioGenerico.Fake
 
 		public override Type GetFieldType(int i)
 		{
+			if (_verificacaoExistencia && (i == 0))
+				return typeof(int);
 			if ((i >= 0) && (i < _dados.Table.Columns.Count))
 			{
 				var tipo = _dados.Table.Columns[i].DataType;
@@ -60,6 +66,8 @@ namespace RepositorioGenerico.Fake
 
 		public override object GetValue(int i)
 		{
+			if (_verificacaoExistencia && (i == 0))
+				return 1;
 			if ((i >= 0) && (i < _dados.Table.Columns.Count))
 				return (_registroAtual[i] == DBNull.Value)
 					? null
@@ -78,6 +86,8 @@ namespace RepositorioGenerico.Fake
 		public override int GetOrdinal(string name)
 		{
 			name = name.ToLower();
+			if (_verificacaoExistencia && string.Equals(name, "result", StringComparison.OrdinalIgnoreCase))
+				return 0;
 			for (var indice = 0; indice < _dados.Table.Columns.Count; indice++)
 				if (string.Equals(_dados.Table.Columns[indice].ColumnName.ToLower(), name))
 					return indice;

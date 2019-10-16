@@ -164,17 +164,17 @@ namespace RepositorioGenerico.SqlClient.Builders
 			if (operador == (int)Operadores.MaiorOuIgual)
 				return ">=";
 			if (operador == (int)OperadoresTexto.Contendo)
-				return "like";
+				return "like ";
 			if (operador == (int)OperadoresTexto.NaoContendo)
-				return "not like";
+				return "not like ";
 			if (operador == (int)OperadoresEspeciais.In)
-				return "in";
+				return "in ";
 			if (operador == (int)OperadoresEspeciais.NotIn)
-				return "not in";
+				return "not in ";
 			if (operador == (int)OperadoresEspeciais.Is)
-				return "is";
+				return "is ";
 			if (operador == (int)OperadoresEspeciais.IsNot)
-				return "is not";
+				return "is not ";
 			return "=";
 		}
 

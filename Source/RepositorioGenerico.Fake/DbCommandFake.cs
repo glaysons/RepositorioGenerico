@@ -29,6 +29,8 @@ namespace RepositorioGenerico.Fake
 			get { return _parameters; }
 		}
 
+		public bool VerificacaoDeExistencia { get; set; }
+
 		public UpdateRowSource UpdatedRowSource { get; set; }
 
 		public DbCommandFake(DataSet bancoDeDadosVirtual)
@@ -138,7 +140,7 @@ namespace RepositorioGenerico.Fake
 		{
 			int top;
 			var view = ConsultarDataViewDaConsultaAtual(out top);
-			return new DataReaderFake(view, top);
+			return new DataReaderFake(view, top, VerificacaoDeExistencia);
 		}
 
 		private DataView ConsultarDataViewDaConsultaAtual(out int top)
@@ -167,6 +169,7 @@ namespace RepositorioGenerico.Fake
 
 		private DataTable ConsultarTabelaComDadosVirtuais()
 		{
+			VerificarSeEhTabelaDeValidacaoDeExistencia();
 			if (_bancoDeDadosVirtual.Tables.Count == 1)
 				return _bancoDeDadosVirtual.Tables[0];
 			var sql = CommandText.ToLower();
@@ -183,6 +186,11 @@ namespace RepositorioGenerico.Fake
 			if (!_bancoDeDadosVirtual.Tables.Contains(nome))
 				throw new NaoFoiPossivelDeterminarONomeDaTabelaFakeException();
 			return _bancoDeDadosVirtual.Tables[nome];
+		}
+
+		private void VerificarSeEhTabelaDeValidacaoDeExistencia()
+		{
+			VerificacaoDeExistencia = (CommandText?.StartsWith("select top 1 1 from") == true);
 		}
 
 		private string ConsultarCondicaoParaFiltragem(string condicao)

@@ -262,6 +262,109 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 				.Be(1);
 		}
 
+		[TestMethod]
+		public void SeVerificarExistenciaDeUmRegistroComBaseNumCampoInteiroDeveEncontrar()
+		{
+			var repositorio = CriarRepositorioComDados();
+
+			var config = repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Codigo).Igual(1);
+
+			repositorio.Buscar.Existe(config)
+				.Should()
+				.BeTrue();
+		}
+
+		[TestMethod]
+		public void SeVerificarExistenciaDeUmRegistroComBaseNumCampoTextoDeveEncontrar()
+		{
+			var repositorio = CriarRepositorioComDados();
+
+			var config = repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Nome).Igual("A");
+
+			repositorio.Buscar.Existe(config)
+				.Should()
+				.BeTrue();
+		}
+
+		[TestMethod]
+		public void SeVerificarExistenciaDeUmRegistroComBaseNaChaveTextoDeveEncontrar()
+		{
+			var repositorio = CriarRepositorioComChaveTexto();
+
+			var config = repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.ChaveTexto).Igual("C");
+
+			repositorio.Buscar.Existe(config)
+				.Should()
+				.BeTrue();
+		}
+
+		private static Pattern.Contextos.IRepositorio<ObjetoComChaveTexto> CriarRepositorioComChaveTexto(IContextoFake contexto = null)
+		{
+			contexto = contexto ?? FabricaFake.CriarContexto();
+			contexto.AdicionarRegistro(new ObjetoComChaveTexto() { ChaveTexto = "A", Nome = "Nome A" });
+			contexto.AdicionarRegistro(new ObjetoComChaveTexto() { ChaveTexto = "B", Nome = "Nome B" });
+			contexto.AdicionarRegistro(new ObjetoComChaveTexto() { ChaveTexto = "C", Nome = "Nome C" });
+			contexto.AdicionarRegistro(new ObjetoComChaveTexto() { ChaveTexto = "D", Nome = "Nome D" });
+
+			var repositorio = contexto.Repositorio<ObjetoComChaveTexto>();
+			return repositorio;
+		}
+
+		[TestMethod]
+		public void SeConsultarChaveDeUmRegistroComBaseNaChaveTextoDeveEncontrar()
+		{
+			var repositorio = CriarRepositorioComChaveTexto();
+
+			var registro = repositorio.Consultar("B");
+
+			registro
+				.Should()
+				.NotBeNull();
+
+			registro.Nome
+				.Should()
+				.Be("Nome B");
+		}
+
+
+		[TestMethod]
+		public void SeAdicionarEDepoisConsultarChaveDeUmRegistroComBaseNaChaveTextoNaoDeveEncontrar()
+		{
+			var repositorio = CriarRepositorioComChaveTexto();
+
+			repositorio.Inserir(new ObjetoComChaveTexto() { ChaveTexto = "E", Nome = "Nome E" });
+
+			var registro = repositorio.Consultar("E");
+
+			registro
+				.Should()
+				.BeNull();
+		}
+
+		[TestMethod]
+		public void SeAdicionarESalvarEDepoisConsultarChaveDeUmRegistroComBaseNaChaveTextoDeveEncontrar()
+		{
+			var contexto = FabricaFake.CriarContexto();
+			var repositorio = CriarRepositorioComChaveTexto(contexto);
+
+			repositorio.Inserir(new ObjetoComChaveTexto() { ChaveTexto = "E", Nome = "Nome E" });
+
+			contexto.Salvar();
+
+			var registro = repositorio.Consultar("E");
+
+			registro
+				.Should()
+				.NotBeNull();
+
+			registro.Nome
+				.Should()
+				.Be("Nome E");
+		}
+
 		//[TestMethod]
 		//public void SeGerarConsultaComEstruturaDiferenteDoObjetoAtualDeveSerPossivelConsultar()
 		//{

@@ -41,18 +41,18 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 		public void SeTestarAConsultaDosOperadoresTextoDeveRetornarSinalValido()
 		{
 			var builder = new QueryBuilder();
-			builder.ConsultarOperador(OperadoresTexto.Contendo).Should().Be("like");
-			builder.ConsultarOperador(OperadoresTexto.NaoContendo).Should().Be("not like");
+			builder.ConsultarOperador(OperadoresTexto.Contendo).Should().Be("like ");
+			builder.ConsultarOperador(OperadoresTexto.NaoContendo).Should().Be("not like ");
 		}
 
 		[TestMethod]
 		public void SeTestarAConsultaDosOperadoresEspeciaisDeveRetornarSinalValido()
 		{
 			var builder = new QueryBuilder();
-			builder.ConsultarOperador(OperadoresEspeciais.In).Should().Be("in");
-			builder.ConsultarOperador(OperadoresEspeciais.NotIn).Should().Be("not in");
-			builder.ConsultarOperador(OperadoresEspeciais.Is).Should().Be("is");
-			builder.ConsultarOperador(OperadoresEspeciais.IsNot).Should().Be("is not");
+			builder.ConsultarOperador(OperadoresEspeciais.In).Should().Be("in ");
+			builder.ConsultarOperador(OperadoresEspeciais.NotIn).Should().Be("not in ");
+			builder.ConsultarOperador(OperadoresEspeciais.Is).Should().Be("is ");
+			builder.ConsultarOperador(OperadoresEspeciais.IsNot).Should().Be("is not ");
 		}
 
 		[TestMethod]
@@ -303,12 +303,12 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 			builder.Wheres[5].Should().Be("([campoQueDeveSerValidado]>=@_p5)");
 			builder.Wheres[6].Should().Be("([campoQueDeveSerValidado]<@_p6)");
 			builder.Wheres[7].Should().Be("([campoQueDeveSerValidado]<=@_p7)");
-			builder.Wheres[8].Should().Be("([campoQueDeveSerValidado]like@_p8)");
-			builder.Wheres[9].Should().Be("([campoQueDeveSerValidado]not like@_p9)");
-			builder.Wheres[10].Should().Be("([campoQueDeveSerValidado]is@_p10)");
-			builder.Wheres[11].Should().Be("([campoQueDeveSerValidado]is not@_p11)");
-			builder.Wheres[12].Should().Be("([campoQueDeveSerValidado]in@_p12)");
-			builder.Wheres[13].Should().Be("([campoQueDeveSerValidado]not in@_p13)");
+			builder.Wheres[8].Should().Be("([campoQueDeveSerValidado]like @_p8)");
+			builder.Wheres[9].Should().Be("([campoQueDeveSerValidado]not like @_p9)");
+			builder.Wheres[10].Should().Be("([campoQueDeveSerValidado]is @_p10)");
+			builder.Wheres[11].Should().Be("([campoQueDeveSerValidado]is not @_p11)");
+			builder.Wheres[12].Should().Be("([campoQueDeveSerValidado]in @_p12)");
+			builder.Wheres[13].Should().Be("([campoQueDeveSerValidado]not in @_p13)");
 
 			builder.ProximoParametro
 				.Should()

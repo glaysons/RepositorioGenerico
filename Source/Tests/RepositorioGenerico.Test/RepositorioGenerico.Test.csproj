@@ -104,6 +104,7 @@
     <Compile Include="Objetos\ObjetoApenasComCamposChave.cs" />
     <Compile Include="Objetos\ObjetoComChaveAutoIncrementoEComputada.cs" />
     <Compile Include="Objetos\ObjetoComChaveComputada.cs" />
+    <Compile Include="Objetos\ObjetoComChaveTexto.cs" />
     <Compile Include="Objetos\ObjetoComChaveDuplaComputada.cs" />
     <Compile Include="Objetos\ObjetoComDoisCamposComputados.cs" />
     <Compile Include="Objetos\ObjetoComDoisCamposAutoIncremento.cs" />
