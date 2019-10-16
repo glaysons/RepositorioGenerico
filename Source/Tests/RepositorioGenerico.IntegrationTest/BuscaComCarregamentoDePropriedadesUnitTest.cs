@@ -99,6 +99,30 @@ namespace RepositorioGenerico.IntegrationTest
 				.Be(2, "porque deve existir 2 filhos pro segundo objeto!");
 		}
 
+		[TestMethod]
+		public void SeGerarUmVolumeGrandeDeRegistrosNaoDeveGerarErro()
+		{
+			var contexto = ContextoHelper.Criar();
+			var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+			repositorio.DesativarValidacoes();
+			repositorio.SalvarFilhos = false;
+
+			for (int i = 0; i < 1000000; i++)
+			{
+				var objeto = repositorio.Criar();
+				objeto.Codigo = (i + 1) * 2000;
+				objeto.Nome = "Registro " + objeto.Codigo.ToString();
+				if (objeto.Nome.Length % 3 == 0)
+					objeto.Nome += "!";
+				objeto.Duplo = objeto.Codigo / 100.0 + 0.1;
+				objeto.Decimal = objeto.Codigo / 200.0M + 0.2M;
+				objeto.Logico = (i % 2 == 0);
+				objeto.DataHora = DateTime.Now;
+				repositorio.Inserir(objeto);
+			}
+
+			// contexto.Salvar();
+		}
 
 	}
 }

@@ -11,7 +11,7 @@ namespace RepositorioGenerico.SqlClient.Contextos.Tables
 
 		public IRepositorio Repositorio<TObjeto>() where TObjeto : class, IEntidade
 		{
-			var tipo = typeof(TObjeto).FullName;
+			var tipo = typeof(TObjeto);
 			if (!Repositorios.ContainsKey(tipo))
 				CriarNovoRepositorio<TObjeto>(tipo);
 			return (IRepositorio)Repositorios[tipo];
@@ -29,7 +29,7 @@ namespace RepositorioGenerico.SqlClient.Contextos.Tables
 
 		}
 
-		private void CriarNovoRepositorio<TObjeto>(string tipo) where TObjeto : class, IEntidade
+		private void CriarNovoRepositorio<TObjeto>(Type tipo) where TObjeto : class, IEntidade
 		{
 			var tipoRepositorio = typeof(Repositorio<>);
 			var tipoGenerico = tipoRepositorio.MakeGenericType(typeof(TObjeto));

@@ -31,5 +31,7 @@ namespace RepositorioGenerico.Pattern.Contextos
 
 		void Excluir(TItem registro);
 
+		void Limpar();
+
 	}
 }

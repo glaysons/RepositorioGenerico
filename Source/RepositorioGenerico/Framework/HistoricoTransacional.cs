@@ -42,6 +42,10 @@ namespace RepositorioGenerico.Framework
 		{
 			foreach (var item in Log)
 				item.Persistencia.Salvar(_conexao, item.Registro);
+		}
+
+		public void Limpar()
+		{
 			Log.Clear();
 		}
 

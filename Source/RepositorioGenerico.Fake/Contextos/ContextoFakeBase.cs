@@ -5,30 +5,33 @@ using RepositorioGenerico.Framework;
 using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Search;
 using RepositorioGenerico.Pattern;
+using RepositorioGenerico.Pattern.Contextos;
+using System;
 
 namespace RepositorioGenerico.Fake.Contextos
 {
 	public class ContextoFakeBase : ConexaoFake
 	{
 
-		private Dictionary<string, object> _repositorios;
+		private Dictionary<Type, object> _repositorios;
 		private IHistoricoTransacional _transacoes;
 		private IBuscador _buscadorGenerico;
 		private object _buscador;
 		private ComandoFake _comando;
 
 		private static readonly IQueryBuilder QueryBuilder = new QueryFakeBuilder();
-
 		private static readonly IRelacionamentoBuilder RelacionamentoBuilder = CriarRelacionamentoBuilder();
+
+		public bool LimparContextoAoSalvar { get; set; } = true;
 
 		private static IRelacionamentoBuilder CriarRelacionamentoBuilder()
 		{
 			return new RelacionamentoBuilderFake();
 		}
 
-		protected Dictionary<string, object> Repositorios
+		protected Dictionary<Type, object> Repositorios
 		{
-			get { return _repositorios ?? (_repositorios = new Dictionary<string, object>()); }
+			get { return _repositorios ?? (_repositorios = new Dictionary<Type, object>()); }
 		}
 
 		internal IHistoricoTransacional Transacoes
@@ -82,6 +85,8 @@ namespace RepositorioGenerico.Fake.Contextos
 				Transacoes.Salvar();
 				if (gerenciarTransacao)
 					transacao.ConfirmarTransacao();
+				if (LimparContextoAoSalvar)
+					Limpar();
 			}
 			catch
 			{
@@ -89,6 +94,13 @@ namespace RepositorioGenerico.Fake.Contextos
 					transacao.CancelarTransacao();
 				throw;
 			}
+		}
+
+		public void Limpar()
+		{
+			Transacoes.Limpar();
+			foreach (var nome in Repositorios.Keys)
+				(Repositorios[nome] as IRepositorioObject).Limpar();
 		}
 
 	}

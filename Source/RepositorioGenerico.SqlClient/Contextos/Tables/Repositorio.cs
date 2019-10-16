@@ -141,6 +141,11 @@ namespace RepositorioGenerico.SqlClient.Contextos.Tables
 			}
 		}
 
+		public void Limpar()
+		{
+			_persistencia.Dados.Rows.Clear();
+		}
+
 	}
 
 }

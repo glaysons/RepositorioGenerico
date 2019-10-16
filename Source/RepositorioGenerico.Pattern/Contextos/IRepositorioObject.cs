@@ -25,5 +25,7 @@ namespace RepositorioGenerico.Pattern.Contextos
 
 		void Excluir(object registro);
 
+		void Limpar();
+
 	}
 }

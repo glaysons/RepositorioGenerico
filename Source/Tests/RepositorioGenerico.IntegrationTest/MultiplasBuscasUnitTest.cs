@@ -74,5 +74,24 @@ namespace RepositorioGenerico.IntegrationTest
 			}
 		}
 
+		[TestMethod]
+		public void SeAcessarRepositorioDezMilhoesDeVezesDeveRetornarRepositorioValido()
+		{
+			var contexto = ContextoHelper.Criar();
+
+			contexto.Repositorio<NetoDoObjetoDeTestes>();
+			contexto.Repositorio<FilhoDoObjetoDeTestes>();
+			contexto.Repositorio<FilhoMistoDoObjetoDeTestes>();
+			var primeiraInstancia = contexto.Repositorio<ObjetoDeTestes>();
+
+			for (int i = 0; i < 10_000_000; i++)
+			{
+				var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+				repositorio
+					.Should()
+					.Be(primeiraInstancia);
+			}
+		}
+
 	}
 }

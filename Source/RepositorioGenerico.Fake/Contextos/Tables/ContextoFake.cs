@@ -10,11 +10,11 @@ namespace RepositorioGenerico.Fake.Contextos.Tables
 	public class ContextoFake : ContextoFakeBase, IContextoFake
 	{
 
-		private readonly Dictionary<string, object> _persistencias;
+		private readonly Dictionary<Type, object> _persistencias;
 
 		public IRepositorio Repositorio<TObjeto>() where TObjeto : class, IEntidade
 		{
-			var tipo = typeof(TObjeto).FullName;
+			var tipo = typeof(TObjeto);
 			if (!Repositorios.ContainsKey(tipo))
 				CriarNovoRepositorio<TObjeto>(tipo);
 			return (IRepositorio)Repositorios[tipo];
@@ -22,10 +22,10 @@ namespace RepositorioGenerico.Fake.Contextos.Tables
 
 		public ContextoFake()
 		{
-			_persistencias = new Dictionary<string, object>();
+			_persistencias = new Dictionary<Type, object>();
 		}
 
-		private void CriarNovoRepositorio<TObjeto>(string tipo) where TObjeto : IEntidade
+		private void CriarNovoRepositorio<TObjeto>(Type tipo) where TObjeto : IEntidade
 		{
 			var tipoRepositorio = typeof(RepositorioFake<>);
 			var tipoGenerico = tipoRepositorio.MakeGenericType(typeof(TObjeto));
@@ -45,7 +45,7 @@ namespace RepositorioGenerico.Fake.Contextos.Tables
 		private PersistenciaFake<TObjeto> ConsultarRepositorioVirtual<TObjeto>() where TObjeto : IEntidade
 		{
 			object persistencia;
-			var tipo = typeof (TObjeto).FullName;
+			var tipo = typeof (TObjeto);
 			if (_persistencias.TryGetValue(tipo, out persistencia))
 				return (PersistenciaFake<TObjeto>)persistencia;
 			CriarNovoRepositorio<TObjeto>(tipo);

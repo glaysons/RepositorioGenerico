@@ -201,5 +201,10 @@ namespace RepositorioGenerico.SqlClient.Contextos
 				Excluir(model);
 		}
 
+		public void Limpar()
+		{
+			_persistencia.Dados.Clear();
+		}
+
 	}
 }

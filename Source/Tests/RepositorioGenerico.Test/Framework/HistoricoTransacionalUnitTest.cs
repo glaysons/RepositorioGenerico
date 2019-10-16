@@ -90,6 +90,10 @@ namespace RepositorioGenerico.Test.Framework
 
 			historico.Salvar();
 
+			historico.Quantidade.Should().Be(4);
+
+			historico.Limpar();
+
 			historico.Quantidade.Should().Be(0);
 
 			for (var n = 0; n < mocks.Count; n++)

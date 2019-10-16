@@ -198,6 +198,10 @@ namespace RepositorioGenerico.Fake.Contextos
 				Excluir(model);
 		}
 
+		public void Limpar()
+		{
+			_persistencia.Dados.Clear();
+		}
 
 	}
 }

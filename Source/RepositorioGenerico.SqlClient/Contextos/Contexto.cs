@@ -12,18 +12,16 @@ namespace RepositorioGenerico.SqlClient.Contextos
 		public IRepositorio<TObjeto> Repositorio<TObjeto>() where TObjeto : IEntidade
 		{
 			var tipo = typeof(TObjeto);
-			var nome = tipo.FullName;
-			if (!Repositorios.ContainsKey(nome))
-				CriarNovoRepositorio(nome, tipo);
-			return (IRepositorio<TObjeto>)Repositorios[nome];
+			if (!Repositorios.ContainsKey(tipo))
+				CriarNovoRepositorio(tipo);
+			return (IRepositorio<TObjeto>)Repositorios[tipo];
 		}
 
 		public IRepositorioObject Repositorio(Type tipo)
 		{
-			var nome = tipo.FullName;
-			if (!Repositorios.ContainsKey(nome))
-				CriarNovoRepositorio(nome, tipo);
-			return (IRepositorioObject)Repositorios[nome];
+			if (!Repositorios.ContainsKey(tipo))
+				CriarNovoRepositorio(tipo);
+			return (IRepositorioObject)Repositorios[tipo];
 		}
 
 		public Contexto(string stringConexao)
@@ -37,7 +35,7 @@ namespace RepositorioGenerico.SqlClient.Contextos
 
 		}
 
-		private void CriarNovoRepositorio(string nome, Type tipo)
+		private void CriarNovoRepositorio(Type tipo)
 		{
 			var tipoRepositorio = typeof(Repositorio<>);
 			var repositorioGenerico = tipoRepositorio.MakeGenericType(tipo);
@@ -46,7 +44,7 @@ namespace RepositorioGenerico.SqlClient.Contextos
 			var dicionario = DicionarioCache.Consultar(tipo);
 			var persistencia = Activator.CreateInstance(persistenciaGenerica, dicionario);
 			var repositorio = Activator.CreateInstance(repositorioGenerico, this, persistencia);
-			Repositorios.Add(nome, repositorio);
+			Repositorios.Add(tipo, repositorio);
 		}
 
 	}

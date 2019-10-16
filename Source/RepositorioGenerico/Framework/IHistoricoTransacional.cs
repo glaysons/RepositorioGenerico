@@ -8,5 +8,6 @@ namespace RepositorioGenerico.Framework
 		ItemHistoricoTransacional this[int indice] { get; }
 		void AdicionarTransacao(IPersistencia persistencia, object registro);
 		void Salvar();
+		void Limpar();
 	}
 }
