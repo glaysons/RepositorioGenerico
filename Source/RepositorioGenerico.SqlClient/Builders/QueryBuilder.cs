@@ -88,14 +88,13 @@ namespace RepositorioGenerico.SqlClient.Builders
 
 		public void AdicionarResultadoAgregado(Agregadores agregador, string campo)
 		{
-			string conteudo;
 			if (agregador == Agregadores.Count)
-				conteudo = (campo == null)
-					? "(*)"
-					: string.Concat("(distinct [", campo, "])as[", campo, "]");
+				if (campo == null)
+					Selects.Add(" " + agregador.ToString() + "(*)");
+				else
+					Selects.Add(" " + agregador.ToString() + "(distinct [" + campo + "])as[" + campo + "]");
 			else
-				conteudo = string.Concat("([", campo, "])as[", campo, "]");
-			Selects.Add(string.Concat(" ", agregador, conteudo));
+				Selects.Add(" " + agregador.ToString() + "([" + campo + "])as[" + campo + "]");
 		}
 
 		public void DefinirTabela(string nome)
@@ -110,28 +109,28 @@ namespace RepositorioGenerico.SqlClient.Builders
 
 		public void AdicionarCondicaoAgrupamento(string condicao)
 		{
-			Havings.Add(string.Concat("(", condicao, ")"));
+			Havings.Add("(" + condicao + ")");
 		}
 
 		public void AdicionarCondicaoPersonalizada(string condicao)
 		{
-			Wheres.Add(string.Concat("(", condicao, ")"));
+			Wheres.Add("(" + condicao + ")");
 		}
 
 		public string AdicionarCondicao(string campo, int operador, object valor)
 		{
 			var parametro = "_p" + _proximoParametro.ToString();
 			if ((valor == null) || (valor == DBNull.Value))
-				Wheres.Add(string.Concat("([", campo, "]IS NULL)"));
+				Wheres.Add("([" + campo + "]IS NULL)");
 			else
-				Wheres.Add(string.Concat("([", campo, "]", ConsultarSinalDoOperador(operador), "@", parametro, ")"));
+				Wheres.Add("([" + campo + "]" + ConsultarSinalDoOperador(operador) + "@" + parametro + ")");
 			_proximoParametro++;
 			return parametro;
 		}
 
 		public void AdicionarCondicaoApenasCampoNaoNulo(string campo)
 		{
-			Wheres.Add(string.Concat("([", campo, "]IS NOT NULL)"));
+			Wheres.Add("([" + campo + "]IS NOT NULL)");
 		}
 
 		public string ConsultarOperador(Operadores operador)
@@ -181,24 +180,24 @@ namespace RepositorioGenerico.SqlClient.Builders
 		public string[] AdicionarCondicaoEntre(string campo, object inicio, object fim)
 		{
 			var parametros = new[] { string.Empty, string.Empty };
-			var parametroInicio = string.Concat("_p", _proximoParametro.ToString(), "a");
-			var parametroFim = string.Concat("_p", _proximoParametro.ToString(), "b");
+			var parametroInicio = "_p" + _proximoParametro.ToString() + "a";
+			var parametroFim = "_p" + _proximoParametro.ToString() + "b";
 
 			if ((inicio != null) && (fim != null))
 			{
 				parametros[0] = parametroInicio;
 				parametros[1] = parametroFim;
-				Wheres.Add(string.Concat("([", campo, "]between @", parametroInicio, " and @", parametroFim, ")"));
+				Wheres.Add("([" + campo + "]between @" + parametroInicio + " and @" + parametroFim + ")");
 			}
 			else if (inicio != null)
 			{
 				parametros[0] = parametroInicio;
-				Wheres.Add(string.Concat("([", campo, "]>=@", parametroInicio, ")"));
+				Wheres.Add("([" + campo + "]>=@" + parametroInicio + ")");
 			}
 			else
 			{
 				parametros[1] = parametroFim;
-				Wheres.Add(string.Concat("([", campo, "]<=@", parametroFim, ")"));
+				Wheres.Add("([" + campo + "]<=@" + parametroFim + ")");
 			}
 
 			_proximoParametro++;
@@ -217,76 +216,170 @@ namespace RepositorioGenerico.SqlClient.Builders
 
 		public void AdicionarOrdemDescendente(string ordem)
 		{
-			OrderBys.Add(string.Concat(ordem, " DESC"));
+			OrderBys.Add(ordem + " DESC");
 		}
 
 		public string GerarScript(Dicionario dicionario)
 		{
 			var sql = new StringBuilder();
 
-			if (Selects.Count == 0) 
-				ConstruirSelectPadrao(dicionario);
+			ConstruirSelectPadrao(dicionario);
+			GerarSelectDoScript(sql);
+			GerarFromDoScript(sql);
+			GerarCorpoDoScript(sql);
 
-			sql.Append("select ");
-
-			var top = (_limite == null) 
-				? string.Empty 
-				: string.Concat("top ", _limite, " ");
-
-			AdicionarSql(sql, top, _selects, ",");
-			sql.Append("from[");
-			sql.Append(_tabela);
-			sql.Append("]");
-			AdicionarSql(sql, "", _joins, " ");
-			AdicionarSql(sql, "where", _wheres, "and");
-			AdicionarSql(sql, "group by ", _groupBys, ",");
-			AdicionarSql(sql, "having", _havings, "and");
-			AdicionarSql(sql, "order by ", _orderBys, ",");
-			return sql.ToString();
-		}
-
-		public string GerarScriptExistencia(Dicionario dicionario)
-		{
-			var sql = new StringBuilder();
-			sql.Append("select top 1 1 from[");
-			sql.Append(_tabela);
-			sql.Append("]");
-			AdicionarSql(sql, "", _joins, " ");
-			AdicionarSql(sql, "where", _wheres, "and");
-			AdicionarSql(sql, "group by ", _groupBys, ",");
-			AdicionarSql(sql, "having", _havings, "and");
-			AdicionarSql(sql, "order by ", _orderBys, ",");
 			return sql.ToString();
 		}
 
 		private void ConstruirSelectPadrao(Dicionario dicionario)
 		{
+			if (_selects?.Count > 0)
+				return;
 			if (dicionario == null)
-				Selects.Add(string.Concat("[", _tabela, "].*"));
+				Selects.Add("[" + _tabela + "].*");
 			else
 				foreach (var item in dicionario.Itens)
-					Selects.Add(string.Concat("[", item.Nome, "]", ConsultarAliasDoCampo(item)));
+					Selects.Add("[" + item.Nome + "]" + ConsultarAliasDoCampo(item));
 		}
 
 		private string ConsultarAliasDoCampo(ItemDicionario item)
 		{
 			if (string.IsNullOrEmpty(item.Alias))
 				return string.Empty;
-			return string.Concat("as[", item.Alias, "]");
+			return "as[" + item.Alias + "]";
 		}
 
-		private void AdicionarSql(StringBuilder sql, string antes, IList<string> lista, string separador)
+		private void GerarCorpoDoScript(StringBuilder sql)
 		{
-			if ((lista == null) || (lista.Count == 0))
-				return;
-			sql.Append(antes);
-			foreach (var item in lista)
+			GerarJoinDoScript(sql);
+			GerarWhereDoScript(sql);
+			GerarGroupByDoScript(sql);
+			GerarHavingDoScript(sql);
+			GerarOrderByDoScript(sql);
+		}
+
+		private void GerarSelectDoScript(StringBuilder sql)
+		{
+			sql.Append("select ");
+
+			if (_limite.HasValue)
+			{
+				sql.Append("top ");
+				sql.Append(_limite);
+				sql.Append(" ");
+			}
+
+			foreach (var item in Selects)
 			{
 				sql.Append(item);
-				sql.Append(separador);
+				sql.Append(",");
 			}
-			sql.Length -= separador.Length;
+
+			sql.Length -= 1;
+
 			sql.Append(" ");
+		}
+
+		private void GerarFromDoScript(StringBuilder sql)
+		{
+			sql.Append("from[");
+			sql.Append(_tabela);
+			sql.Append("]");
+		}
+
+		private void GerarJoinDoScript(StringBuilder sql)
+		{
+			if (!(_joins?.Count > 0))
+				return;
+
+			foreach (var item in _joins)
+			{
+				sql.Append(item);
+				sql.Append(" ");
+			}
+		}
+
+		private void GerarWhereDoScript(StringBuilder sql)
+		{
+			if (!(_wheres?.Count > 0))
+				return;
+
+			sql.Append("where");
+
+			foreach (var item in _wheres)
+			{
+				sql.Append(item);
+				sql.Append("and");
+			}
+
+			sql.Length -= 3;
+
+			sql.Append(" ");
+		}
+
+		private void GerarGroupByDoScript(StringBuilder sql)
+		{
+			if (!(_groupBys?.Count > 0))
+				return;
+
+			sql.Append("group by ");
+
+			foreach (var item in _groupBys)
+			{
+				sql.Append(item);
+				sql.Append(",");
+			}
+
+			sql.Length -= 1;
+
+			sql.Append(" ");
+		}
+
+		private void GerarHavingDoScript(StringBuilder sql)
+		{
+			if (!(_havings?.Count > 0))
+				return;
+
+			sql.Append("having");
+
+			foreach (var item in _havings)
+			{
+				sql.Append(item);
+				sql.Append("and");
+			}
+
+			sql.Length -= 3;
+
+			sql.Append(" ");
+		}
+
+		private void GerarOrderByDoScript(StringBuilder sql)
+		{
+			if (!(_orderBys?.Count > 0))
+				return;
+
+			sql.Append("order by ");
+
+			foreach (var item in _orderBys)
+			{
+				sql.Append(item);
+				sql.Append(",");
+			}
+
+			sql.Length -= 1;
+
+			sql.Append(" ");
+		}
+
+		public string GerarScriptExistencia(Dicionario dicionario)
+		{
+			var sql = new StringBuilder();
+			sql.Append("select top 1 1 ");
+
+			GerarFromDoScript(sql);
+			GerarCorpoDoScript(sql);
+
+			return sql.ToString();
 		}
 
 	}
