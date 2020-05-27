@@ -191,6 +191,21 @@ Outra forma de realizar consultas no banco de dados é utilizar o método **Cons
   var registroDireto = repositorio.Consultar(123);
 ```
 
+Para realizar a busca já carregando os registros descendentes, você pode montar uma query assim:
+```
+    var configuracao = _repositorio.Buscar.CriarQuery()
+	    .CarregarPropriedade(c => c.GruposDeVendedores)
+	    .CarregarPropriedade(c => c.TiposDePrecos)
+	    .CarregarPropriedade(c => c.LinhasDeItens)
+	    .CarregarPropriedade(c => c.FamiliasDeItens)
+	    .CarregarPropriedade(c => c.GruposDeItens)
+	    .CarregarPropriedade(c => c.Itens)
+	    .AdicionarCondicao(c => c.CodigoComissao).Igual(codigo);
+
+    return _repositorio.Buscar.Um(configuracao);
+```
+Ao declarar o "CarregarPropriedade", a busca se encarregará de carregar os registros filhos. Isto com certeza facilitará muito a sua vida.
+
 ### Alterar Registros ###
 
 ```
