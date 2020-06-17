@@ -623,5 +623,25 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 				.Be("select top 1 1 from[ObjetoVirtual]");
 		}
 
+		[TestMethod]
+		public void SeGerarScriptDezMilhoesDeVezesDeveGerarUmScriptValido()
+		{
+			var builder = new QueryBuilder();
+			var dicionario = new Dicionario(typeof(ObjetoDeTestes));
+			builder.DefinirTabela(dicionario.Nome);
+
+			var consulta =
+					"select " + 
+						"[Codigo],[CodigoNulo],[Nome],[Duplo],[DuploNulo]," + 
+						"[Decimal],[DecimalNulo],[Logico],[DataHora],[DataHoraNulo] " +
+					"from[ObjetoVirtual]";
+
+			for (int i = 0; i < 10_000_000; i++)
+			{
+				if (!string.Equals(builder.GerarScript(dicionario), consulta))
+					throw new Exception("Script gerado errado!");
+			}
+		}
+
 	}
 }
