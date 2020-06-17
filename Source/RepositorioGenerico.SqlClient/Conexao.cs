@@ -10,6 +10,7 @@ namespace RepositorioGenerico.SqlClient
 	{
 
 		private readonly string _stringConexao;
+		private IDbConnection _conexao;
 		private Transacao _transacao;
 		private bool _transacaoExterna;
 
@@ -48,7 +49,8 @@ namespace RepositorioGenerico.SqlClient
 			try
 			{
 				ExecutarEventoTransacao(AntesIniciarTransacao);
-				_transacao = new Transacao(CriarConexaoSemTransacao());
+				_conexao = CriarConexaoSemTransacao();
+				_transacao = new Transacao(_conexao);
 				_transacao.DepoisLimparTransacao += DepoisLimparTransacao;
 				return _transacao;
 			}
@@ -60,25 +62,23 @@ namespace RepositorioGenerico.SqlClient
 
 		private void ExecutarEventoTransacao(EventoDelegate eventoConexao)
 		{
-			if (eventoConexao != null)
-				eventoConexao(this);
+			eventoConexao?.Invoke(this);
 		}
 
 		private void DepoisLimparTransacao(object sender)
 		{
-			LimparConexaoExistente(_transacao.ConexaoAtual);
-			if (_transacao.DepoisLimparTransacao != null)
-				_transacao.DepoisLimparTransacao -= DepoisLimparTransacao;
+			_transacao.DepoisLimparTransacao -= DepoisLimparTransacao;
 			_transacao.Dispose();
 			_transacao = null;
+			LimparConexaoExistente();
 		}
 
-		private void LimparConexaoExistente(IDbConnection conexao)
+		private void LimparConexaoExistente()
 		{
-			if (conexao == null)
+			if (_conexao == null)
 				return;
-			conexao.Close();
-			conexao.Dispose();
+			_conexao.Close();
+			_conexao.Dispose();
 		}
 
 		public void DefinirConexaoTransacionada(IDbCommand comando)
@@ -98,8 +98,8 @@ namespace RepositorioGenerico.SqlClient
 		{
 			if (!_transacaoExterna && EmTransacao)
 			{
-				DepoisLimparTransacao(this);
 				_transacao.Dispose();
+				LimparConexaoExistente();
 			}
 		}
 
