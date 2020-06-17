@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Pattern;
@@ -65,9 +66,19 @@ namespace RepositorioGenerico.SqlClient
 
 		private void DepoisLimparTransacao(object sender)
 		{
-			_transacao.DepoisLimparTransacao -= DepoisLimparTransacao;
+			LimparConexaoExistente(_transacao.ConexaoAtual);
+			if (_transacao.DepoisLimparTransacao != null)
+				_transacao.DepoisLimparTransacao -= DepoisLimparTransacao;
 			_transacao.Dispose();
 			_transacao = null;
+		}
+
+		private void LimparConexaoExistente(IDbConnection conexao)
+		{
+			if (conexao == null)
+				return;
+			conexao.Close();
+			conexao.Dispose();
 		}
 
 		public void DefinirConexaoTransacionada(IDbCommand comando)
@@ -86,7 +97,10 @@ namespace RepositorioGenerico.SqlClient
 		public void Dispose()
 		{
 			if (!_transacaoExterna && EmTransacao)
+			{
+				DepoisLimparTransacao(this);
 				_transacao.Dispose();
+			}
 		}
 
 	}
