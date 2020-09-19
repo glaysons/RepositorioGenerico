@@ -112,7 +112,7 @@ namespace RepositorioGenerico.SqlClient.Test.Builders
 			Action sincronizar = () => CommandBuilder.SincronizarParametrosDeTodosOsCampos(dicionario, comando, objeto);
 
 			sincronizar
-				.ShouldThrow<IndexOutOfRangeException>();
+				.Should().Throw<IndexOutOfRangeException>();
 
 		}
 

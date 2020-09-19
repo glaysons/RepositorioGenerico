@@ -70,7 +70,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 				Action salvar = () => contexto.Salvar();
 
 				salvar
-					.ShouldNotThrow();
+					.Should().NotThrow();
 			}
 		}
 

@@ -25,7 +25,7 @@ namespace Business.Test.Cidades
 			Action cadastro = () => manutencao.Cadastrar(cidade);
 
 			cadastro
-				.ShouldNotThrow();
+				.Should().NotThrow();
 		}
 
 		[TestMethod]
@@ -65,7 +65,7 @@ namespace Business.Test.Cidades
 			Action cadastro = () => manutencao.Cadastrar(cidade);
 
 			cadastro
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Já existe uma cidade cadastrada com este nome!");
 
 		}
@@ -159,7 +159,7 @@ namespace Business.Test.Cidades
 			Action exclusao = () => manutencao.Excluir(cidade);
 
 			exclusao
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Ainda existem clientes cadastrados para esta cidade!");
 		}
 

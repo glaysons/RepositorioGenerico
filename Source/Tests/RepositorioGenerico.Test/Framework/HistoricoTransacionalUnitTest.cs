@@ -20,7 +20,7 @@ namespace RepositorioGenerico.Test.Framework
 		{
 			var conexao = new Mock<IConexao>();
 			Action act = () => new HistoricoTransacional(conexao.Object);
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 		}
 
 		[TestMethod]
@@ -58,10 +58,10 @@ namespace RepositorioGenerico.Test.Framework
 			Action act = () => acesso(enviarIndice[0]);
 
 			enviarIndice[0] = -1;
-			act.ShouldThrow<IndexOutOfRangeException>();
+			act.Should().Throw<IndexOutOfRangeException>();
 
 			enviarIndice[0] = 1;
-			act.ShouldThrow<IndexOutOfRangeException>();
+			act.Should().Throw<IndexOutOfRangeException>();
 
 			item.Should().BeNull();
 		}

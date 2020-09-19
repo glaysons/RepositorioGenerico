@@ -26,7 +26,7 @@ namespace RepositorioGenerico.Fake.Test
 			using (var conexao = new ConexaoFake())
 			{
 				Action act = () => conexao.IniciarTransacao();
-				act.ShouldNotThrow();
+				act.Should().NotThrow();
 			}
 		}
 
@@ -49,7 +49,7 @@ namespace RepositorioGenerico.Fake.Test
 			using (var transacao = conexao.IniciarTransacao() as TransacaoFake)
 			{
 				Action act = () => conexao.IniciarTransacao();
-				act.ShouldThrow<TransacaoJaIniciadaException>();
+				act.Should().Throw<TransacaoJaIniciadaException>();
 			}
 		}
 
@@ -61,7 +61,7 @@ namespace RepositorioGenerico.Fake.Test
 			{
 				transacao.ConfirmarTransacao();
 				Action act = () => transacao.ConfirmarTransacao();
-				act.ShouldThrow<TransacaoNaoIniciadaException>();
+				act.Should().Throw<TransacaoNaoIniciadaException>();
 			}
 		}
 
@@ -72,7 +72,7 @@ namespace RepositorioGenerico.Fake.Test
 			using (var transacao = conexao.IniciarTransacao() as TransacaoFake)
 			{
 				Action act = () => transacao.ConfirmarTransacao();
-				act.ShouldNotThrow();
+				act.Should().NotThrow();
 			}
 		}
 
@@ -129,7 +129,7 @@ namespace RepositorioGenerico.Fake.Test
 			{
 				transacao.CancelarTransacao();
 				Action act = () => transacao.CancelarTransacao();
-				act.ShouldThrow<TransacaoNaoIniciadaException>();
+				act.Should().Throw<TransacaoNaoIniciadaException>();
 			}
 		}
 

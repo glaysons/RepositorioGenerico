@@ -18,7 +18,7 @@ namespace RepositorioGenerico.Test.Dictionary.Builders
 			var dicionario = new Dicionario(typeof(ObjetoDeTestes));
 			Action criar = () => DataTableBuilder.CriarDataTable(dicionario);
 			criar
-				.ShouldNotThrow();
+				.Should().NotThrow();
 		}
 
 		[TestMethod]
@@ -92,7 +92,7 @@ namespace RepositorioGenerico.Test.Dictionary.Builders
 
 			Action incluir = () => tabela.Rows.Add(novoRegistro);
 			incluir
-				.ShouldThrow<ConstraintException>();
+				.Should().Throw<ConstraintException>();
 		}
 
 		[TestMethod]

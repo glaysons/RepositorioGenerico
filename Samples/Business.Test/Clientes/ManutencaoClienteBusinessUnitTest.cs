@@ -25,7 +25,7 @@ namespace Business.Test.Clientes
 			Action cadastro = () => manutencao.Cadastrar(Cliente);
 
 			cadastro
-				.ShouldNotThrow();
+				.Should().NotThrow();
 		}
 
 		[TestMethod]
@@ -63,7 +63,7 @@ namespace Business.Test.Clientes
 			Action cadastro = () => manutencao.Cadastrar(Cliente);
 
 			cadastro
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Já existe um Cliente cadastrado com este nome!");
 
 		}

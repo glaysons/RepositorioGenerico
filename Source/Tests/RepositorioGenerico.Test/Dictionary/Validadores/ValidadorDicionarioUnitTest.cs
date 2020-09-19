@@ -24,7 +24,7 @@ namespace RepositorioGenerico.Test.Dictionary.Validadores
 			
 			Action validacao = () => validador.Validar(objeto);
 
-			validacao.ShouldThrow<CampoPossuiPreenchimentoObrigatorioException>();
+			validacao.Should().Throw<CampoPossuiPreenchimentoObrigatorioException>();
 
 			var valido = validador.Valido(objeto).ToList();
 
@@ -45,7 +45,7 @@ namespace RepositorioGenerico.Test.Dictionary.Validadores
 
 			Action validacao = () => validador.Validar(objeto);
 
-			validacao.ShouldNotThrow();
+			validacao.Should().NotThrow();
 
 			var valido = validador.Valido(objeto).ToList();
 
@@ -66,7 +66,7 @@ namespace RepositorioGenerico.Test.Dictionary.Validadores
 			
 			Action validacao = () => validador.Validar(objeto);
 
-			validacao.ShouldThrow<CampoPossuiTamanhoMaximoDePeenchimentoException>();
+			validacao.Should().Throw<CampoPossuiTamanhoMaximoDePeenchimentoException>();
 
 			var valido = validador.Valido(objeto).ToList();
 
@@ -84,7 +84,7 @@ namespace RepositorioGenerico.Test.Dictionary.Validadores
 
 			Action validacao = () => validador.Validar(objeto);
 
-			validacao.ShouldNotThrow();
+			validacao.Should().NotThrow();
 
 			var valido = validador.Valido(objeto).ToList();
 

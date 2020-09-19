@@ -83,7 +83,7 @@ namespace RepositorioGenerico.SqlClient.Test
 
 					Action repetirIniciar = () => conexao.IniciarTransacao();
 					repetirIniciar
-						.ShouldThrow<TransacaoJaIniciadaException>();
+						.Should().Throw<TransacaoJaIniciadaException>();
 
 					transacao.CancelarTransacao();
 
@@ -93,7 +93,7 @@ namespace RepositorioGenerico.SqlClient.Test
 
 					Action repetirCancelar = () => transacao.CancelarTransacao();
 					repetirCancelar
-						.ShouldThrow<TransacaoNaoIniciadaException>();
+						.Should().Throw<TransacaoNaoIniciadaException>();
 				}
 			}
 
@@ -124,7 +124,7 @@ namespace RepositorioGenerico.SqlClient.Test
 					Action repetirConfirmar = () => transacao.ConfirmarTransacao();
 
 					repetirConfirmar
-						.ShouldThrow<TransacaoNaoIniciadaException>();
+						.Should().Throw<TransacaoNaoIniciadaException>();
 				}
 
 			}
@@ -280,7 +280,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				Action antesIniciarIniciar = () => conexao.IniciarTransacao();
 
 				antesIniciarIniciar
-					.ShouldThrow<Exception>()
+					.Should().Throw<Exception>()
 					.WithMessage("ErroAntesIniciar");
 
 				conexao.EmTransacao
@@ -299,7 +299,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				Action depoisIniciar = () => conexao.IniciarTransacao();
 
 				depoisIniciar
-					.ShouldThrow<Exception>()
+					.Should().Throw<Exception>()
 					.WithMessage("ErroDepoisIniciar");
 
 				conexao.EmTransacao
@@ -319,7 +319,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				Action antesConfirmar = () => transacao.ConfirmarTransacao();
 
 				antesConfirmar
-					.ShouldThrow<Exception>()
+					.Should().Throw<Exception>()
 					.WithMessage("ErroAntesConfirmar");
 
 				conexao.EmTransacao
@@ -339,7 +339,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				Action aoConfirmar = () => transacao.ConfirmarTransacao();
 
 				aoConfirmar
-					.ShouldThrow<Exception>()
+					.Should().Throw<Exception>()
 					.WithMessage("ErroAoConfirmar");
 
 				conexao.EmTransacao
@@ -359,7 +359,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				Action antesCancelar = () => transacao.CancelarTransacao();
 
 				antesCancelar
-					.ShouldThrow<Exception>()
+					.Should().Throw<Exception>()
 					.WithMessage("ErroAntesCancelar");
 
 				conexao.EmTransacao
@@ -381,7 +381,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				Action aoCancelar = () => transacao.CancelarTransacao();
 
 				aoCancelar
-					.ShouldThrow<Exception>()
+					.Should().Throw<Exception>()
 					.WithMessage("ErroAoCancelar");
 
 				conexao.EmTransacao
@@ -416,7 +416,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				Action definirConexao = () => conexao.DefinirConexaoTransacionada(comando);
 
 				definirConexao
-					.ShouldThrow<TransacaoNaoIniciadaException>();
+					.Should().Throw<TransacaoNaoIniciadaException>();
 			}
 		}
 

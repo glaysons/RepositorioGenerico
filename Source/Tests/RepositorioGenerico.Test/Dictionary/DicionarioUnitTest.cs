@@ -18,28 +18,28 @@ namespace RepositorioGenerico.Dictionary.Test
 		public void SeCriarUmDicionarioNaoDeveGerarErro()
 		{
 			Action act = () => { new Dicionario(typeof(ObjetoDeTestes)); };
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 		}
 
 		[TestMethod]
 		public void SeCriarUmDicionarioMapeadoNaoDeveGerarErro()
 		{
 			Action act = () => { new Dicionario(typeof(ObjetoMapeadoDeTestes)); };
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 		}
 
 		[TestMethod]
 		public void SeCriarUmDicionarioMistoNaoDeveGerarErro()
 		{
 			Action act = () => { new Dicionario(typeof(ObjetoMistoDeTestes)); };
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 		}
 
 		[TestMethod]
 		public void SeCriarUmDicionarioDeUmObjetoQueNaoHerdeObjetoDeBancoDeveGerarErro()
 		{
 			Action act = () => { new Dicionario(typeof(ObjetoSemHerancaCorreta)); };
-			act.ShouldThrow<NaoSeraPossivelCriarUmDicionarioDeUmObjetoQueNaoHerdeObjetoBancoException>();
+			act.Should().Throw<NaoSeraPossivelCriarUmDicionarioDeUmObjetoQueNaoHerdeObjetoBancoException>();
 		}
 
 		[TestMethod]
@@ -225,7 +225,7 @@ namespace RepositorioGenerico.Dictionary.Test
 			Action consulta = () => dicionario.ConsultarValoresDaChave(objeto, new[] { "NomeDeCampoInexistenteNaTabela" });
 
 			consulta
-				.ShouldNotThrow();
+				.Should().NotThrow();
 		}
 
 		[TestMethod]
@@ -494,7 +494,7 @@ namespace RepositorioGenerico.Dictionary.Test
 			var dicionario = new Dicionario(typeof(ObjetoSemEstruturaDefinida));
 			Action consulta = () => dicionario.Itens.Count();
 			consulta
-				.ShouldThrow<TabelaNaoPossuiInformacoesDeCamposDaTabelaException>();
+				.Should().Throw<TabelaNaoPossuiInformacoesDeCamposDaTabelaException>();
 		}
 
 		[TestMethod]
@@ -513,7 +513,7 @@ namespace RepositorioGenerico.Dictionary.Test
 			var dicionario = new Dicionario(typeof(ObjetoComDoisCamposAutoIncremento));
 			Action consulta = () => dicionario.Itens.Count();
 			consulta
-				.ShouldThrow<DicionarioNaoSuportaMultiplosCamposAutoIncrementoException>();
+				.Should().Throw<DicionarioNaoSuportaMultiplosCamposAutoIncrementoException>();
 
 		}
 
@@ -523,7 +523,7 @@ namespace RepositorioGenerico.Dictionary.Test
 			var dicionario = new Dicionario(typeof(ObjetoComDoisCamposComputados));
 			Action consulta = () => dicionario.Itens.Count();
 			consulta
-				.ShouldThrow<DicionarioNaoSuportaMultiplosCamposAutoIncrementoException>();
+				.Should().Throw<DicionarioNaoSuportaMultiplosCamposAutoIncrementoException>();
 
 		}
 
@@ -541,7 +541,7 @@ namespace RepositorioGenerico.Dictionary.Test
 			var dicionario = new Dicionario(typeof(ObjetoComChaveAutoIncrementoEComputada));
 			Action consulta = () => dicionario.Itens.Count();
 			consulta
-				.ShouldThrow<DicionarioNaoSuportaMultiplosCamposAutoIncrementoException>();
+				.Should().Throw<DicionarioNaoSuportaMultiplosCamposAutoIncrementoException>();
 			
 		}
 

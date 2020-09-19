@@ -12,14 +12,14 @@ namespace RepositorioGenerico.Fake.Test
 		public void SeCriarUmContextoFakeNaoDeveGerarErro()
 		{
 			Action act = () => FabricaFake.CriarContexto();
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 		}
 
 		[TestMethod]
 		public void SeCriarUmContextoLegadoFakeNaoDeveGerarErro()
 		{
 			Action act = () => FabricaFake.CriarContextoLegado();
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 		}
 
 		[TestMethod]

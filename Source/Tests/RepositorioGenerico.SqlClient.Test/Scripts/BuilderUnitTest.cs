@@ -58,7 +58,7 @@ namespace RepositorioGenerico.SqlClient.Test.Scripts
 			Action gerarScript = () => Builder.CriarScriptUpdate(dicionario);
 
 			gerarScript
-				.ShouldThrow<ChavePrimariaInvalidaException>();
+				.Should().Throw<ChavePrimariaInvalidaException>();
 		}
 
 		[TestMethod]
@@ -91,7 +91,7 @@ namespace RepositorioGenerico.SqlClient.Test.Scripts
 			Action gerarScript = () => Builder.CriarScriptDelete(dicionario);
 
 			gerarScript
-				.ShouldThrow<ChavePrimariaInvalidaException>();
+				.Should().Throw<ChavePrimariaInvalidaException>();
 		}
 
 		[TestMethod]

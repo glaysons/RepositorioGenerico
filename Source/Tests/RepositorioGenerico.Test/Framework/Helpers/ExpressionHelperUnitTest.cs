@@ -60,7 +60,7 @@ namespace RepositorioGenerico.Test.Framework.Helpers
 		public void SeConsultarAPropriedadeDaExpressaoInvalidaDeveGerarErroPropriedadeInvalidaException()
 		{
 			Action act = () => ExpressionHelper.PropriedadeDaExpressao<ObjetoDeTestes>(c => c.Nome + c.Nome);
-			act.ShouldThrow<PropriedadeInvalidaException>();
+			act.Should().Throw<PropriedadeInvalidaException>();
 		}
 
 		[TestMethod]
