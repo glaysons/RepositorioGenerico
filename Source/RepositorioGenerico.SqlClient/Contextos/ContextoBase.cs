@@ -8,13 +8,14 @@ using System.Data;
 using RepositorioGenerico.Pattern;
 using RepositorioGenerico.Pattern.Contextos;
 using System;
+using System.Collections.Concurrent;
 
 namespace RepositorioGenerico.SqlClient.Contextos
 {
 	public abstract class ContextoBase : Conexao
 	{
 
-		private Dictionary<Type, object> _repositorios;
+		private ConcurrentDictionary<Type, object> _repositorios;
 		private HistoricoTransacional _transacoes;
 		private IBuscador _buscadorGenerico;
 		private object _buscador;
@@ -25,9 +26,9 @@ namespace RepositorioGenerico.SqlClient.Contextos
 
 		public bool LimparContextoAoSalvar { get; set; } = true;
 
-		protected Dictionary<Type, object> Repositorios
+		protected ConcurrentDictionary<Type, object> Repositorios
 		{
-			get { return _repositorios ?? (_repositorios = new Dictionary<Type, object>()); }
+			get { return _repositorios ?? (_repositorios = new ConcurrentDictionary<Type, object>()); }
 		}
 
 		internal HistoricoTransacional Transacoes

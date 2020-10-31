@@ -14,6 +14,7 @@ using RepositorioGenerico.Entities.Mapas;
 using RepositorioGenerico.Exceptions;
 using RepositorioGenerico.Framework.Helpers;
 using System.Data;
+using System.Threading;
 
 namespace RepositorioGenerico.Dictionary
 {
@@ -36,6 +37,7 @@ namespace RepositorioGenerico.Dictionary
 		private readonly bool _possuiReferencial;
 		private bool _possuiCamposFilhos;
 		private readonly IMapa _mapa;
+		private bool _carregando = true;
 
 		public string Alias { get; private set; }
 
@@ -152,15 +154,27 @@ namespace RepositorioGenerico.Dictionary
 		private void CarregarDefinicoesDoModel()
 		{
 			if (_itens != null)
+			{
+				while (_carregando)
+					Thread.Sleep(10);
 				return;
-			_itens = new Dictionary<string, ItemDicionario>();
-			_listaItens = new List<ItemDicionario>();
-			_itensNaoMapeados = new Dictionary<string, ItemDicionario>();
-			_propriedades = new Dictionary<string, ItemDicionario>();
-			_propriedadesNaoMapeadas = new Dictionary<string, ItemDicionario>();
-			_chaves = new Dictionary<string, ItemDicionario>();
-			CarregarCamposDaTabela();
-			CarregarValidadoresDoModel();
+			}
+
+			try
+			{
+				_itens = new Dictionary<string, ItemDicionario>();
+				_listaItens = new List<ItemDicionario>();
+				_itensNaoMapeados = new Dictionary<string, ItemDicionario>();
+				_propriedades = new Dictionary<string, ItemDicionario>();
+				_propriedadesNaoMapeadas = new Dictionary<string, ItemDicionario>();
+				_chaves = new Dictionary<string, ItemDicionario>();
+				CarregarCamposDaTabela();
+				CarregarValidadoresDoModel();
+			}
+			finally
+			{
+				_carregando = false;
+			}
 		}
 
 		private void CarregarCamposDaTabela()

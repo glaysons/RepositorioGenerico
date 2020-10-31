@@ -1,5 +1,4 @@
-﻿using System.Data.SqlClient;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Dictionary;
 using RepositorioGenerico.Pattern;
@@ -7,6 +6,8 @@ using RepositorioGenerico.Pattern.Buscadores;
 using RepositorioGenerico.Search;
 using RepositorioGenerico.SqlClient.Builders;
 using RepositorioGenerico.Test.Objetos;
+using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace RepositorioGenerico.SqlClient.Test
 {
@@ -250,6 +251,39 @@ namespace RepositorioGenerico.SqlClient.Test
 			comando.Existe(config)
 				.Should()
 				.BeFalse();
+		}
+
+
+		[TestMethod]
+		public void SeConsultarScalar20MilVezesDeveDurarMenosQueTresSegundos()
+		{
+			var comando = CriarComando();
+			var dicionario = new Dicionario(typeof(ObjetoDeTestes));
+
+			var config = new ConfiguradorQuery(comando.CriarComando(), new QueryBuilder());
+			config.DefinirTabela(dicionario.Nome);
+			config.AdicionarResultado("(Count(*))as[Quantidade]");
+
+			var tempo = new Stopwatch();
+			tempo.Start();
+
+			for (var i = 0; i < 20000; i++)
+			{
+				var scalar = comando.Scalar(config);
+
+				scalar
+					.Should()
+					.BeOfType<int>();
+
+				((int)scalar)
+					.Should()
+					.BeGreaterThan(0);
+			}
+
+			tempo.Stop();
+			tempo.ElapsedMilliseconds
+				.Should()
+				.BeLessOrEqualTo(1000 * 3);
 		}
 
 	}

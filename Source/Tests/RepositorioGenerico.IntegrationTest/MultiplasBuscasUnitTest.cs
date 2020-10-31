@@ -1,6 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositorioGenerico.Test.Objetos;
-using FluentAssertions;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace RepositorioGenerico.IntegrationTest
 {
@@ -91,6 +93,67 @@ namespace RepositorioGenerico.IntegrationTest
 					.Should()
 					.Be(primeiraInstancia);
 			}
+		}
+
+		[TestMethod]
+		public void SeRealizarConsultaDeUmObjeto10000VezesUtilizandoConsultarDeveDurarMenosQueCincoSegundos()
+		{
+			var tempo = new Stopwatch();
+			tempo.Start();
+
+			Parallel.For(0, 10_000, n =>
+			{
+				using (var contexto = ContextoHelper.Criar())
+				{
+					var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+					var objeto = repositorio.Consultar(1);
+
+					objeto
+						.Should()
+						.NotBeNull();
+
+					objeto.Codigo
+						.Should()
+						.Be(1);
+				}
+			});
+
+			tempo.Stop();
+			tempo.ElapsedMilliseconds
+				.Should()
+				.BeLessOrEqualTo(1000 * 5);
+		}
+
+		[TestMethod]
+		public void SeRealizarConsultaScalar100MilVezesUtilizandoConsultarDeveDurarMenosQueCincoSegundos()
+		{
+			var tempo = new Stopwatch();
+			tempo.Start();
+
+			Parallel.For(0, 100_000, n =>
+			{
+				using (var contexto = ContextoHelper.Criar())
+				{
+					var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+					var consulta = repositorio.Buscar.CriarQuery();
+					consulta.AdicionarCondicao(o => o.Codigo).Igual(1);
+					consulta.AdicionarResultado(o => o.Nome);
+					var objeto = repositorio.Buscar.Scalar(consulta);
+
+					objeto
+						.Should()
+						.NotBeNull();
+
+					objeto
+						.Should()
+						.Be("Teste A");
+				}
+			});
+
+			tempo.Stop();
+			tempo.ElapsedMilliseconds
+				.Should()
+				.BeLessOrEqualTo(1000 * 5);
 		}
 
 	}

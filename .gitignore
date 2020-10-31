@@ -2,6 +2,13 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.config
+
 /packages
 /Source/RepositorioGenerico/bin
 /Source/RepositorioGenerico/obj
