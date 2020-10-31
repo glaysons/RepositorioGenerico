@@ -44,7 +44,7 @@ namespace RepositorioGenerico.Test.Search.Extensoes
 			Action personalizar = () => config.PersonalizarScript("hello world");
 
 			personalizar
-				.ShouldThrow<EsteTipoDeConfiguracaoNaoPermitePersonalizacaoDeScript>();
+				.Should().Throw<EsteTipoDeConfiguracaoNaoPermitePersonalizacaoDeScript>();
 		}
 
 		[TestMethod]
@@ -53,7 +53,7 @@ namespace RepositorioGenerico.Test.Search.Extensoes
 			Action personalizar = () => ((IConfiguracao)null).PersonalizarScript("hello world");
 
 			personalizar
-				.ShouldNotThrow();
+				.Should().NotThrow();
 		}
 
 	}

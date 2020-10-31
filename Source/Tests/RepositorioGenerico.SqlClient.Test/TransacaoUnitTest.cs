@@ -26,7 +26,7 @@ namespace RepositorioGenerico.SqlClient.Test
 		public void AoIniciarUmaTransacaoNaoDeveGerarErro()
 		{
 			Action act = () => CriarTransacao();
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 		}
 
 		private static Transacao CriarTransacao()
@@ -70,7 +70,7 @@ namespace RepositorioGenerico.SqlClient.Test
 			{
 				transacao.CancelarTransacao();
 				Action act = () => transacao.ConfirmarTransacao();
-				act.ShouldThrow<TransacaoNaoIniciadaException>();
+				act.Should().Throw<TransacaoNaoIniciadaException>();
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace RepositorioGenerico.SqlClient.Test
 			using (var transacao = CriarTransacao())
 			{
 				Action act = () => transacao.ConfirmarTransacao();
-				act.ShouldNotThrow();
+				act.Should().NotThrow();
 			}
 		}
 
@@ -116,7 +116,7 @@ namespace RepositorioGenerico.SqlClient.Test
 			{
 				transacao.CancelarTransacao();
 				Action act = () => transacao.CancelarTransacao();
-				act.ShouldThrow<TransacaoNaoIniciadaException>();
+				act.Should().Throw<TransacaoNaoIniciadaException>();
 			}
 		}
 
@@ -173,7 +173,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				{
 					Action acao = () => conexao.IniciarTransacao();
 					acao
-						.ShouldThrow<TransacaoJaIniciadaException>();
+						.Should().Throw<TransacaoJaIniciadaException>();
 				}
 
 				transacaoBanco.Rollback();
@@ -193,7 +193,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				{
 					Action acao = () => transacao.ConfirmarTransacao();
 					acao
-						.ShouldThrow<NaoEhPossivelConfirmarOuCancelarTransacaoExternaException>();
+						.Should().Throw<NaoEhPossivelConfirmarOuCancelarTransacaoExternaException>();
 				}
 
 				transacaoBanco.Rollback();
@@ -213,7 +213,7 @@ namespace RepositorioGenerico.SqlClient.Test
 				{
 					Action acao = () => transacao.CancelarTransacao();
 					acao
-						.ShouldThrow<NaoEhPossivelConfirmarOuCancelarTransacaoExternaException>();
+						.Should().Throw<NaoEhPossivelConfirmarOuCancelarTransacaoExternaException>();
 				}
 
 				transacaoBanco.Rollback();

@@ -200,7 +200,7 @@ namespace RepositorioGenerico.Test.Search
 			Action teste = () => configurador.Preparar();
 
 			teste
-				.ShouldThrow<NotImplementedException>();
+				.Should().Throw<NotImplementedException>();
 		}
 
 		[TestMethod]

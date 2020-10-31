@@ -22,7 +22,7 @@ namespace RepositorioGenerico.Test.Framework.Helpers
 		{
 			Action act = () => EnumHelper.FromString<EnumDeTestes>("OpcaoInvalida");
 			act
-				.ShouldThrow<ArgumentException>();
+				.Should().Throw<ArgumentException>();
 		}
 
 	}

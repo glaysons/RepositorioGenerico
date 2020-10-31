@@ -24,7 +24,7 @@ namespace Business.Test.TiposDosContatos
 			Action cadastro = () => manutencao.Cadastrar(tipoContato);
 
 			cadastro
-				.ShouldNotThrow();
+				.Should().NotThrow();
 		}
 
 		[TestMethod]
@@ -62,7 +62,7 @@ namespace Business.Test.TiposDosContatos
 			Action cadastro = () => manutencao.Cadastrar(tipoContato);
 
 			cadastro
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Já existe um Tipo de Contato cadastrado com este nome!");
 
 		}
@@ -155,7 +155,7 @@ namespace Business.Test.TiposDosContatos
 			Action exclusao = () => manutencao.Excluir(tipoContato);
 
 			exclusao
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Ainda existem contatos vinculados com este Tipo de Contato!");
 		}
 

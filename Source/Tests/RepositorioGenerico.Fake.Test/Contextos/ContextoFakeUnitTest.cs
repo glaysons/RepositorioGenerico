@@ -330,11 +330,11 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 			Action nomeNulo = () => contexto.DefinirResultadoProcedure(null, lista);
 			nomeNulo
-				.ShouldThrow<ArgumentNullException>();
+				.Should().Throw<ArgumentNullException>();
 
 			Action nomeVazio = () => contexto.DefinirResultadoProcedure(string.Empty, lista);
 			nomeVazio
-				.ShouldThrow<ArgumentNullException>();
+				.Should().Throw<ArgumentNullException>();
 		}
 
 		[TestMethod]

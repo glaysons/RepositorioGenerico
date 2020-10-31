@@ -38,7 +38,7 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 			Action salvar = () => persistencia.Salvar(contexto, null);
 
 			salvar
-				.ShouldThrow<ArgumentNullException>();
+				.Should().Throw<ArgumentNullException>();
 		}
 
 		[TestMethod]
@@ -51,7 +51,7 @@ namespace RepositorioGenerico.SqlClient.Test.Contextos
 			Action salvar = () => persistencia.Salvar(contexto, objeto);
 
 			salvar
-				.ShouldThrow<TipoDeObjetoInvalidoException>();
+				.Should().Throw<TipoDeObjetoInvalidoException>();
 		}
 
 		[TestMethod]

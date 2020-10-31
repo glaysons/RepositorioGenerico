@@ -36,7 +36,7 @@ namespace RepositorioGenerico.Fake.Test
 		{
 
 			Action act = () => CriarDataReader();
-			act.ShouldNotThrow();
+			act.Should().NotThrow();
 
 		}
 
@@ -62,7 +62,7 @@ namespace RepositorioGenerico.Fake.Test
 				reader.GetName(9).Should().Be("DataHoraNulo");
 
 				Action act = () => reader.GetName(10);
-				act.ShouldThrow<IndexOutOfRangeException>();
+				act.Should().Throw<IndexOutOfRangeException>();
 
 				reader.FieldCount.Should().Be(10);
 

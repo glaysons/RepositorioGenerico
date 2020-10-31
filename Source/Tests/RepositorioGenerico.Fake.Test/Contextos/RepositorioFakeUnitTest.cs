@@ -148,7 +148,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			Action insercao = () => repositorio.Inserir(novo);
 
 			insercao
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Favor informar no mínimo 10 caracteres para o nome!");
 
 			repositorio.Quantidade
@@ -158,7 +158,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			Action validacao = () => repositorio.Validar(novo);
 
 			validacao
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Favor informar no mínimo 10 caracteres para o nome!");
 
 		}
@@ -201,12 +201,12 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			Action insercao = () => repositorio.Inserir(novo);
 
 			insercao
-				.ShouldNotThrow();
+				.Should().NotThrow();
 
 			Action validacao = () => repositorio.Validar(novo);
 
 			validacao
-				.ShouldNotThrow();
+				.Should().NotThrow();
 
 			repositorio.Quantidade
 				.Should()
@@ -228,7 +228,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			Action insercao = () => repositorio.Inserir(novo);
 
 			insercao
-				.ShouldThrow<Exception>()
+				.Should().Throw<Exception>()
 				.WithMessage("Favor informar no mínimo 10 caracteres para o nome!");
 
 			repositorio.Quantidade
@@ -255,7 +255,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			Action insercao = () => repositorio.Inserir(novo);
 
 			insercao
-				.ShouldNotThrow();
+				.Should().NotThrow();
 
 			repositorio.Quantidade
 				.Should()
