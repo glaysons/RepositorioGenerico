@@ -248,6 +248,25 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 		}
 
 		[TestMethod]
+		public void SeConsultarPorCodigoComVariasCondicoesComOrdemDeveConsultar()
+		{
+			var contexto = CriarContextoParaTestes();
+			var repositorio = contexto.Repositorio<ObjetoDeTestes>();
+
+			var query = repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Codigo).Igual(5)
+				.AdicionarCondicao(c => c.Codigo).Igual(5)
+				.AdicionarCondicao(c => c.Codigo).Igual(5)
+				.AdicionarCondicao(c => c.Codigo).Igual(5)
+				.AdicionarOrdemDescendente(c => c.Nome);
+
+			var registro = repositorio.Buscar.Um(query);
+
+			registro.Should().NotBeNull();
+			registro.Nome.Should().Be("Teste de cadastros do nome E");
+		}
+
+		[TestMethod]
 		public void SeConsultarPorVariosRegistrosNoContextoOsMesmosDevemSerEncontrados()
 		{
 			var contexto = CriarContextoParaTestes();

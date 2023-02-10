@@ -46,6 +46,11 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 4, Nome = "D", Logico = true});
 			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 5, Nome = "E", Logico = false});
 			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 6, Nome = "F", Logico = false});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 7, Nome = "G1", Logico = false});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 8, Nome = "G2", Logico = true});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 9, Nome = "G3", Logico = true});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 10, Nome = "G4", Logico = true});
+			contexto.AdicionarRegistro(new ObjetoDeTestes() {Codigo = 11, Nome = "G5", Logico = false});
 		}
 
 		[TestMethod]
@@ -58,9 +63,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 				.Should()
 				.Be(0);
 
-			repositorio.Buscar.Todos()
-				.Should()
-				.HaveCount(6);
+			var quantidade = repositorio.Buscar.Todos().Count();
 
 			var registro = repositorio.Consultar(3);
 			repositorio.Excluir(registro);
@@ -73,7 +76,7 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 
 			repositorio.Buscar.Todos()
 				.Should()
-				.HaveCount(5);
+				.HaveCount(quantidade - 1);
 
 		}
 
@@ -286,6 +289,23 @@ namespace RepositorioGenerico.Fake.Test.Contextos
 			repositorio.Buscar.Existe(config)
 				.Should()
 				.BeTrue();
+		}
+
+		[TestMethod]
+		public void SeConsultarPorUmaCondicaoComplexaDeveEncontrarApenasTresRegistros()
+		{
+			var repositorio = CriarRepositorioComDados();
+
+			var config = repositorio.Buscar.CriarQuery()
+				.AdicionarCondicao(c => c.Nome).InicieCom("G")
+				.AdicionarCondicao(c => c.Logico).Igual(true)
+				.AdicionarCondicao(c => c.Codigo).Seja(Pattern.Buscadores.Operadores.Maior, 7)
+				.AdicionarCondicao(c => c.Codigo).Seja(Pattern.Buscadores.Operadores.Menor, 11)
+				.AdicionarOrdemDescendente(c => c.Codigo);
+
+			repositorio.Buscar.Varios(config)
+				.Should()
+				.HaveCount(3);
 		}
 
 		[TestMethod]
