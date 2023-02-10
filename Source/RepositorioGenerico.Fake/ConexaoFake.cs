@@ -15,6 +15,8 @@ namespace RepositorioGenerico.Fake
 			get { return (_transacaoFake != null); }
 		}
 
+		public bool RealizaConsultasUtilizandoConexaoTransacionada { get; set; } = true;
+
 		protected DataSet BancoDeDadosVirtual { get; private set; }
 
 		public EventoDelegate AntesIniciarTransacao { get; set; }
@@ -28,6 +30,13 @@ namespace RepositorioGenerico.Fake
 
 		public ConexaoFake(IDbTransaction transacao) : this()
 		{
+			DefinirUmaTransacaoEspecifica(transacao);
+		}
+
+		public void DefinirUmaTransacaoEspecifica(IDbTransaction transacao)
+		{
+			if (EmTransacao)
+				throw new TransacaoJaIniciadaException();
 			_transacaoFake = new TransacaoFake(transacao);
 			_transacaoExterna = true;
 		}

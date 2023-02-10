@@ -156,12 +156,17 @@ namespace RepositorioGenerico.Fake
 			var condicao = (indiceWhere > 0)
 				? ConsultarCondicaoParaFiltragem(CommandText.Substring(indiceWhere + 5))
 				: string.Empty;
-			var indiceOrderby = sql.IndexOf("order by", StringComparison.Ordinal);
-			if ((indiceOrderby > 0) && (indiceOrderby > indiceWhere))
+			var indiceOrderby = (indiceWhere > 0 ? condicao : sql)
+				.IndexOf("order by", StringComparison.Ordinal);
+			if (indiceOrderby > 0)
 			{
 				if (indiceWhere > 0)
-					condicao = condicao.Substring(0, indiceOrderby - indiceWhere - 8 + 1 - 5 + 1);
-				view.Sort = CommandText.Substring(indiceOrderby + 8);
+				{
+					view.Sort = condicao.Substring(indiceOrderby + 8);
+					condicao = condicao.Substring(0, indiceOrderby);
+				}
+				else
+					view.Sort = CommandText.Substring(indiceOrderby + 8);
 			}
 			view.RowFilter = condicao;
 			return view;

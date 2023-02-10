@@ -7,6 +7,8 @@ namespace RepositorioGenerico.Pattern
 	public interface IConexao : ITransacional, IDisposable
 	{
 
+		bool RealizaConsultasUtilizandoConexaoTransacionada { get; set; }
+
 		IDbConnection CriarConexaoSemTransacao();
 
 		IDbCommand CriarComando();

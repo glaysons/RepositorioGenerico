@@ -19,6 +19,8 @@ namespace RepositorioGenerico.SqlClient
 			get { return (_transacao != null); }
 		}
 
+		public bool RealizaConsultasUtilizandoConexaoTransacionada { get; set; } = true;
+
 		public EventoDelegate AntesIniciarTransacao { get; set; }
 
 		public EventoDelegate DepoisIniciarTransacao { get; set; }
@@ -31,9 +33,17 @@ namespace RepositorioGenerico.SqlClient
 
 		public Conexao(string stringConexao, IDbTransaction transacao) : this(stringConexao)
 		{
+			DefinirUmaTransacaoEspecifica(transacao);
+		}
+
+		public void DefinirUmaTransacaoEspecifica(IDbTransaction transacao)
+		{
+			if (EmTransacao)
+				throw new TransacaoJaIniciadaException();
 			_transacao = new Transacao(transacao);
 			_transacaoExterna = true;
 		}
+
 
 		public IDbConnection CriarConexaoSemTransacao()
 		{
