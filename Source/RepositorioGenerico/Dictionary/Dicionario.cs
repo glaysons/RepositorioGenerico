@@ -37,7 +37,7 @@ namespace RepositorioGenerico.Dictionary
 		private readonly bool _possuiReferencial;
 		private bool _possuiCamposFilhos;
 		private readonly IMapa _mapa;
-		private bool _carregando = true;
+		private readonly Lazy<bool> _carregando;
 
 		public string Alias { get; private set; }
 
@@ -142,6 +142,20 @@ namespace RepositorioGenerico.Dictionary
 			if (string.Equals(Nome, Alias) || string.IsNullOrEmpty(Alias))
 				Alias = null;
 			_possuiCamposFilhos = false;
+			_carregando = new Lazy<bool>(InicializarMapeamento, LazyThreadSafetyMode.ExecutionAndPublication);
+		}
+
+		public bool InicializarMapeamento()
+		{
+			_itens = new Dictionary<string, ItemDicionario>();
+			_listaItens = new List<ItemDicionario>();
+			_itensNaoMapeados = new Dictionary<string, ItemDicionario>();
+			_propriedades = new Dictionary<string, ItemDicionario>();
+			_propriedadesNaoMapeadas = new Dictionary<string, ItemDicionario>();
+			_chaves = new Dictionary<string, ItemDicionario>();
+			CarregarCamposDaTabela();
+			CarregarValidadoresDoModel();
+			return true;
 		}
 
 		private bool ObjetoPossuiOutroObjetoReferenciado(Type tipo)
@@ -153,28 +167,7 @@ namespace RepositorioGenerico.Dictionary
 
 		private void CarregarDefinicoesDoModel()
 		{
-			if (_itens != null)
-			{
-				while (_carregando)
-					Thread.Sleep(10);
-				return;
-			}
-
-			try
-			{
-				_itens = new Dictionary<string, ItemDicionario>();
-				_listaItens = new List<ItemDicionario>();
-				_itensNaoMapeados = new Dictionary<string, ItemDicionario>();
-				_propriedades = new Dictionary<string, ItemDicionario>();
-				_propriedadesNaoMapeadas = new Dictionary<string, ItemDicionario>();
-				_chaves = new Dictionary<string, ItemDicionario>();
-				CarregarCamposDaTabela();
-				CarregarValidadoresDoModel();
-			}
-			finally
-			{
-				_carregando = false;
-			}
+			var _ = _carregando.Value;
 		}
 
 		private void CarregarCamposDaTabela()
@@ -233,7 +226,7 @@ namespace RepositorioGenerico.Dictionary
 					throw new DicionarioNaoSuportaMultiplosCamposAutoIncrementoException();
 				_autoIncremento = OpcoesAutoIncremento.Calculado;
 			}
-			
+
 			if ((camposIdentity > 0) && (camposAgrupados > 0))
 				throw new DicionarioNaoSuportaMultiplosCamposAutoIncrementoException();
 		}
