@@ -145,7 +145,7 @@ namespace RepositorioGenerico.Dictionary
 			_carregando = new Lazy<bool>(InicializarMapeamento, LazyThreadSafetyMode.ExecutionAndPublication);
 		}
 
-		public bool InicializarMapeamento()
+		private bool InicializarMapeamento()
 		{
 			_itens = new Dictionary<string, ItemDicionario>();
 			_listaItens = new List<ItemDicionario>();
